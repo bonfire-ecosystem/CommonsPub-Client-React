@@ -13,7 +13,7 @@ export const INSTANCE_DESCRIPTION =
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||
   'Please note, signups on this instance are currently invite-only.';
-export const INSTANCE_TAGLINE = 'Share. Curate. Discuss.';
+export const INSTANCE_TAGLINE = 'CommonsPub - join up, federate, cooperate';
 export const INSTANCE_PROMPT =
   "You don't need to sign up to preview what people are sharing and discussing publicly.";
 export const prompt_signin = 'Sign in';
@@ -33,7 +33,7 @@ export const terms_markdown_text = {
 
 export const terms_markdown_urls = {
   // replace the URLs as needed, or enable/disable to use `terms_markdown_text` instead
-  enabled: true,
+  enabled: false,
   terms_users: 'https://moodle.net/terms/users.md',
   terms_cookies: 'https://moodle.net/terms/cookies.md',
   terms_indexing: 'https://moodle.net/terms/indexing.md'

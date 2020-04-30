@@ -12,10 +12,10 @@ echo "Building the static site..."
 yarn build-storybook # generate styleguide
 
 echo "Deploying the static content to a dedicated git repo..."
+rm -rf ../commonspub-websites/storybook
 mv storybook-static ../commonspub-websites/storybook
 cd ../commonspub-websites/
 git add *
 git commit -m "Storybook update"
-git pull
+git pullls 
 git push -u origin master
-
