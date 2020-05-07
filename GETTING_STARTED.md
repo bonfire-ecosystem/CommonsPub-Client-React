@@ -20,7 +20,7 @@ Our vision was to **achieve modularity through simplicity**, an old and ongoing 
  
 As open source software is becoming more and more prominent over the web, we have to deal also with wider issues: 
 
-- How does the design of open source software help shape a communities? 
+- How does the design of open source software help shape communities? 
 - How do communities shape the open source software?
 - How can this symbiosis can empower both parties? (rather than slowly bind them to an unproductive and frustrating relationship)
 
@@ -28,13 +28,6 @@ As open source software is becoming more and more prominent over the web, we hav
 The following is a technical documentation to describe how we developed the CommonsPub front-end codebase to accomplish such challenges and a way to encourage designers, developers and instance admins to contribute with ideas and codes to such vision.
 
 ## Getting started
-
-The CommonsPub client connects to a graphql endpoint to perform queries and mutation over the database. 
-
-In order to launch locally the client, you’ll need a running backend. [Here](https://gitlab.com/commonspub/Server/-/blob/develop/HACKING.md) you will find a detailed documentation about how to run the CommonsPub backend locally (manually or with docker).
-
-Once you’ve a backend up and running on http://localhost:4000/api/graphql, you can move further running the client.
-*(nd. If you just want to run `storybook`, there is no need to install and run any backend, as stories are populated with fake data)*
 
 ##### Get the code
 `git clone https://gitlab.com/CommonsPub/Client.git commonspub`
@@ -44,6 +37,23 @@ Once you’ve a backend up and running on http://localhost:4000/api/graphql, you
 cd commonspub
 yarn
 ```
+##### Setup the local environment
+
+```
+cp .env.example .env
+```
+
+##### Run the backend
+The CommonsPub client connects to a graphql endpoint to perform queries and mutation over the database. 
+
+In order to launch locally the client, you’ll need a running backend. [Here](https://gitlab.com/commonspub/Server/-/blob/develop/HACKING.md) you will find a detailed documentation about how to run the CommonsPub backend locally (manually or with docker).
+
+Once you’ve got a backend up and running on http://localhost:4000, you can move further running the client.
+*(nd. If you just want to run `storybook`, there is no need to install and run any backend, as stories are populated with fake data)*
+
+Note that if you run the client and the server on the same machine with default settings, the GraphQL server will be listening on port 4004. The environment variable `REACT_APP_GRAPHQL_ENDPOINT` should be then changed to `http://localhost:4004/api/graphql` in `.env`.
+You will be able to access the Apollo GraphQL Playground at the same address in the browser.
+
 
 ##### Extract the languages
 We use [linguijs](https://lingui.js.org/index.html) to provide multi-languages. Before launching the app, make sure you’ve added one or more translations to the app.
@@ -62,17 +72,24 @@ Currently CommonsPub is translated in the following languages:
 Apart from en_GB that is the default language, feel free do add the needed translations for your scope, when launching the script:
  
 ```
-yarn add locale en_GB en_US es_MX es_ES fr_FR eu ar_SA
+yarn add-locale en_GB en_US es_MX es_ES fr_FR eu ar_SA
 ```
 
 
 ##### Launch CommonsPub
-`yarn start`
+```
+yarn start
+```
 
-Visit http://localhost:3000 🌱
+Visit http://localhost:4000 🌱
 
-##### or launch Storybook
-`yarn storybook`
+##### Launch the Storybook
+
+A storybook is available to document the different UI components and their use cases. You can run it with:
+
+```
+yarn storybook
+```
 
 Visit http://localhost:5000 🍄
 
@@ -100,9 +117,6 @@ Our main dependencies are:
 3. ### Edit a module in the component library
 4. ### Add a new language
 5. ### ...
-
-
-## How to contribute to CommonsPub Front-end
 
 
 ## Next steps

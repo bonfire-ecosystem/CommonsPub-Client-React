@@ -36,11 +36,10 @@ yarn.lock
 !/src/locales/en_GB/README.md
 
 ## env
+.env
 .env*
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+!.env.example
+!.env.secrets.example
 src/fragmentTypes.json
 
 
