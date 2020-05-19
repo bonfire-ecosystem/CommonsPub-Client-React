@@ -8,7 +8,7 @@ import Button from 'ui/elements/Button';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
 import Modal from 'ui/modules/Modal';
-import { Header } from 'ui/modules/Header';
+// import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
 import {
   Wrapper,
@@ -32,9 +32,9 @@ export interface Props {
   basePath: string;
   newThreadFormik: null | FormikHook<{ text: string }>;
   CreateCollectionPanel: React.ComponentType<{ done(): any }>;
-  loadMoreActivities: FormikHook | undefined;
-  loadMoreCollections: FormikHook | undefined;
-  loadMoreThreads: FormikHook | undefined;
+  loadMoreActivities: FormikHook | null;
+  loadMoreCollections: FormikHook | null;
+  loadMoreThreads: FormikHook | null;
 }
 
 export const Community: React.FC<Props> = ({
@@ -66,7 +66,7 @@ export const Community: React.FC<Props> = ({
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Header name={communityName} />
+            {/* <Header name={communityName} /> */}
             <Switch>
               <Route exact path={`${basePath}`}>
                 <>

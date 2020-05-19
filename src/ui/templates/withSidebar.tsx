@@ -1,5 +1,5 @@
 import React, { ComponentType, useState, useCallback } from 'react';
-import { Flex } from 'rebass/styled-components';
+import { Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
 export interface SidebarProps {
   // SidebarBox: JSX.Element;
@@ -17,28 +17,49 @@ export const WithSidebar: React.FC<SidebarProps> = ({
     isSidebarOpen
   ]);
   return (
-    <Wrapper>
+    <Page>
       <HeaderBox toggleSideBar={toggleSideBar} />
-      <CenteredWrapper>
-        {/* {SidebarBox} */}
-        <SidebarBox isSidebarOpen={isSidebarOpen} />
-        <Flex ml={2}>{children}</Flex>
-      </CenteredWrapper>
-    </Wrapper>
+      <Wrapper>
+        <Panel>
+          <Sidebar>
+            <SidebarBox isSidebarOpen={isSidebarOpen} />
+          </Sidebar>
+        </Panel>
+        <Panel>
+          <Content>{children}</Content>
+        </Panel>
+      </Wrapper>
+    </Page>
   );
 };
-const Wrapper = styled(Flex)`
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  flex-direction: column;
+
+const Panel = styled(Box)`
+  display: grid;
+  grid-template-rows: auto;
+  height: calc(100vh - 58px);
 `;
 
-const CenteredWrapper = styled(Flex)`
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  margin-top: 66px;
+const Page = styled(Box)`
+  height: 100vh;
+  grid-template-rows: 50px auto;
+  row-gap: 8px;
+  display: grid;
+`;
+
+const Wrapper = styled(Box)`
+  max-width: 1096px;
+  margin: 0 auto;
+  height: calc(100vh - 66px);
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 240px 1fr;
+  column-gap: 8px;
+`;
+
+const Sidebar = styled(Box)`
+  overflow: auto;
+`;
+
+const Content = styled(Box)`
+  overflow: auto;
 `;

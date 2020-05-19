@@ -1,5 +1,0 @@
-mutation followMutation($contextId: String!) {
-    createFollow(contextId: $contextId){
-        id
-    }
-}

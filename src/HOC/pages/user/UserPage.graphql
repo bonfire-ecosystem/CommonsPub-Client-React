@@ -6,6 +6,7 @@ fragment UserPageActivities on Activity {
 
 fragment UserPageUserData on User {
   id
+  userId:id
   collectionFollows{
     totalCount
   }
@@ -19,7 +20,7 @@ fragment UserPageUserData on User {
     totalCount
   }
   website
-  name
+  userName:name
   
   ...HeroUserUserData
 }

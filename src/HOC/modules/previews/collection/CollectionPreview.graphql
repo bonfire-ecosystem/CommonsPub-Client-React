@@ -9,6 +9,7 @@ fragment CollectionPreview on Collection {
     displayUsername
     myFlag { id }
     myFollow { id }
+    preferredUsername
     # myLike { id }
     # likerCount
     community {

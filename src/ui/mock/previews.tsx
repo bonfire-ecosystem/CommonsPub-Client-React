@@ -36,6 +36,8 @@ export function CommunityPreviewProps(
   summary = 'Example of a community.'
 ): CommunityProps {
   return {
+    isCreator: false,
+    hideActions: false,
     icon,
     name,
     link: { url: '/', external: true },

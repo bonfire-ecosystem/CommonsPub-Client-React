@@ -8,7 +8,7 @@ import { clearFix } from 'polished';
 import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
 import { Flex, Text, Box, Heading } from 'rebass/styled-components';
-import DropzoneArea from '../../../components/elements/DropzoneModal';
+import DropzoneArea from 'ui/modules/DropzoneModal';
 import Alert from 'ui/elements/Alert';
 import {
   Actions,

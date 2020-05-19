@@ -1,4 +1,4 @@
-import { useLMS } from 'fe/lib/moodleLMS/useSendToMoodle';
+import { useLMSGQL } from 'fe/lib/moodleLMS/useSendToMoodle';
 import { useResourcePreview } from 'fe/resource/preview/useResourcePreview';
 import { useFormik } from 'formik';
 import { Resource } from 'graphql/types.generated';
@@ -22,7 +22,7 @@ export const ResourcePreviewHOC: FC<Props> = ({ resourceId, flagged }) => {
     initialValues: {},
     onSubmit: toggleLike
   });
-  const { LMSPrefsPanel } = useLMS(resource?.payload?.url);
+  const { LMSPrefsPanel } = useLMSGQL(resource);
   const resourcePreviewProps = useMemo<ResourcePreviewProps | null>(() => {
     if (!resource) {
       return null;

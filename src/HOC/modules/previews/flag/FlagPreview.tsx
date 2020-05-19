@@ -1,5 +1,5 @@
 import { useFlagPreview } from 'fe/flags/preview/useFlagPreview';
-import { getActivitySimpleLink } from 'fe/lib/activity/getActivitySimpleLink';
+import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
 import { useFormik } from 'formik';
 import { Flag } from 'graphql/types.generated';
@@ -8,7 +8,6 @@ import { ActivityPreview, Status } from 'ui/modules/ActivityPreview';
 import { FlaggedItem, FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
 import { PreviewComponent } from '../activity/PreviewComponent';
 import { CommentPreviewHOC } from '../comment/CommentPreview';
-import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 
 interface FlagPreviewHOC {
   flagId: Flag['id'];
@@ -27,7 +26,6 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
     } else if (flag.context.__typename === 'Comment') {
       const comment = flag.context;
       const { communityLink, communityName } = getCommunityInfoStrings(comment);
-      const link = getActivitySimpleLink(comment);
       const CommentPreview = (
         <CommentPreviewHOC
           commentId={comment.id}
@@ -45,7 +43,6 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
           communityLink={communityLink}
           communityName={communityName}
           status={Status.Loaded}
-          link={link}
           preview={CommentPreview}
         />
       );

@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { Box, Flex, Text } from 'rebass/styled-components';
-import { HomeBox, MainContainer } from '../../sections/layoutUtils';
-// import styled from '../../themes/styled';
-import { Wrapper, WrapperCont } from '../wrappers/Wrappers';
+import {
+  Wrapper,
+  WrapperCont,
+  HomeBox,
+  MainContainer
+} from 'ui/elements/Layout/';
 import {
   connectInfiniteHits,
   Pagination,
@@ -12,13 +15,13 @@ import {
 import Preview from './preview';
 import { Trans } from '@lingui/macro';
 // import { LocaleContext } from '../../containers/App/App';
-import styled from '../../themes/styled';
+import styled from 'ui/themes/styled';
 import { Nav, Panel, PanelTitle, WrapperPanel } from 'ui/elements/Panel';
 import {
   SearchHostIndexAndMyFollowingsQuery,
   useSearchHostIndexAndMyFollowingsQuery
 } from './SearchData.generated';
-import { Hit } from './Hits';
+import { Hit } from '../../fe/search/Hits';
 import Maybe from 'graphql/tsutils/Maybe';
 import { mnCtx } from 'fe/lib/graphql/ctx';
 
@@ -50,14 +53,14 @@ interface Result {
 const Result: React.FC<Result> = ({ hit, myInfo }) => {
   return (
     <WrapperResult p={3}>
-      {hit.collection ? (
+      {hit.index_type === 'Resource' && hit.collection?.community ? (
         <SupText mb={3} variant="suptitle">
           <a href={hit.collection.community.canonicalUrl}>
             {hit.collection.community.name}
           </a>{' '}
           > <a href={hit.collection.canonicalUrl}>{hit.collection.name}</a>
         </SupText>
-      ) : hit.community ? (
+      ) : hit.index_type === 'Collection' && hit.community ? (
         <SupText mb={3} variant="suptitle">
           <a href={hit.community.canonicalUrl}>{hit.community.name}</a>
         </SupText>

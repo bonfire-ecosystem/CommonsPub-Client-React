@@ -3,7 +3,7 @@ import { clearFix } from 'polished';
 import * as React from 'react';
 import styled from '../../themes/styled';
 import { Box } from 'rebass/styled-components';
-import { related_urls } from 'mn-constants'; // + instance_bg_img
+import { APP_NAME, related_urls } from 'mn-constants'; // + instance_bg_img
 
 const Footer = () => {
   return (
@@ -11,27 +11,22 @@ const Footer = () => {
       <ul>
         <li>
           <a href={related_urls.project_homepage} target="blank">
-            <Trans>About</Trans>
-          </a>
-        </li>
-        <li>
-          <a href={related_urls.terms_users} target="blank">
-            <Trans>Code of Conduct</Trans>
+            <Trans>About {APP_NAME}</Trans>
           </a>
         </li>
         <li>
           <a href={related_urls.code} target="blank">
-            <Trans>Open source</Trans>
+            <Trans>Open Source Code</Trans>
           </a>
         </li>
         <li>
           <a href={related_urls.feedback} target="blank">
-            <Trans>Feedback</Trans>
+            <Trans>Feedback &amp; Suggestions</Trans>
           </a>
         </li>
         <li>
-          <a href={related_urls.terms_cookies} target="blank">
-            <Trans>Privacy notice</Trans>
+          <a href="/terms">
+            <Trans>Code of Conduct &amp; Privacy Policy</Trans>
           </a>
         </li>
       </ul>

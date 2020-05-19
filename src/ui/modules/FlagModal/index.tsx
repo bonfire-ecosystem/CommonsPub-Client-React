@@ -51,7 +51,7 @@ export const FlagModal: React.FC<Props> = ({
   return !isFlagged ? (
     <Container>
       <Header>
-        <Heading m={2}>
+        <Heading>
           <Trans>Report as inappropriate</Trans>
         </Heading>
       </Header>
@@ -90,7 +90,7 @@ export const FlagModal: React.FC<Props> = ({
   ) : (
     <Container>
       <Header>
-        <Heading m={2}>
+        <Heading>
           <Trans>Unflag</Trans>
         </Heading>
       </Header>

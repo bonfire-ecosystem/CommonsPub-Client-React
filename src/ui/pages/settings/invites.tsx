@@ -24,7 +24,7 @@ export interface Props {
   formikSendInvite: FormikHook<WithEmail>;
   formikAddEmail: FormikHook<WithEmail>;
   emailsList: string[];
-  loadMoreEmails?: FormikHook; // FIX ME after add LoadMoreFormik
+  loadMoreEmails: FormikHook | null;
 }
 
 export interface WithEmail {
@@ -103,7 +103,7 @@ const Emails: React.FC<Props> = ({
       {formikRemoveEmail.values.email && (
         <Modal closeModal={() => formikRemoveEmail.setValues({ email: '' })}>
           <ConfirmationModal
-            cancel={() => formikRemoveEmail.setValues({ email: '' })}
+            done={() => formikRemoveEmail.setValues({ email: '' })}
             formik={formikRemoveEmail}
             modalAction={i18n._(`Remove email from whitelist`)}
             modalDescription={i18n._(

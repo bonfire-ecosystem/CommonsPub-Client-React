@@ -113,7 +113,7 @@ export const Resource: React.FC<Props> = ({
               sx={{ textTransform: 'capitalize' }}
               ml={1}
             >
-              {like.totalLikes + ' '} <Trans>Favourite</Trans>
+              {like.totalLikes + ' '} <Trans>Star</Trans>
             </ActionText>
           </ActionItem>
           <ActionItem
