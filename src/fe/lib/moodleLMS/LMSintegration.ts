@@ -21,6 +21,8 @@ export const getUrlParamsFromEntryPointForMoodleLMS = (): LMSPrefs | null => {
 
 export const sendToMoodle = (
   resourceurl: string,
+  resource_info: string,
+  type: string,
   { site, course, section }: LMSPrefs
 ) => {
   const form = document.createElement('form');
@@ -31,7 +33,9 @@ export const sendToMoodle = (
   const params = {
     resourceurl,
     course,
-    section
+    section,
+    type,
+    resource_info
   };
   Object.entries(params).forEach(([name, val]) => {
     const hiddenField = document.createElement('input');

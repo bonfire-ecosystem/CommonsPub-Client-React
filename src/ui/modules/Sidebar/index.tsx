@@ -90,18 +90,9 @@ const SidebarLink = styled(NavLink)`
     height: 36px;
   }
   &.active {
-    color: ${props => props.theme.colors.primary};
-    position: relative;
-    &:before {
-      position: absolute;
-      content: '';
-      left: -10px;
-      top: 24px;
-      width: 8px;
-      border-radius: 100px;
-      height: 8px;
-      display: block;
-      background: ${props => props.theme.colors.primary};
+    div {
+      color: ${props => props.theme.colors.primary};
+      position: relative;
     }
   }
   div {
@@ -115,7 +106,7 @@ const NavItem = styled(Flex)`
   padding: 8px;
   margin-bottom: 8px;
   &:hover {
-    background: ${props => props.theme.colors.light};
+    background: ${props => props.theme.colors.medium};
   }
   ${media.lessThan('1280px')`
 img {
@@ -125,7 +116,8 @@ img {
 `;
 
 const ItemTitle = styled(Text)`
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 600;
   color: ${props => props.theme.colors.darker};
   a:focus,
   a:active {
@@ -178,7 +170,7 @@ export interface SidebarLoading {
 export type Props = SidebarLoaded | SidebarLoading;
 
 export const Sidebar: React.FC<Props> = props => {
-  console.log('isSidebarOpen ' + (props.isSidebarOpen == true));
+  // console.log('isSidebarOpen ' + (props.isSidebarOpen == true));
   return (
     <>
       {props.isSidebarOpen == true ? (

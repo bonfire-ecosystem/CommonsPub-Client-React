@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { Flex, Text, Box } from 'rebass/styled-components';
-import { Header } from 'ui/modules/Header';
+// import { Header } from 'ui/modules/Header';
 import { FormikHook } from 'ui/@types/types';
 import { LoadMore } from 'ui/modules/Loadmore';
+import styled from 'ui/themes/styled';
+import { ellipsis } from 'polished';
 import {
   Wrapper,
   WrapperCont,
@@ -36,12 +38,11 @@ export interface Props {
   totalUsers: string;
   userLink: string;
   userName: string;
-  loadMoreFormik?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
-  loadMoreActivities?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
-  loadMoreLikes?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
-  loadMoreCommunities?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
-  loadMoreCollections?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
-  loadMoreFollowing?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
+  loadMoreActivities: FormikHook | null;
+  loadMoreLikes: FormikHook | null;
+  loadMoreCommunities: FormikHook | null;
+  loadMoreCollections: FormikHook | null;
+  loadMoreFollowing: FormikHook | null;
 }
 
 export const User: React.FC<Props> = ({
@@ -69,7 +70,7 @@ export const User: React.FC<Props> = ({
         <WrapperCont>
           <Wrapper>
             <Box mb={2}>
-              <Header name={userName} />
+              {/* <Header name={userName} /> */}
               {HeroUserBox}
               <Menu
                 basePath={basePath}
@@ -85,7 +86,7 @@ export const User: React.FC<Props> = ({
                   <LoadMore LoadMoreFormik={loadMoreActivities} />
                 )}
               </Route>
-              <Route exact path={`${basePath}/likes`}>
+              <Route exact path={`${basePath}/starred`}>
                 <List>{LikesBoxes}</List>
                 {loadMoreLikes && <LoadMore LoadMoreFormik={loadMoreLikes} />}
               </Route>
@@ -122,9 +123,11 @@ export const User: React.FC<Props> = ({
               <NavItem fontSize={1}>
                 <Flex>
                   <Link size={20} />{' '}
-                  <Text ml={2} flex={1}>
-                    {userLink}
-                  </Text>
+                  <a href={userLink} target="_blank">
+                    <TextLink ml={2} flex={1}>
+                      {userLink}
+                    </TextLink>
+                  </a>
                 </Flex>
               </NavItem>
             </Nav>
@@ -150,8 +153,8 @@ const Menu = ({
     <NavLink exact to={`${basePath}`}>
       Recent activity
     </NavLink>
-    <NavLink exact to={`${basePath}/likes`}>
-      Likes
+    <NavLink exact to={`${basePath}/starred`}>
+      Starred
     </NavLink>
     <NavLink exact to={`${basePath}/communities`}>
       {totalCommunities} communities
@@ -164,3 +167,11 @@ const Menu = ({
     </NavLink> */}
   </MenuList>
 );
+
+const TextLink = styled(Text)`
+  ${ellipsis('250px')};
+  color: ${props => props.theme.colors.dark};
+  &:hover {
+    text-decoration: underline;
+  }
+`;

@@ -1,22 +1,20 @@
+import * as Sentry from '@sentry/browser';
+import { MngErrorLink } from 'fe/lib/graphql/ctx';
 import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import ReactDOM from 'react-dom';
+import { Slide, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createGlobalStyle } from 'styled-components';
+import media from 'styled-media-query';
 import getApolloClient from './apollo/client';
 import App from './containers/App/App';
 import { ProvideContexts } from './context/global';
-import { integrateSessionApolloRedux } from './integrations/Session-Apollo-Redux';
+import * as K from './mn-constants';
+import { colors, typography } from './mn-constants';
 import createStore from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
 import { createLocalSessionKVStorage } from './util/keyvaluestore/localSessionStorage';
-import { ToastContainer, Slide } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { createDynamicLinkEnv } from './util/apollo/dynamicLink';
-import * as Sentry from '@sentry/browser';
-import * as K from './mn-constants';
-import { typography, colors } from './mn-constants';
-import { MngErrorLink } from 'fe/lib/graphql/ctx';
-import media from 'styled-media-query';
 
 K.SENTRY_KEY &&
   Sentry.init({
@@ -41,20 +39,22 @@ async function run() {
 
       body {
       background: ${colors.app};
-      overflow-y: scroll;
-      overscroll-behavior-y: none;
       .ais-SearchBox {
-        height: 42px;
         border-radius: 4px;
-        border: 1px solid #dadada
+        border: ${colors.border}
+        height: 34px;
+        width: 380px;
+        margin-top: 8px;
+        background: ${colors.app}
         input {
-          height: 40px;
           border: none;
-          background: #fff;
           margin: 0 !important; 
           border-radius: 4px;
           text-indent: 30px;
           padding: 0;
+          height: 32px;
+          background: ${colors.app};
+          font-size: 13px;
         }
       }
       .ais-InstantSearch__root { 
@@ -70,30 +70,29 @@ async function run() {
         `}; 
     }
       
-      
-       
-     
+    input, textarea{
+      &:focus::placeholder{
+        color: transparent;
+      }
+    }
+    
+    input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder { color:transparent; }
+    input:focus:-moz-placeholder, textarea:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+    input:focus::-moz-placeholder, textarea:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+    input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
   `;
   const createLocalKVStore = createLocalSessionKVStorage('local');
   const store = createStore({ createLocalKVStore });
 
-  const dynamicLinkEnv = createDynamicLinkEnv();
-
-  const appLink = dynamicLinkEnv.link.concat(MngErrorLink);
   const apolloClient = await getApolloClient({
     localKVStore: createLocalKVStore('APOLLO#'),
-    appLink,
+    appLinks: [MngErrorLink],
     dispatch: store.dispatch
   });
 
-  integrateSessionApolloRedux(
-    dynamicLinkEnv.srv,
-    store.dispatch,
-    apolloClient.client
-  );
   const ApolloApp = () => (
     <ApolloProvider client={apolloClient.client}>
-      <ProvideContexts store={store} dynamicLinkSrv={dynamicLinkEnv.srv}>
+      <ProvideContexts store={store}>
         <Global />
         <ToastContainer
           hideProgressBar

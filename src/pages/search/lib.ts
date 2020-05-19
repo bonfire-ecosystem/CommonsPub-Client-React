@@ -6,9 +6,9 @@ import {
   useSearchUnfollowMutation,
   SearchHostIndexAndMyFollowingsDocument
 } from './SearchData.generated';
-import { Hit } from './Hits';
 import { useMemo, useCallback } from 'react';
 import Maybe from 'graphql/tsutils/Maybe';
+import { Hit } from 'fe/search/Hits';
 // import { GetSidebarQueryDocument } from 'graphql/getSidebar.generated';
 
 type Q = Maybe<SearchHostIndexAndMyFollowingsQuery>;

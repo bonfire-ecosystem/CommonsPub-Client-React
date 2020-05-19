@@ -17,7 +17,7 @@ import {
 } from 'react-feather';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import { Input, Textarea } from '@rebass/forms';
-import DropzoneArea from '../../../components/elements/DropzoneModal';
+import DropzoneArea from 'ui/modules/DropzoneModal';
 import { ContainerForm, Actions } from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
 // import { useHistory } from 'react-router';

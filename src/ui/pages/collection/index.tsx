@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { Flex } from 'rebass/styled-components';
+import { Flex, Box } from 'rebass/styled-components';
 import { Trans } from '@lingui/react';
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
@@ -11,7 +11,7 @@ import { LoadMore } from 'ui/modules/Loadmore';
 import {
   Wrapper,
   WrapperCont,
-  List,
+  // List,
   MainContainer,
   HomeBox,
   MenuList,
@@ -24,20 +24,20 @@ export interface Props {
   ResourcesBox: JSX.Element;
   HeroCollectionBox: JSX.Element;
   FollowersBoxes: JSX.Element;
-  ShareLinkModalPanel: React.ComponentType<{ done(): any }>;
+  ShareLinkBox: React.ComponentType<{ done(): any }>;
   EditCollectionPanel: React.ComponentType<{ done(): any }>;
   UploadResourcePanel: React.ComponentType<{ done(): any }>;
   basePath: string;
   collectionName: string;
-  loadMoreActivities?: FormikHook;
-  loadMoreResources?: FormikHook;
-  loadMoreFollowers?: FormikHook;
-  isCommunityMember?: boolean; // FIX ME remove ? after added at HOC
+  loadMoreActivities: FormikHook | null;
+  loadMoreResources: FormikHook | null;
+  loadMoreFollowers: FormikHook | null;
+  isCommunityMember: boolean;
 }
 
 export const Collection: React.FC<Props> = ({
   HeroCollectionBox,
-  ShareLinkModalPanel,
+  ShareLinkBox,
   EditCollectionPanel,
   UploadResourcePanel,
   ActivitiesBox,
@@ -53,17 +53,12 @@ export const Collection: React.FC<Props> = ({
   const [isOpenEditCollection, setOpenEditCollection] = React.useState(false);
   const [isShareLinkOpen, setOpenShareLink] = React.useState(false);
   const [isUploadOpen, setUploadOpen] = React.useState(false);
-  isCommunityMember = true; // FIX ME remove after added at HOC
+
   return (
     <MainContainer>
       {isOpenEditCollection && (
         <Modal closeModal={() => setOpenShareLink(false)}>
           <EditCollectionPanel done={() => setOpenEditCollection(false)} />
-        </Modal>
-      )}
-      {isShareLinkOpen && (
-        <Modal closeModal={() => setOpenShareLink(false)}>
-          <ShareLinkModalPanel done={() => setOpenShareLink(false)} />
         </Modal>
       )}
       <HomeBox>
@@ -72,13 +67,15 @@ export const Collection: React.FC<Props> = ({
             <Header name={collectionName} />
             <Switch>
               <Route path={`${basePath}/followers`}>
-                <FollowersMenu basePath={`${basePath}/followers`} />
-                <ObjectsList>{FollowersBoxes}</ObjectsList>
-                {loadMoreFollowers && (
-                  <LoadMore LoadMoreFormik={loadMoreFollowers} />
-                )}
+                <White>
+                  <FollowersMenu basePath={`${basePath}/followers`} />
+                  <ObjectsList>{FollowersBoxes}</ObjectsList>
+                  {loadMoreFollowers && (
+                    <LoadMore LoadMoreFormik={loadMoreFollowers} />
+                  )}
+                </White>
               </Route>
-              <Route exact path={`${basePath}/resources`}>
+              <Route exact path={`${basePath}/`}>
                 <>
                   {HeroCollectionBox}
                   <Menu basePath={basePath} />
@@ -99,7 +96,10 @@ export const Collection: React.FC<Props> = ({
                       </Button>
                     </WrapButton>
                   ) : null}
-
+                  {isShareLinkOpen && (
+                    // <h1>jhhhh</h1>
+                    <ShareLinkBox done={() => setOpenShareLink(false)} />
+                  )}
                   {isUploadOpen && (
                     <UploadResourcePanel done={() => setUploadOpen(false)} />
                   )}
@@ -109,7 +109,7 @@ export const Collection: React.FC<Props> = ({
                   )}
                 </>
               </Route>
-              <Route exact path={`${basePath}/`}>
+              {/* <Route exact path={`${basePath}/`}>
                 <>
                   {HeroCollectionBox}
                   <Menu basePath={basePath} />
@@ -118,7 +118,7 @@ export const Collection: React.FC<Props> = ({
                     <LoadMore LoadMoreFormik={loadMoreActivities} />
                   )}
                 </>
-              </Route>
+              </Route> */}
             </Switch>
           </Wrapper>
         </WrapperCont>
@@ -128,6 +128,10 @@ export const Collection: React.FC<Props> = ({
   );
 };
 export default Collection;
+
+const White = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+`;
 
 const FollowersMenu = ({ basePath }: { basePath: string }) => (
   <MenuList m={2} p={2} pt={0}>
@@ -139,10 +143,10 @@ const FollowersMenu = ({ basePath }: { basePath: string }) => (
 
 const Menu = ({ basePath }: { basePath: string }) => (
   <MenuList p={3} pt={3}>
-    <NavLink exact to={`${basePath}`}>
+    {/* <NavLink exact to={`${basePath}`}>
       Recent activity
-    </NavLink>
-    <NavLink exact to={`${basePath}/resources`}>
+    </NavLink> */}
+    <NavLink exact to={`${basePath}/`}>
       <Trans>Resources</Trans>
     </NavLink>
   </MenuList>
