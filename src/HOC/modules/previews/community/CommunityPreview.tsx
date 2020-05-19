@@ -13,7 +13,7 @@ export interface Props {
 }
 
 export const CommunityPreviewHOC: FC<Props> = ({ communityId, flagged }) => {
-  const { community, toggleJoin } = useCommunityPreview(communityId);
+  const { community, toggleJoin, isCreator } = useCommunityPreview(communityId);
 
   const toggleJoinFormik = useFormik({
     initialValues: {},
@@ -40,6 +40,7 @@ export const CommunityPreviewHOC: FC<Props> = ({ communityId, flagged }) => {
     const props: CommunityPreviewProps = {
       icon: icon?.url || '',
       name,
+      isCreator,
       summary: summary || '',
       collectionsCount: collectionCount || 0,
       joined: !!myFollow,

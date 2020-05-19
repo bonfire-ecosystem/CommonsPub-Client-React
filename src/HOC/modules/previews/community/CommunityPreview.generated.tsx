@@ -5,10 +5,7 @@ import gql from 'graphql-tag';
 export type CommunityPreviewFragment = (
   { __typename: 'Community' }
   & Pick<Types.Community, 'id' | 'summary' | 'collectionCount' | 'followerCount'>
-  & { icon: Types.Maybe<(
-    { __typename: 'Content' }
-    & Pick<Types.Content, 'id' | 'url'>
-  )>, myFlag: Types.Maybe<(
+  & { myFlag: Types.Maybe<(
     { __typename: 'Flag' }
     & Pick<Types.Flag, 'id'>
   )>, threads: Types.Maybe<(
@@ -20,8 +17,11 @@ export type CommunityPreviewFragment = (
 
 export type CommunityInfoFragment = (
   { __typename: 'Community' }
-  & Pick<Types.Community, 'id' | 'name' | 'isLocal' | 'canonicalUrl' | 'displayUsername'>
-  & { icon: Types.Maybe<(
+  & Pick<Types.Community, 'id' | 'name' | 'isLocal' | 'canonicalUrl' | 'displayUsername' | 'preferredUsername'>
+  & { creator: Types.Maybe<(
+    { __typename: 'User' }
+    & Pick<Types.User, 'id'>
+  )>, icon: Types.Maybe<(
     { __typename: 'Content' }
     & Pick<Types.Content, 'id' | 'url'>
   )>, myFollow: Types.Maybe<(
@@ -34,6 +34,9 @@ export const CommunityInfoFragmentDoc = gql`
     fragment CommunityInfo on Community {
   id
   name
+  creator {
+    id
+  }
   icon {
     id
     url
@@ -44,16 +47,13 @@ export const CommunityInfoFragmentDoc = gql`
   }
   canonicalUrl
   displayUsername
+  preferredUsername
 }
     `;
 export const CommunityPreviewFragmentDoc = gql`
     fragment CommunityPreview on Community {
   ...CommunityInfo
   id
-  icon {
-    id
-    url
-  }
   summary
   myFlag {
     id

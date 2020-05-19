@@ -24,7 +24,7 @@ export interface Props {
   ActivitiesBox: JSX.Element;
   CommunitiesBoxes: JSX.Element;
   CollectionsBoxes: JSX.Element;
-  LoadMoreFormik?: FormikHook;
+  LoadMoreFormik: FormikHook | null;
 }
 export const Discover: React.FC<Props> = ({
   basePath,

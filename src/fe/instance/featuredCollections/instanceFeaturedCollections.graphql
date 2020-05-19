@@ -1,6 +1,8 @@
-query instanceFeaturedCollections {
-  instance @connection(key: "instanceFeaturedCollections"){
-    featuredCollections{
+# query instanceFeaturedCollections($limit:Int, $before:[Cursor!], $after:[Cursor!]){
+query instanceFeaturedCollections{
+  instance {
+    # featuredCollections (limit:$limit, before:$before, after:$after) @connection(key: "instanceFeaturedCollections"){
+    featuredCollections @connection(key: "instanceFeaturedCollections"){
       totalCount,
       pageInfo{ ...FullPageInfo }
       edges{

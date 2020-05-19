@@ -23,8 +23,8 @@ export interface Props {
     external: boolean;
   };
   displayUsername: string;
-  hideActions?: boolean;
-  isCreator?: boolean;
+  hideActions: boolean;
+  isCreator: boolean;
   // followers: string[]
 }
 
