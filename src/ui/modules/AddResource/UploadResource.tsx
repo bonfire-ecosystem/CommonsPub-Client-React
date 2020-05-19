@@ -15,7 +15,7 @@ import {
 } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
 // import { clearFix } from 'polished';
-import DropzoneArea from 'ui/modules/DropzoneModal';
+import DropzoneArea from '../../../components/elements/DropzoneModal';
 import { LocaleContext } from '../../../context/global/localizationCtx';
 
 // these icons must match the types and order of the `accepted_license_types` configured in constants.tsx

@@ -108,7 +108,8 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11'
+    createdAt: '2018-11-11',
+    link: 'https://picsum.photos/80/80'
   };
 
   const activityCollectionPreviewProps: ActivityLoaded = {
@@ -178,7 +179,8 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11'
+    createdAt: '2018-11-11',
+    link: 'https://picsum.photos/80/80'
   };
 
   const activityResourcePreviewProps: ActivityLoaded = {
@@ -259,7 +261,8 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11'
+    createdAt: '2018-11-11',
+    link: 'https://picsum.photos/80/80'
   };
 
   const activityUserPreviewProps: ActivityLoaded = {
@@ -326,7 +329,8 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11'
+    createdAt: '2018-11-11',
+    link: 'https://picsum.photos/80/80'
   };
 
   const ActivitiesBox = (

@@ -7,7 +7,7 @@ import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 import ConfirmationModal from 'ui/modules/ConfirmationModal';
 import Modal, { Actions, ContainerForm, Row } from 'ui/modules/Modal';
-// import DropzoneArea from 'ui/modules/DropzoneModal';
+// import DropzoneArea from '../../../components/elements/DropzoneModal';
 import styled from 'ui/themes/styled';
 import { LocaleContext } from 'context/global/localizationCtx';
 import { LoadMore } from 'ui/modules/Loadmore';
@@ -22,7 +22,7 @@ export interface Props {
   formikAddDomain: FormikHook<WithDomain>;
   formikRemoveDomain: FormikHook<WithDomain>;
   domainsList: string[];
-  loadMoreDomains: FormikHook | null;
+  loadMoreDomains?: FormikHook; // FIX ME after add LoadMoreFormik
 }
 
 export interface WithDomain {
@@ -126,7 +126,7 @@ const Instance: React.FC<Props> = ({
       {formikRemoveDomain.values.domain && (
         <Modal closeModal={() => formikRemoveDomain.setValues({ domain: '' })}>
           <ConfirmationModal
-            done={() => formikRemoveDomain.setValues({ domain: '' })}
+            cancel={() => formikRemoveDomain.setValues({ domain: '' })}
             formik={formikRemoveDomain}
             modalAction={i18n._(`Delete domain from allowlist`)}
             modalDescription={i18n._(

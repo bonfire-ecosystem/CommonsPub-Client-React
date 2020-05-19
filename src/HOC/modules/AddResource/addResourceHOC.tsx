@@ -46,22 +46,22 @@ export const AddResourceHOC: FC<AddResourceHOC> = ({
     initialValues,
     enableReinitialize: true,
     onSubmit: vals => {
-      const { resource: resourceFile, icon, name, license, summary } = vals;
-      if (!resourceFile) {
+      const { resource: resFile } = vals;
+      if (!resFile) {
         return;
       }
 
       const resource: ResourceInput = {
-        name,
-        summary,
-        license
+        name: vals.name,
+        summary: vals.summary,
+        license: vals.license
       };
 
       return create({
         collectionId,
         resource,
-        content: resourceFile,
-        icon
+        content: resFile,
+        icon: vals.icon
       }).then(done);
     }
   });

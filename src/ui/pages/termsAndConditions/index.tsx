@@ -1,10 +1,6 @@
 import useAxios from 'axios-hooks';
 import Markdown from 'markdown-to-jsx';
-import {
-  terms_markdown_text,
-  terms_markdown_urls,
-  terms_privacy
-} from 'mn-constants';
+import { terms_markdown_text, terms_markdown_urls } from 'mn-constants';
 import * as React from 'react';
 import { Eye } from 'react-feather';
 import { Box, Flex, Text } from 'rebass/styled-components';
@@ -17,7 +13,6 @@ export interface Props {}
 
 const TermsAndConditionsPage: React.FC<Props> = ({}) => {
   var terms_users_text = { data: terms_markdown_text.terms_users };
-  var terms_privacy_text = { data: terms_privacy.text_markdown };
   var terms_cookies_text = { data: terms_markdown_text.terms_cookies };
   var terms_indexing_text = { data: terms_markdown_text.terms_indexing };
 
@@ -25,17 +20,10 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
     var [terms_users] = useAxios(terms_markdown_urls.terms_users, {
       useCache: true
     });
-
     var [terms_cookies] = useAxios(terms_markdown_urls.terms_cookies, {
       useCache: true
     });
     var [terms_indexing] = useAxios(terms_markdown_urls.terms_indexing, {
-      useCache: true
-    });
-  }
-
-  if (terms_privacy.enabled) {
-    var [privacy_url_text] = useAxios(terms_privacy.url_markdown, {
       useCache: true
     });
   }
@@ -46,38 +34,37 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
         <LogoContainer />
         <Flex mt={2}>
           <Right>
-            <Aware green mb={3} mt={3} p={3}>
-              <Box mr={2}>
-                <Eye size="20" color="white" />
-              </Box>
-              <Text variant="suptitle">
-                {' '}
-                Please read the following. By using this instance of MoodleNet
-                you are consenting to these agreements.
-              </Text>
-            </Aware>
-            <Panel className="extra">
-              <Box p={3}>
-                <Markdown>{terms_users.data || terms_users_text.data}</Markdown>
-              </Box>
-              <Box p={3}>
-                {terms_privacy.enabled ? (
-                  <Markdown>
-                    {privacy_url_text.data || terms_privacy_text.data}
-                  </Markdown>
-                ) : null}
-              </Box>
-              <Box p={3}>
-                <Markdown>
-                  {terms_cookies.data || terms_cookies_text.data}
-                </Markdown>
-              </Box>
-              <Box p={3}>
-                <Markdown>
-                  {terms_indexing.data || terms_indexing_text.data}
-                </Markdown>
-              </Box>
-            </Panel>
+            {terms_markdown_urls.enabled && (
+              <>
+                <Aware green mb={3} mt={3} p={3}>
+                  <Box mr={2}>
+                    <Eye size="20" color="white" />
+                  </Box>
+                  <Text variant="suptitle">
+                    {' '}
+                    Please read the following. By signing up your are consenting
+                    to these agreements.
+                  </Text>
+                </Aware>
+                <Panel className="extra">
+                  <Box p={3}>
+                    <Markdown>
+                      {terms_users.data || terms_users_text.data}
+                    </Markdown>
+                  </Box>
+                  <Box p={3}>
+                    <Markdown>
+                      {terms_cookies.data || terms_cookies_text.data}
+                    </Markdown>
+                  </Box>
+                  <Box p={3}>
+                    <Markdown>
+                      {terms_indexing.data || terms_indexing_text.data}
+                    </Markdown>
+                  </Box>
+                </Panel>
+              </>
+            )}
           </Right>
         </Flex>
       </LoginWrapper>

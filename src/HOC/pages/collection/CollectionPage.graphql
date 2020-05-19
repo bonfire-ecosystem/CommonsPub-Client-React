@@ -16,4 +16,3 @@ fragment CollectionPageActivity on Activity {
   id
   ...ActivityPreview
 }
-

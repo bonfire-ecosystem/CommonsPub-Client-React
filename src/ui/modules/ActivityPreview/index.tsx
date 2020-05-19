@@ -23,6 +23,7 @@ export interface ActivityLoading {
 export interface Activity {
   createdAt: string;
   actor: Actor | null;
+  link: string;
   event: string;
   preview: JSX.Element;
   communityLink: string;
