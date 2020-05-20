@@ -868,7 +868,7 @@ export type RootMutationTypeConfirmEmailArgs = {
 export type RootMutationTypeUpdateProfileArgs = {
   icon?: Maybe<UploadInput>,
   image?: Maybe<UploadInput>,
-  user: RegistrationInput
+  profile: UpdateProfileInput
 };
 
 
@@ -915,7 +915,7 @@ export type RootMutationTypeCreateUserArgs = {
 
 export type RootMutationTypeCopyResourceArgs = {
   collectionId: Scalars['String'],
-  icon?: Maybe<UploadInput>
+  resourceId: Scalars['String']
 };
 
 
@@ -1327,7 +1327,7 @@ export type UserLikersArgs = {
 
 
 /** User profile information */
-export type UserCommentsArgs = {
+export type UserCommunityFollowsArgs = {
   after?: Maybe<Array<Scalars['Cursor']>>,
   before?: Maybe<Array<Scalars['Cursor']>>,
   limit?: Maybe<Scalars['Int']>

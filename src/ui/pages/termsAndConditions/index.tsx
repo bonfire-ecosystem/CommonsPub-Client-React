@@ -12,7 +12,7 @@ import media from 'styled-media-query';
 import { Panel } from 'ui/elements/Panel';
 import styled from '../../themes/styled';
 import LogoContainer from 'ui/elements/Logo';
-import APP_NAME from 'mn-constants'
+import { APP_NAME } from 'mn-constants';
 
 export interface Props {}
 
