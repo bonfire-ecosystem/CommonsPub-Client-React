@@ -1,8 +1,6 @@
-# query instanceFeaturedCommunities ($limit:Int, $before:[Cursor!], $after:[Cursor!]){
 query instanceFeaturedCommunities {
-  instance {
-    # featuredCommunities (limit:$limit, before:$before, after:$after) @connection(key: "instanceFeaturedCommunities"){
-    featuredCommunities @connection(key: "instanceFeaturedCommunities"){
+  instance @connection(key: "instanceFeaturedCommunities"){
+    featuredCommunities{
       totalCount,
       pageInfo{ ...FullPageInfo }
       edges{

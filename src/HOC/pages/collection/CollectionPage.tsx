@@ -1,3 +1,4 @@
+import ShareLinkModal from 'components/elements/CollectionModal';
 import { useCollectionOutboxActivities } from 'fe/activities/outbox/collection/useCollectionOutboxActivities';
 import { useCollection } from 'fe/collection/useCollection';
 import { useFormikPage } from 'fe/lib/helpers/usePage';
@@ -10,7 +11,6 @@ import { HeroCollection } from 'HOC/modules/HeroCollection/HeroCollection';
 import { ActivityPreviewHOC } from 'HOC/modules/previews/activity/ActivityPreview';
 import { ResourcePreviewHOC } from 'HOC/modules/previews/resource/ResourcePreview';
 import { UserPreviewHOC } from 'HOC/modules/previews/user/UserPreview';
-import { ShareLinkHOC } from 'HOC/modules/ShareLink/shareLinkHOC';
 import React, { FC, useMemo } from 'react';
 import { Box } from 'rebass';
 import CollectionPageUI, {
@@ -19,8 +19,7 @@ import CollectionPageUI, {
 
 export enum CollectionPageTab {
   Activities,
-  Resources,
-  Followers
+  Resources
 }
 export interface CollectionPage {
   collectionId: Collection['id'];
@@ -29,8 +28,7 @@ export interface CollectionPage {
 }
 
 export const CollectionPage: FC<CollectionPage> = props => {
-  const { collectionId, basePath /*,tab */ } = props;
-  const { collection, isCommunityMember } = useCollection(props.collectionId);
+  const { collection } = useCollection(props.collectionId);
   const { collectionFollowersPage } = useCollectionFollowers(
     props.collectionId
   );
@@ -46,6 +44,8 @@ export const CollectionPage: FC<CollectionPage> = props => {
     if (!collection) {
       return null;
     }
+    const { collectionId, basePath /* ,
+      tab */ } = props;
 
     const HeroCollectionBox = (
       <HeroCollection basePath={basePath} collectionId={collectionId} />
@@ -86,13 +86,22 @@ export const CollectionPage: FC<CollectionPage> = props => {
       </>
     );
 
-    const ShareLinkBox: CollectionPageProps['ShareLinkBox'] = ({ done }) => (
-      <ShareLinkHOC collectionId={collectionId} done={done} />
-    );
+    const ShareLinkModalPanel: CollectionPageProps['ShareLinkModalPanel'] = ({
+      done
+    }) => {
+      return (
+        <ShareLinkModal
+          toggleModal={done}
+          modalIsOpen={true}
+          collectionId={collectionId}
+          collectionExternalId={collectionId}
+        />
+      );
+    };
 
     const uiProps: CollectionPageProps = {
       ActivitiesBox,
-      ShareLinkBox,
+      ShareLinkModalPanel,
       HeroCollectionBox,
       ResourcesBox,
       EditCollectionPanel,
@@ -102,8 +111,7 @@ export const CollectionPage: FC<CollectionPage> = props => {
       collectionName: collection.name,
       loadMoreFollowers,
       loadMoreResources,
-      loadMoreActivities,
-      isCommunityMember
+      loadMoreActivities
     };
     return uiProps;
   }, [
@@ -113,9 +121,7 @@ export const CollectionPage: FC<CollectionPage> = props => {
     collectionFollowersPage,
     loadMoreFollowers,
     loadMoreResources,
-    loadMoreActivities,
-    isCommunityMember,
-    collection
+    loadMoreActivities
   ]);
   return collectionPageProps && <CollectionPageUI {...collectionPageProps} />;
 };

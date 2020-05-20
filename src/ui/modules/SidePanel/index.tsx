@@ -21,22 +21,22 @@ export const SidePanel: React.FC<Props> = props => {
             Popular hashtags
           </PanelTitle>
           <Nav>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               #pedagogy
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               #transition
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               #english
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               #template
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               #assessment
             </NavItem>
-            <NavItem fontSize={0}>
+            <NavItem fontSize={1}>
               <ComingSoon variant="text">
                 ✨<Trans>This feature is coming soon!</Trans>✨
               </ComingSoon>
@@ -48,19 +48,19 @@ export const SidePanel: React.FC<Props> = props => {
             Popular categories
           </PanelTitle>
           <Nav>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               Humanities
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               Behavioural science
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               English
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               Romana
             </NavItem>
-            <NavItem mb={3} fontSize={0}>
+            <NavItem mb={3} fontSize={1}>
               Postgraduate
             </NavItem>
             <ComingSoon variant="text">

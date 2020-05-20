@@ -41,7 +41,7 @@ yarn.lock
 !.env.example
 !.env.secrets.example
 src/fragmentTypes.json
-src/mn-constants.tsx
+
 
 # sentry
 sentry.tsx

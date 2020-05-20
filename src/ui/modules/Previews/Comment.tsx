@@ -25,7 +25,7 @@ export interface ReplyActions {
 export interface CommentProps {
   FlagModal: null | React.ComponentType<{ done(): unknown }>;
   like: LikeActions;
-  reply: ReplyActions | null;
+  reply: ReplyActions;
   content: string;
   url: string;
   isFlagged: boolean;
@@ -114,7 +114,7 @@ export const Comment: React.SFC<CommentProps> = ({
                   sx={{ textTransform: 'capitalize' }}
                   ml={1}
                 >
-                  {like.totalLikes + ' '} <Trans>Star</Trans>
+                  {like.totalLikes + ' '} <Trans>Favourite</Trans>
                 </ActionText>
               </ActionItem>
               <ActionItem
@@ -190,7 +190,7 @@ const Items = styled(Flex)`
 `;
 
 const Actions = styled(Box)`
-  // border-top: ${props => props.theme.colors.border};
+  border-top: ${props => props.theme.colors.border};
   margin-top: 16px;
   position: relative;
   z-index: 999999999999999999999999999999999999;

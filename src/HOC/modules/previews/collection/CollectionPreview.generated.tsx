@@ -7,7 +7,7 @@ import { CommunityInfoFragmentDoc } from '../community/CommunityPreview.generate
 
 export type CollectionPreviewFragment = (
   { __typename: 'Collection' }
-  & Pick<Types.Collection, 'id' | 'isLocal' | 'canonicalUrl' | 'name' | 'summary' | 'resourceCount' | 'displayUsername' | 'preferredUsername'>
+  & Pick<Types.Collection, 'id' | 'isLocal' | 'canonicalUrl' | 'name' | 'summary' | 'resourceCount' | 'displayUsername'>
   & { icon: Types.Maybe<(
     { __typename: 'Content' }
     & Pick<Types.Content, 'id' | 'url'>
@@ -43,7 +43,6 @@ export const CollectionPreviewFragmentDoc = gql`
   myFollow {
     id
   }
-  preferredUsername
   community {
     id
     ...CommunityInfo

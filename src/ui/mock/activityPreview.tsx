@@ -77,6 +77,7 @@ export function activityPreviewProps(event, preview): Props {
     preview: preview,
     status: Status.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11'
+    createdAt: '2018-11-11',
+    link: 'https://picsum.photos/80/80'
   };
 }

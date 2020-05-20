@@ -3,7 +3,8 @@ import Markdown from 'markdown-to-jsx';
 import {
   terms_markdown_text,
   terms_markdown_urls,
-  terms_privacy
+  terms_privacy,
+  APP_NAME
 } from 'mn-constants';
 import * as React from 'react';
 import { Eye } from 'react-feather';
@@ -18,7 +19,6 @@ export interface Props {}
 
 const TermsAndConditionsPage: React.FC<Props> = ({}) => {
   var terms_users_text = { data: terms_markdown_text.terms_users };
-  var terms_privacy_text = { data: terms_privacy.text_markdown };
   var terms_cookies_text = { data: terms_markdown_text.terms_cookies };
   var terms_indexing_text = { data: terms_markdown_text.terms_indexing };
 
@@ -26,17 +26,10 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
     var [terms_users] = useAxios(terms_markdown_urls.terms_users, {
       useCache: true
     });
-
     var [terms_cookies] = useAxios(terms_markdown_urls.terms_cookies, {
       useCache: true
     });
     var [terms_indexing] = useAxios(terms_markdown_urls.terms_indexing, {
-      useCache: true
-    });
-  }
-
-  if (terms_privacy.enabled) {
-    var [privacy_url_text] = useAxios(terms_privacy.url_markdown, {
       useCache: true
     });
   }

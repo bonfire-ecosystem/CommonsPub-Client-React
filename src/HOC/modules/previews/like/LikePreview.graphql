@@ -1,7 +1,5 @@
 fragment LikePreview on Like{
   id
-  createdAt
-  
   context{
     ...on Community {
       ...CommunityPreview

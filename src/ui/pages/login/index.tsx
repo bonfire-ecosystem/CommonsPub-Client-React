@@ -4,6 +4,7 @@ import * as React from 'react';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import { Link } from 'react-router-dom';
+// import SignupModal from '../../components/elements/SignupModal';
 import styled from 'ui/themes/styled';
 import { Box, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';

@@ -40,7 +40,7 @@ export const Thread: React.SFC<CommentProps> = ({
             </Meta>
             <Spacer mx={1}>·</Spacer>
             <Meta>
-              {totalLikes || 0} <Trans>Stars</Trans>
+              {totalLikes || 0} <Trans>Likes</Trans>
             </Meta>
           </Flex>
           <Flex>
