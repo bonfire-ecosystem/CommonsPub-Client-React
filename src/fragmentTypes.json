@@ -3,37 +3,6 @@
     "types": [
       {
         "kind": "UNION",
-        "name": "FlagContext",
-        "possibleTypes": [
-          { "name": "Collection" },
-          { "name": "Comment" },
-          { "name": "Community" },
-          { "name": "Resource" },
-          { "name": "User" }
-        ]
-      },
-      {
-        "kind": "UNION",
-        "name": "EventOrCommitment",
-        "possibleTypes": [{ "name": "Commitment" }, { "name": "EconomicEvent" }]
-      },
-      {
-        "kind": "UNION",
-        "name": "ThreadContext",
-        "possibleTypes": [
-          { "name": "Collection" },
-          { "name": "Community" },
-          { "name": "Flag" },
-          { "name": "Resource" }
-        ]
-      },
-      {
-        "kind": "INTERFACE",
-        "name": "Agent",
-        "possibleTypes": [{ "name": "Organization" }, { "name": "Person" }]
-      },
-      {
-        "kind": "UNION",
         "name": "ActivityContext",
         "possibleTypes": [
           { "name": "Collection" },
@@ -48,13 +17,12 @@
       },
       {
         "kind": "UNION",
-        "name": "LikeContext",
+        "name": "ThreadContext",
         "possibleTypes": [
           { "name": "Collection" },
-          { "name": "Comment" },
           { "name": "Community" },
-          { "name": "Resource" },
-          { "name": "User" }
+          { "name": "Flag" },
+          { "name": "Resource" }
         ]
       },
       {
@@ -85,20 +53,21 @@
       },
       {
         "kind": "UNION",
-        "name": "GeoScope",
+        "name": "FlagContext",
         "possibleTypes": [
           { "name": "Collection" },
           { "name": "Community" },
-          { "name": "Organisation" }
+          { "name": "Resource" },
+          { "name": "User" }
         ]
       },
       {
         "kind": "UNION",
-        "name": "FollowContext",
+        "name": "LikeContext",
         "possibleTypes": [
           { "name": "Collection" },
           { "name": "Community" },
-          { "name": "Thread" },
+          { "name": "Resource" },
           { "name": "User" }
         ]
       },
