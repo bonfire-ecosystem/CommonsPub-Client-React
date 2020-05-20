@@ -3,7 +3,6 @@ import Instance, { Props } from 'ui/pages/settings/instance';
 import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registration/allowlist/instanceRegistrationAllowLists';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useFormikPage } from 'fe/lib/helpers/usePage';
 
 export const withEmailDomainValidation = Yup.object().shape({
   domain: Yup.string().matches(
@@ -19,7 +18,6 @@ export const InstanceSettingsSection: FC<InstanceSettingsSection> = () => {
     addEmailDomain,
     listEmailDomainsPage
   } = useInstanceRegistrationAllowLists();
-  const [loadMoreDomains] = useFormikPage(listEmailDomainsPage);
   const formikAddDomain = useFormik<{ domain: string }>({
     initialValues: { domain: '' },
     validationSchema: withEmailDomainValidation,
@@ -30,11 +28,10 @@ export const InstanceSettingsSection: FC<InstanceSettingsSection> = () => {
   const formikRemoveDomain = useFormik<{ domain: string }>({
     initialValues: { domain: '' },
     validationSchema: withEmailDomainValidation,
-    onSubmit: async ({ domain }) => {
+    onSubmit: ({ domain }) => {
       const domainId = listEmailDomainsPage.edges.find(_ => domain === _.domain)
         ?.id;
-      await (domainId ? removeEmailDomain(domainId) : undefined);
-      formikRemoveDomain.setValues({ domain: '' });
+      return domainId ? removeEmailDomain(domainId) : undefined;
     }
   });
 
@@ -47,8 +44,7 @@ export const InstanceSettingsSection: FC<InstanceSettingsSection> = () => {
     return {
       formikAddDomain,
       formikRemoveDomain,
-      domainsList,
-      loadMoreDomains
+      domainsList
     };
   }, [formikAddDomain, formikRemoveDomain, domainsList]);
   return <Instance {...props} />;

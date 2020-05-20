@@ -10,24 +10,28 @@ import Maybe from 'graphql/tsutils/Maybe';
 
 export interface LMSPrefsPanel {
   done(): unknown;
-  sendToLMS(_: LMSPrefs, updatePrefs: boolean): void | Promise<unknown>;
+  updateLMSPrefsAndSend(_: LMSPrefs): unknown;
   lmsParams: Maybe<LMSPrefs>;
+  resourceurl?: string;
 }
 const validationSchema = Yup.object<BasicMoodleLMSConfigFormValues>({
-  site: Yup.string()
-    .url()
-    .required()
+  site: Yup.string().url()
 });
 export const LMSPrefsPanel: FC<LMSPrefsPanel> = ({
   done,
   lmsParams,
-  sendToLMS
+  updateLMSPrefsAndSend
 }) => {
   const sendToMoodleFormik = useFormik<BasicMoodleLMSConfigFormValues>({
     initialValues: lmsParams || { site: '' },
     enableReinitialize: true,
     validationSchema,
-    onSubmit: LMSPrefs => sendToLMS(LMSPrefs, sendToMoodleFormik.dirty)
+    onSubmit: async LMSPrefs => {
+      if (sendToMoodleFormik.dirty) {
+        updateLMSPrefsAndSend(LMSPrefs);
+      }
+      done();
+    }
   });
   const cancel = useCallback(() => done(), [done]);
   return (

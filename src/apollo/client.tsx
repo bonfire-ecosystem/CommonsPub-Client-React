@@ -22,8 +22,8 @@ import {
 } from 'fe/session/anon.generated';
 import { MeLogoutMutationName } from 'fe/session/me.generated';
 import { GraphQLError } from 'graphql';
-import HttpStatus from 'http-status-codes';
 import { Socket as PhoenixSocket } from 'phoenix';
+import { logout } from 'redux/session';
 import { RootMutationType, RootQueryType } from '../graphql/types.generated';
 import {
   GRAPHQL_ENDPOINT,
@@ -42,7 +42,7 @@ export type OperationName = QueryName | MutationName;
 // const { meQuery } = require('../../../graphql/me.graphql');
 interface Cfg {
   localKVStore: KVStore;
-  appLinks: ApolloLink[];
+  appLink: ApolloLink;
   dispatch(payload: any);
 }
 
@@ -50,7 +50,7 @@ const AUTH_TOKEN_KEY = 'AUTH_TOKEN';
 
 export default async function initialise({
   localKVStore,
-  appLinks,
+  appLink,
   dispatch
 }: Cfg) {
   let authToken = localKVStore.get(AUTH_TOKEN_KEY);
@@ -104,6 +104,7 @@ export default async function initialise({
   const delToken = () => {
     authToken = undefined;
     localKVStore.del(AUTH_TOKEN_KEY);
+    dispatch(logout.create());
   };
 
   const setTokenLink = new ApolloLink((operation, nextLink) => {
@@ -120,8 +121,8 @@ export default async function initialise({
         operationName === AnonConfirmEmailMutationName
       ) {
         setToken(
-          resp.data?.createSession?.token ||
-            resp.data?.confirmEmail?.token ||
+          resp?.data?.createSession?.token ||
+            resp?.data?.confirmEmail?.token ||
             resp.data?.resetPassword?.token
         );
       }
@@ -146,19 +147,23 @@ export default async function initialise({
 
   const errorLink = onError(errorResponse => {
     const { operation, response, graphQLErrors, networkError } = errorResponse;
-    console.error(`errorLink on operation`, errorResponse);
+    console.error(`errorLink on operation`, {
+      operation,
+      response,
+      graphQLErrors,
+      networkError
+    });
 
     if (networkError) {
-      // NETWORK ERROR
       const message =
         'statusCode' in networkError
           ? HttpStatus.getStatusText(networkError.statusCode)
           : networkError.message;
+
       return Observable.of<FetchResult>({
         errors: [new GraphQLError(`network error:${message}`)]
       });
     } else if (graphQLErrors) {
-      // GRAPHQL ERROR
       const unexpectedError = graphQLErrors.find(
         err =>
           /Failed to fetch/gi.test(err.message) ||
@@ -171,13 +176,11 @@ export default async function initialise({
           : graphQLErrors
       });
     } else if (response?.errors) {
-      // RESPONSE ERROR
       return Observable.of<FetchResult>({
         data: response.data,
         errors: response.errors
       });
     } else {
-      // UNKNOWN ERROR
       const respStr = JSON.stringify(response, null, 2);
       const message = `unknown error:\noperation:${operation}\nresponse:${respStr}`;
       return Observable.of<FetchResult>({
@@ -230,7 +233,7 @@ export default async function initialise({
   const httpLink = ApolloLink.from(
     [
       IS_DEV ? apolloLogger : null,
-      ...appLinks,
+      appLink,
       alertBlockMutationsForAnonymousLink,
       errorLink,
       authLink,

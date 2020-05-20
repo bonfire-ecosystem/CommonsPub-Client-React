@@ -1,0 +1,13 @@
+#import "./fragments/basicCommunity.graphql"
+
+input CommunityInput {
+    name: String!
+    summary: String
+    preferredUsername: String!
+}
+
+mutation createCommunityMutation($community: CommunityInput!) {
+    createCommunity(community: $community) {
+        ...BasicCommunity
+    }
+}

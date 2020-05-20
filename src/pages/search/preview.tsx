@@ -13,19 +13,19 @@
 
 import * as React from 'react';
 
-import styled from 'ui/themes/styled';
+import styled from '../../themes/styled';
 import { Heading, Box, Flex, Text, Button } from 'rebass/styled-components';
 // import { NavLink } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import Avatar from 'ui/elements/Avatar';
-import { Hit } from '../../fe/search/Hits';
+import { Hit } from './Hits';
 import { useHit } from './lib';
 import { SearchHostIndexAndMyFollowingsQuery } from './SearchData.generated';
-import { useLMSHit } from 'fe/lib/moodleLMS/useSendToMoodle';
+import { useLMS } from 'fe/lib/moodleLMS/useSendToMoodle';
 import Modal from 'ui/modules/Modal';
 import Maybe from 'graphql/tsutils/Maybe';
 
-// const PlaceholderImg = require('../../components/elements/Icons/resourcePlaceholder.png');
+const PlaceholderImg = require('../../components/elements/Icons/resourcePlaceholder.png');
 
 interface Props {
   hit: Hit;
@@ -34,21 +34,21 @@ interface Props {
 
 const Resource: React.FC<Props> = ({ hit, myInfo }) => {
   const props = {
-    icon: hit.icon,
+    icon: hit.icon || hit.image,
     title: hit.name,
     summary: hit.summary,
-    url: hit.canonicalUrl || '',
+    url: hit.url || hit.canonicalUrl || '',
     type: hit.index_type
   };
   const hitCtl = useHit(myInfo, hit);
-  const { LMSPrefsPanel } = useLMSHit(
-    hit.index_type === 'Resource' ? hit : null
+  const { LMSPrefsPanel } = useLMS(
+    hit.index_type === 'Resource' && hit.url ? hit.url : null
   );
   const [isOpenMoodleModal, setOpenMoodleModal] = React.useState(false);
   return (
     <Wrapper p={3}>
       <WrapperLink target="blank" href={props.url}>
-        <Avatar size="m" src={props.icon} />
+        <Avatar size="m" src={props.icon || PlaceholderImg} />
         <Infos ml={3}>
           <Title>
             {props.title.length > 80

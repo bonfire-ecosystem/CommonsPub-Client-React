@@ -19,8 +19,6 @@ const CollectionPageRouter: FC<RouteComponentProps<CollectionPageRouter>> = ({
   const tab =
     maybeTabStr === 'resources'
       ? CollectionPageTab.Resources
-      : maybeTabStr === 'followers'
-      ? CollectionPageTab.Followers
       : !maybeTabStr
       ? CollectionPageTab.Activities
       : null;

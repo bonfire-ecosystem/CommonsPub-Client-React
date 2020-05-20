@@ -9,8 +9,9 @@ fragment HeroCollectionData on Collection  {
     community {
         id
         name
-        icon{ id, url }
-        myFollow{id}
+        icon{
+ id, url }
+
     }
     followerCount
     followers {

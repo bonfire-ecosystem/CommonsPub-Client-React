@@ -13,7 +13,7 @@ import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 export interface AddResource {
   collectionId: Collection['id'];
   resource: ResourceInput;
-  content: File | string;
+  content: File;
   icon: Maybe<File | string>;
 }
 export const useAddResource = () => {

@@ -11,7 +11,7 @@ export interface Props {
 export const ActivityPreviewHOC: FC<Props> = ({ activityId }) => {
   const activityBox = useActivityPreview(activityId);
   const props = useMemo<null | UI.Props>(() => {
-    const { activity, communityInfoStrings, eventString } = activityBox;
+    const { activity, communityInfoStrings, eventString, link } = activityBox;
     if (!activity) {
       return { status: UI.Status.Loading };
     } else {
@@ -25,6 +25,7 @@ export const ActivityPreviewHOC: FC<Props> = ({ activityId }) => {
         createdAt: activity.createdAt,
         actor: activity.user && getActivityActor(activity.user),
         event: eventString,
+        link,
         ...communityInfoStrings,
         preview: <PreviewComponent context={activity.context} />
       };

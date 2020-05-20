@@ -14,9 +14,6 @@ export type HeroCollectionDataFragment = (
     & { icon: Types.Maybe<(
       { __typename: 'Content' }
       & Pick<Types.Content, 'id' | 'url'>
-    )>, myFollow: Types.Maybe<(
-      { __typename: 'Follow' }
-      & Pick<Types.Follow, 'id'>
     )> }
   )>, followers: Types.Maybe<(
     { __typename: 'FollowsPage' }
@@ -57,9 +54,6 @@ export const HeroCollectionDataFragmentDoc = gql`
     icon {
       id
       url
-    }
-    myFollow {
-      id
     }
   }
   followerCount

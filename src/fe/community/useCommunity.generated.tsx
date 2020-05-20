@@ -16,7 +16,6 @@ export type CommunityDataQuery = (
   { __typename: 'RootQueryType' }
   & { community: Types.Maybe<(
     { __typename: 'Community' }
-    & Pick<Types.Community, 'id'>
     & CommunityPageDataFragment
   )> }
 );
@@ -25,7 +24,6 @@ export type CommunityDataQuery = (
 export const CommunityDataDocument = gql`
     query communityData($communityId: String!) {
   community(communityId: $communityId) {
-    id
     ...CommunityPageData
   }
 }

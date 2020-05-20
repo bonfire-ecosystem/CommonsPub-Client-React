@@ -13,7 +13,7 @@ import {
 } from 'ui/modules/Modal';
 
 export interface Props {
-  done(confirmed: boolean): unknown;
+  cancel(): any;
   modalTitle: string;
   modalDescription: string;
   modalAction: string;
@@ -21,7 +21,7 @@ export interface Props {
 }
 
 export const ConfirmationModal: React.FC<Props> = ({
-  done,
+  cancel,
   modalTitle,
   modalDescription,
   modalAction,
@@ -45,13 +45,11 @@ export const ConfirmationModal: React.FC<Props> = ({
           isDisabled={formik.isSubmitting}
           type="submit"
           style={{ marginLeft: '10px' }}
-          onClick={() => {
-            formik.submitForm().then(() => done(true));
-          }}
+          onClick={formik.submitForm}
         >
           {modalAction}
         </SubmitButton>
-        <Button variant="outline" onClick={() => done(false)}>
+        <Button variant="outline" onClick={cancel}>
           <Trans>Cancel</Trans>
         </Button>
       </Actions>

@@ -20,7 +20,7 @@ export const CommentPreviewHOC: FC<CommentPreviewHOC> = ({
   mainComment,
   hideActions
 }) => {
-  const { comment, toggleLike, reply, canReply } = useCommentPreview(commentId);
+  const { comment, toggleLike, reply } = useCommentPreview(commentId);
   const toggleLikeFormik = useFormik({
     initialValues: {},
     onSubmit: toggleLike
@@ -38,11 +38,9 @@ export const CommentPreviewHOC: FC<CommentPreviewHOC> = ({
     const props: CommentProps = {
       url: comment.thread ? `/thread/${comment.thread.id}` : '',
       content: comment.content,
-      reply: canReply
-        ? {
-            replyFormik
-          }
-        : null,
+      reply: {
+        replyFormik
+      },
       like: {
         iLikeIt: !!comment.myLike,
         totalLikes: comment.likerCount || 0,
