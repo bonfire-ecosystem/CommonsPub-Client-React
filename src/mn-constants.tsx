@@ -41,6 +41,16 @@ export const terms_markdown_urls = {
   terms_indexing: 'https://moodle.net/terms/indexing.md'
 };
 
+export const terms_privacy = {
+  // replace the URLs as needed, or enable/disable to use `text_markdown` instead
+  enabled: true,
+  // replace the URL with that of your instance's privacy policy (in markdown format)
+  url_markdown: 'https://moodle.net/terms/privacy.md',
+  // replace the text as needed (in markdown format as well)
+  text_markdown:
+    'This site uses cookies and follows GDPR rules. Contact the instance operators if you want your data exported or deleted.'
+};
+
 export const related_urls = {
   // replace the URLs as needed
   project_homepage: 'https://moodle.net',
