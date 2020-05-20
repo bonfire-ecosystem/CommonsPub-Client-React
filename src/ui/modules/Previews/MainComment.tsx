@@ -23,7 +23,7 @@ export interface ReplyActions {
 export interface CommentProps {
   FlagModal: null | React.ComponentType<{ done(): unknown }>;
   like: LikeActions;
-  reply: ReplyActions | null;
+  reply: ReplyActions;
   content: string;
   isFlagged?: boolean;
   hideActions?: boolean;
@@ -76,7 +76,7 @@ export const MainComment: React.SFC<CommentProps> = ({
                     sx={{ textTransform: 'capitalize' }}
                     ml={1}
                   >
-                    {like.totalLikes + ' '} <Trans>Star</Trans>
+                    {like.totalLikes + ' '} <Trans>Favourite</Trans>
                   </ActionText>
                 </ActionItem>
                 <ActionItem
@@ -120,18 +120,16 @@ export const MainComment: React.SFC<CommentProps> = ({
           )}
         </Actions>
       </Wrapper>
-      {reply && (
-        <SocialWrapper my={2}>
-          <SocialText
-            placeholder={i18n._(tt.placeholders.name)}
-            defaultValue={''}
-            submit={msg => {
-              reply.replyFormik.setValues({ replyMessage: msg });
-              reply.replyFormik.submitForm();
-            }}
-          />
-        </SocialWrapper>
-      )}
+      <SocialWrapper my={2}>
+        <SocialText
+          placeholder={i18n._(tt.placeholders.name)}
+          defaultValue={''}
+          submit={msg => {
+            reply.replyFormik.setValues({ replyMessage: msg });
+            reply.replyFormik.submitForm();
+          }}
+        />
+      </SocialWrapper>
     </Box>
   );
 };

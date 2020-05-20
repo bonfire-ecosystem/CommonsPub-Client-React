@@ -1,5 +1,6 @@
 fragment ResourcePreview on Resource {
     id
+    # isLocal
     icon{ id, url }
     name
     summary
@@ -16,10 +17,6 @@ fragment ResourcePreview on Resource {
     likers { totalCount }
     collection {
       id
-      preferredUsername
-      canonicalUrl
-      icon{ id, url }
-      summary
       community {
         id
         ...CommunityInfo

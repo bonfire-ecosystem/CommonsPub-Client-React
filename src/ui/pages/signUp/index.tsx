@@ -44,16 +44,14 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
     <Container>
       {!formik.isSubmitting && formik.submitCount && registeredUsername ? (
         <Box mt={3}>
-          <LogoContainer />
-          <Text variant="suptitle">
-            <Trans>Welcome</Trans> <b>{registeredUsername}</b>
-          </Text>
-          <Text mt={2} variant="text">
+          <p>
+            <Trans>Welcome</Trans> {registeredUsername}
+          </p>
+          <p>
             <Trans>
-              Please confirm your email address by clicking on the link we
-              emailed you (check your spam folder if necessary).
+              Please confirm your email clicking on the link we sent you at
             </Trans>
-          </Text>
+          </p>
 
           <Alert variant="bad">{formik.errors.email}</Alert>
         </Box>
@@ -88,7 +86,7 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
               </Box>
               <Box mt={3}>
                 <label>
-                  <Trans>Full name</Trans>
+                  <Trans>Display Name</Trans>
                 </label>
                 <Input
                   placeholder={tt.placeholders.name}
@@ -160,9 +158,10 @@ export const SignUpPage: React.FC<Props> = ({ formik, registeredUsername }) => {
                     value={formik.values.terms}
                     onChange={formik.handleChange}
                   />
-                  <Text mr={1}>I have read and agreed the</Text>
-                  <NavLink to="/terms" target="_blank">
-                    Terms and Conditions
+                  I have read and agreed the{' '}
+                  <NavLink to="/termsAndConditions">
+                    {' '}
+                    Terms and Conditions{' '}
                   </NavLink>
                 </Label>
               </Box>

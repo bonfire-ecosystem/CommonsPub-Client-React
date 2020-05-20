@@ -2,14 +2,13 @@ import React, { ComponentType } from 'react';
 import styled from 'ui/themes/styled';
 // import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { ChevronLeft, ChevronDown } from 'react-feather';
+import { ChevronLeft, ChevronDown, Menu } from 'react-feather';
 import { Flex, Text, Box } from 'rebass/styled-components';
-// import {Input} from '@rebass/forms'
 import Avatar from 'ui/elements/Avatar';
 // import Avatar from 'ui/elements/Avatar';
 import { DropdownSidebar } from './dropdown';
 import media from 'styled-media-query';
-import { ellipsis, darken } from 'polished';
+import { ellipsis } from 'polished';
 import { Link } from 'react-router-dom';
 import { Trans } from '@lingui/react';
 // const MnetLogo = require('static/img/logo-icon.png');
@@ -42,22 +41,19 @@ export const MainHeader: React.FC<Props> = props => {
   );
   return (
     <HeaderWrapper>
-      <Container>
+      <FlexWrapper>
         <Left>
           <Icon onClick={() => history.goBack()}>
             <ChevronLeft size="20" />
           </Icon>
-          {/* <HamburgerIcon onClick={props.toggleSideBar}>
+          <HamburgerIcon onClick={props.toggleSideBar}>
             <Menu size="20" />
-          </HamburgerIcon> */}
-          <HomeLink to={props.user ? '/' : '/discover'}>
+          </HamburgerIcon>
+          <HomeLink to="/">
             <Avatar size="s" src={logo_small_url} />
           </HomeLink>
-          <Search>
-            {/* <Input /> */}
-            {props.Search}
-          </Search>
         </Left>
+        <Center>{props.Search}</Center>
         <Header alignItems={'center'}>
           {props.user ? (
             <NavItem
@@ -87,41 +83,47 @@ export const MainHeader: React.FC<Props> = props => {
               )}
             </NavItem>
           ) : (
-            <Box>
-              <Signin>
+            <Flex justifyContent="space-evenly">
+              <NavItem>
                 <Link to="/">
                   <Text variant="link">
                     <Trans>{prompt_signin}</Trans>
                   </Text>
                 </Link>
-              </Signin>
-            </Box>
+              </NavItem>
+              <NavItem>
+                <Link to="/discover">
+                  <Text variant="link">
+                    <Trans>Discover</Trans>
+                  </Text>
+                </Link>
+              </NavItem>
+            </Flex>
           )}
         </Header>
-        {isOpenCreateCommunity && (
-          <props.CreateCommunityModal done={closeCreateCommunity} />
-        )}
-      </Container>
+      </FlexWrapper>
+      {isOpenCreateCommunity && (
+        <props.CreateCommunityModal done={closeCreateCommunity} />
+      )}
     </HeaderWrapper>
   );
 };
 
-const Container = styled(Box)`
-  max-width: 1096px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 200px;
+const FlexWrapper = styled(Flex)`
+  align-items: center;
+  justify-content: center;
+  height: 50px;
 `;
-const Search = styled(Box)`
+const Center = styled(Box)`
+  flex: 1 1 600px;
+  order: 1;
+  max-width: 600px;
+  overflow: hidden;
   input {
     width: 100%;
-    font-size: 13px;
+    margin: 0 auto;
+    border: ${props => props.theme.colors.border};
     border-radius: 4px;
-    max-width: 500px;
-    height: 32px;
-    margin: 0;
-    border: 0;
-    background: ${props => props.theme.colors.app};
   }
 `;
 
@@ -138,7 +140,6 @@ const NavItem = styled(Flex)`
   border-radius: 0px;
   padding: 4px 8px;
   border-radius: 4px;
-  margin-top: 5px;
   float: right;
   &:hover {
     background: ${props => props.theme.colors.lighter};
@@ -161,35 +162,13 @@ const Header = styled(Box)`
     border-radius: 36px;
   }
 `;
-const Signin = styled(NavItem)`
-  height: 30px;
-  line-height: 30px;
-  text-decoration: none;
-  padding: 0 8px;
-  background: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.colors.lighter};
-  border-radius: 4px;
-  margin-top: 10px;
-  &:hover {
-    background: ${props => darken('0.1', props.theme.colors.primary)};
-  }
-  a {
-    text-decoration: none;
-    font-size: 13px;
-  }
-  div {
-    text-decoration: none;
-    color: ${props => props.theme.colors.lighter};
-    font-size: 13px;
-  }
-`;
+
 const Icon = styled(Box)`
   cursor: pointer;
   height: 40px;
   width: 40px;
   min-width: 40px;
   border-radius: 40px;
-  margin-top: 5px;
   display: flex;
   align-items: center;
   &:hover {
@@ -204,27 +183,39 @@ const Icon = styled(Box)`
   }
 `;
 
-const Left = styled(Box)`
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  column-gap: 8px;
+const Left = styled(Flex)`
+  align-items: center;
+  flex: 0 0 240px;
+  order: 0;
+  justify-content: flex-start;
 `;
 
 const HeaderWrapper = styled(Box)`
   border-bottom: ${props => props.theme.colors.border};
   height: 50px;
+  cursor: pointer;
   background: ${props => props.theme.colors.appInverse};
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999999999999999;
+  padding: 0 8px;
+  a {
+    display: flex;
+    flex: 1;
+    text-decoration: none;
+  }
 `;
 
-// const HamburgerIcon = styled(Icon)`
-//   display: none;
-//   min-width: 40px;
-//   ${media.lessThan('medium')`
-//       display: flex;
-//   `};
-// `;
+const HamburgerIcon = styled(Icon)`
+  display: none;
+  min-width: 40px;
+  ${media.lessThan('medium')`
+      display: flex;
+  `};
+`;
 
 const HomeLink = styled(Link)`
-  margin-top: 9px;
-  cursor: pointer;
+  margin-left: 8px;
 `;

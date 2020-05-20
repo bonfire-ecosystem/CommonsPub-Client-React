@@ -12,8 +12,7 @@ export type UserPageActivitiesFragment = (
 
 export type UserPageUserDataFragment = (
   { __typename: 'User' }
-  & Pick<Types.User, 'id' | 'website'>
-  & { userId: Types.User['id'], userName: Types.User['name'] }
+  & Pick<Types.User, 'id' | 'website' | 'name'>
   & { collectionFollows: Types.Maybe<(
     { __typename: 'FollowsPage' }
     & Pick<Types.FollowsPage, 'totalCount'>
@@ -38,7 +37,6 @@ export const UserPageActivitiesFragmentDoc = gql`
 export const UserPageUserDataFragmentDoc = gql`
     fragment UserPageUserData on User {
   id
-  userId: id
   collectionFollows {
     totalCount
   }
@@ -52,7 +50,7 @@ export const UserPageUserDataFragmentDoc = gql`
     totalCount
   }
   website
-  userName: name
+  name
   ...HeroUserUserData
 }
     ${HeroUserUserDataFragmentDoc}`;

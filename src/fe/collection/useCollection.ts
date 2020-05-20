@@ -12,19 +12,16 @@ export const useCollection = (collectionId: Collection['id']) => {
   const collection = collectionQ.data?.collection;
   const { toggleFollow: toggleJoin } = useFollowContext(collection);
   const { edit } = useEditCollection(collectionId);
-  const isCommunityMember = !!collection?.community?.myFollow;
-  const isCreator =
-    !!me && !!collection?.creator && me.user.id === collection.creator.id;
-  const canModify = !!me?.isInstanceAdmin || isCreator;
+  const canModify =
+    !!me?.isInstanceAdmin ||
+    (!!me && !!collection?.creator && me.user.id === collection.creator.id);
 
   return useMemo(() => {
     return {
-      isCommunityMember,
-      isCreator,
       collection,
       toggleJoin,
       edit,
       canModify
     };
-  }, [collection, isCreator, toggleJoin, edit, canModify, isCommunityMember]);
+  }, [collection, toggleJoin, edit, canModify]);
 };

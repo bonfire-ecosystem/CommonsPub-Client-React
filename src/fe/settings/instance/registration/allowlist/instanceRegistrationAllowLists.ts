@@ -2,7 +2,6 @@ import { usePage } from 'fe/lib/helpers/usePage';
 import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 import { useMemo } from 'react';
 import * as GQL from './instanceRegistrationAllowLists.generated';
-import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 // import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 
 export const useInstanceRegistrationAllowLists = () => {
@@ -24,55 +23,20 @@ export const useInstanceRegistrationAllowLists = () => {
 
   const listEmailsQ = GQL.useInstanceRegisterEmailAccessesQuery({
     variables: {
-      limit: DEFAULT_PAGE_SIZE
+      /* limit: DEFAULT_PAGE_SIZE  */
     }
   });
-  const listEmailsPage = usePage(
-    listEmailsQ.data?.registerEmailAccesses,
-    ({ cursor, update }) => {
-      return listEmailsQ.fetchMore({
-        variables: { ...cursor, limit: DEFAULT_PAGE_SIZE },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          return fetchMoreResult?.registerEmailAccesses &&
-            prev.registerEmailAccesses
-            ? {
-                ...fetchMoreResult,
-                registerEmailAccesses: update({
-                  prev: prev.registerEmailAccesses,
-                  fetched: fetchMoreResult.registerEmailAccesses
-                })
-              }
-            : prev;
-        }
-      });
-    }
-  );
+  const listEmailsPage = usePage(listEmailsQ.data?.registerEmailAccesses);
 
   const listEmailDomainsQ = GQL.useInstanceRegisterEmailDomainAccessesQuery({
     variables: {
-      limit: DEFAULT_PAGE_SIZE
+      /* limit: DEFAULT_PAGE_SIZE  */
     }
   });
   const listEmailDomainsPage = usePage(
-    listEmailDomainsQ.data?.registerEmailDomainAccesses,
-    ({ cursor, update }) => {
-      return listEmailDomainsQ.fetchMore({
-        variables: { ...cursor, limit: DEFAULT_PAGE_SIZE },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          return fetchMoreResult?.registerEmailDomainAccesses &&
-            prev.registerEmailDomainAccesses
-            ? {
-                ...fetchMoreResult,
-                registerEmailDomainAccesses: update({
-                  prev: prev.registerEmailDomainAccesses,
-                  fetched: fetchMoreResult.registerEmailDomainAccesses
-                })
-              }
-            : prev;
-        }
-      });
-    }
+    listEmailDomainsQ.data?.registerEmailDomainAccesses
   );
+
   const addEmailDomain = useCallOrNotifyMustLogin(
     (domain: string) => {
       return addEmailDomainMut({

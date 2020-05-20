@@ -1,32 +1,23 @@
 import Maybe from 'graphql/tsutils/Maybe';
 
-export type WithExtraInfo<
-  GQLType extends Maybe<{ extraInfo?: any }>,
-  ExtraInfoType
-> = GQLType extends undefined | null
-  ? GQLType
-  : Omit<GQLType, 'extraInfo'> & { extraInfo?: Maybe<ExtraInfoType> };
-export const withEncodedExtraInfo = <GQLType extends { extraInfo?: any }>(
-  gqlObj: GQLType,
-  olderGqlObj: Maybe<GQLType>
-): GQLType & { extraInfo?: string } => {
-  const newExtraInfo = gqlObj.extraInfo;
-  const isSomeNewExtraInfo = !!newExtraInfo;
-  if (!isSomeNewExtraInfo) {
-    return {
-      ...gqlObj,
-      extraInfo: void 0
-    };
-  }
-
-  const olderExtraInfo = olderGqlObj?.extraInfo;
-  const mergedExtraInfo = JSON.stringify({
-    ...olderExtraInfo,
-    ...gqlObj.extraInfo
-  });
+export type WithExtraInfo<T extends Maybe<{ extraInfo?: any }>, E> = T extends
+  | undefined
+  | null
+  ? T
+  : Omit<T, 'extraInfo'> & { extraInfo?: Maybe<E> };
+export const withEncodedExtraInfo = <T extends { extraInfo?: any }>(
+  obj: T,
+  old: Maybe<T>
+): T & { extraInfo?: string } => {
+  const extraInfo =
+    obj.extraInfo === void 0
+      ? old?.extraInfo
+      : obj.extraInfo === null
+      ? null
+      : JSON.stringify({ ...old?.extraInfo, ...obj.extraInfo });
 
   return {
-    ...gqlObj,
-    extraInfo: mergedExtraInfo
+    ...obj,
+    extraInfo
   };
 };

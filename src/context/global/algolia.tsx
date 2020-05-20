@@ -60,7 +60,7 @@ export const ProvideAlgoliaContext: React.FC = ({ children }) => {
       onSearchStateChange={handleSetSearchState}
       searchClient={searchClient}
       refresh={true}
-      indexName={mothershipCreds.indexName || ''}
+      indexName={mothershipCreds.indexName}
       createURL={createURL}
     >
       {children}

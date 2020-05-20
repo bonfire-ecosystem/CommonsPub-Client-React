@@ -37,11 +37,12 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
 
     const activityProps: Pick<
       ActivityPreviewProps,
-      'status' | 'communityLink' | 'communityName' | 'event'
+      'status' | 'communityLink' | 'communityName' | 'link' | 'event'
     > = {
       communityLink: `/communities/${communityId}`,
       communityName,
-      event: 'started a discussion',
+      event: 'Created Comment',
+      link: '',
       status: ActivityPreviewStatus.Loaded
     };
 
@@ -51,7 +52,7 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
           ...activityProps,
           actor: mainComment.creator
             ? getActivityActor(mainComment.creator)
-            : null,
+            : { icon: '', link: '', name: '' },
           preview: (
             <CommentPreviewHOC commentId={mainComment.id} mainComment={true} />
           ),
@@ -68,7 +69,6 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
               key={comment.id}
               {...{
                 ...activityProps,
-                event: 'replied',
                 actor: comment.creator
                   ? getActivityActor(comment.creator)
                   : { icon: '', link: '', name: '' },

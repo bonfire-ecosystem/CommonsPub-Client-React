@@ -22,7 +22,7 @@ export interface Props {
   communityName: string;
   communityIcon: string;
   isCommunityContext: boolean;
-  loadMoreComments: FormikHook | null;
+  loadMoreComments?: FormikHook; // FIX ME remove ? after add LoadMoreFormik
 }
 
 export const Thread: React.FC<Props> = ({

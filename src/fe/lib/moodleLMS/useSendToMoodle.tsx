@@ -6,27 +6,13 @@ import {
   SESSION,
   createLocalSessionKVStorage
 } from 'util/keyvaluestore/localSessionStorage';
-import { useInstanceInfoQuery } from 'fe/instance/info/useInstanceInfo.generated';
-import Maybe from 'graphql/tsutils/Maybe';
-import {
-  ResourceLMS,
-  ResourceGqlMin,
-  ResourceHitMin
-} from 'HOC/lib/LMSMappings/types';
-import { resourceGql2lms } from 'HOC/lib/LMSMappings/gql2LMS';
-import { resourceHit2lms } from 'HOC/lib/LMSMappings/hit2LMS';
 const storage = createLocalSessionKVStorage(SESSION)('LMS_');
 const LMS_KEY = 'LMS';
 
-export const useLMSGQL = (resource: Maybe<ResourceGqlMin>) => {
-  return useLMS(resourceGql2lms(resource));
-};
-export const useLMSHit = (resource: Maybe<ResourceHitMin>) => {
-  return useLMS(resourceHit2lms(resource));
-};
-export const useLMS = (resource: Maybe<ResourceLMS>) => {
+type MaybeResourceUrl = string | null | undefined;
+export const useLMS = (resourceUrl: MaybeResourceUrl) => {
   const { profile, updateProfile } = useProfile();
-  const { data: instanceInfo } = useInstanceInfoQuery();
+
   const LMSPrefs = profile?.extraInfo?.LMS;
 
   const updateLMSPrefs = useCallback(
@@ -39,40 +25,29 @@ export const useLMS = (resource: Maybe<ResourceLMS>) => {
     [updateProfile]
   );
 
-  const sendToLMS = useCallback(
-    (LMS: LMSPrefs) => {
-      if (!(instanceInfo?.instance && resource)) {
+  const updateLMSPrefsAndSend = useCallback(
+    async (LMS: LMSPrefs) => {
+      if (!resourceUrl) {
         return false;
       }
-      const resource_info = JSON.stringify(resource);
-      const type = instanceInfo.instance.uploadResourceTypes.includes(
-        resource.mediaType
-      )
-        ? 'file'
-        : 'link';
-      sendToMoodle(resource.url, resource_info, type, LMS);
+      updateLMSPrefs(LMS).finally(() => sendToMoodle(resourceUrl, LMS));
       return true;
     },
-    [instanceInfo, resource]
+    [resourceUrl, LMSPrefs]
   );
 
   return useMemo(
     () => ({
       updateLMSPrefs,
-      sendToLMS,
-      sendToMoodle,
+      updateLMSPrefsAndSend,
       LMSPrefsPanel: ({ done }) => (
         <LMSPrefsPanel
           done={done}
-          lmsParams={LMSPrefs || storage.get(LMS_KEY)}
-          sendToLMS={async (LMS, update) => {
-            done();
-            (await update) && updateLMSPrefs(LMS);
-            return sendToLMS(LMS);
-          }}
+          lmsParams={profile?.extraInfo?.LMS || storage.get(LMS_KEY)}
+          updateLMSPrefsAndSend={updateLMSPrefsAndSend}
         />
       )
     }),
-    [sendToLMS, updateLMSPrefs, sendToMoodle, LMSPrefs]
+    [updateLMSPrefsAndSend, updateLMSPrefs]
   );
 };

@@ -38,8 +38,8 @@ export type InstanceFeaturedCollectionsQuery = (
 
 export const InstanceFeaturedCollectionsDocument = gql`
     query instanceFeaturedCollections {
-  instance {
-    featuredCollections @connection(key: "instanceFeaturedCollections") {
+  instance @connection(key: "instanceFeaturedCollections") {
+    featuredCollections {
       totalCount
       pageInfo {
         ...FullPageInfo
