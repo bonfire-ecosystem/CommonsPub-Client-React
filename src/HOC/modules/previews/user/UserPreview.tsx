@@ -10,9 +10,10 @@ import { Box } from 'rebass';
 import { getActivitySimpleLink } from 'fe/lib/activity/getActivitySimpleLink';
 export interface Props {
   userId: User['id'];
+  flagged?: boolean;
 }
 
-export const UserPreviewHOC: FC<Props> = ({ userId }) => {
+export const UserPreviewHOC: FC<Props> = ({ userId, flagged }) => {
   const { user, toggleFollow } = useUserPreview(userId);
 
   const toggleFollowFormik = useFormik({
@@ -24,6 +25,8 @@ export const UserPreviewHOC: FC<Props> = ({ userId }) => {
       return null;
     }
 
+    const hideActions = flagged ? true : false;
+
     const { userName, displayUsername, image, icon, summary, myFollow } = user;
 
     const props: UserPreviewProps = {
@@ -33,7 +36,8 @@ export const UserPreviewHOC: FC<Props> = ({ userId }) => {
       bio: summary || '',
       isFollowing: !!myFollow,
       toggleFollowFormik,
-      profileUrl: getActivitySimpleLink(user)
+      profileUrl: getActivitySimpleLink(user),
+      hideActions: hideActions
     };
     return props;
   }, [user, toggleFollowFormik]);

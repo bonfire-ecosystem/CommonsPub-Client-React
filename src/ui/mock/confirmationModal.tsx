@@ -14,7 +14,7 @@ export const getConfirmationModalProps = (): ConfirmationModalProps => {
   });
 
   return {
-    cancel: action('cancel'),
+    done: action('cancel'),
     modalTitle: 'Remove email from whitelist',
     modalDescription: `Are you sure you want to remove test@moodle.net from the whitelisted emails`,
     modalAction: 'Delete',

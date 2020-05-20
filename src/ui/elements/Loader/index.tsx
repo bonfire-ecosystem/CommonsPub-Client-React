@@ -4,7 +4,7 @@ import { Box } from 'rebass/styled-components';
 import './loader.css';
 const Bounce = styled(Box)<{ color: string }>`
   background-color: ${props =>
-    props.color === 'primary' ? '#ffffffeb' : props.theme.colors.orange};
+    props.color === 'primary' ? '#ffffffeb' : props.theme.colors.primary};
 `;
 
 /**

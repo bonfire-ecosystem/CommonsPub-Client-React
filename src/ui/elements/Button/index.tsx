@@ -5,16 +5,22 @@ import { darken, lighten, transitions } from 'polished';
 import { Button } from 'rebass/styled-components';
 import { ButtonProps } from 'rebass';
 
-const WrapperButton = styled(Button)<{ variant: string; isIcon: boolean }>`
+const WrapperButton = styled(Button)<{
+  variant: string;
+  isIcon: boolean;
+  disabled: boolean;
+}>`
   ${transitions('background, 0.2s')};
   width: ${props => (props.isIcon === true ? '40px' : 'auto')};
   border-radius: ${props => (props.isIcon === true ? '100%' : '4px')};
   padding: ${props => (props.isIcon === true ? '0px' : 'auto')};
-  &:hover  {
+  opacity: ${props => (props.disabled == true ? '0.7' : '1')};
+  cursor: ${props => (props.disabled == true ? 'default' : 'pointer')};
+  &:hover && not:['disabled']  {
     background: ${props =>
       props.variant === 'primary' || props.variant === 'danger'
-        ? darken('0.1', props.theme.colors.orange)
-        : lighten('0.3', props.theme.colors.orange)};
+        ? darken('0.1', props.theme.colors.primary)
+        : lighten('0.3', props.theme.colors.primary)};
   }
 `;
 
@@ -30,7 +36,7 @@ const MNButton: FC<Props> = props => (
   <WrapperButton
     {...props}
     isSubmitting={props.isSubmitting}
-    isDisabled={props.isDisabled}
+    disabled={props.isDisabled}
     isIcon={props.isIcon}
     variant={props.variant}
   >

@@ -22,18 +22,17 @@ const Left = styled(Flex)`
 `;
 
 const SupText = styled(Text)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.darker};
   text-transform: capitalize;
-  font-size: 16px;
 `;
 
 const HeaderWrapper = styled(Flex)`
-  border-bottom: 1px solid ${props => props.theme.colors.lightgray};
+  border-bottom: ${props => props.theme.colors.border};
   height: 50px;
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
-  background: #fff;
+  background: ${props => props.theme.colors.appInverse};
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   a {

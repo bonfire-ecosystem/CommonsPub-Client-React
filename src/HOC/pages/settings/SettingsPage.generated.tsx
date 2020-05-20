@@ -6,7 +6,7 @@ export type SettingsPageMeFragment = (
   { __typename: 'Me' }
   & { user: (
     { __typename: 'User' }
-    & Pick<Types.User, 'id' | 'name' | 'location' | 'summary' | 'displayUsername' | 'website'>
+    & Pick<Types.User, 'id' | 'name' | 'location' | 'summary' | 'displayUsername' | 'website' | 'extraInfo'>
     & { icon: Types.Maybe<(
       { __typename: 'Content' }
       & Pick<Types.Content, 'id' | 'url'>
@@ -34,6 +34,7 @@ export const SettingsPageMeFragmentDoc = gql`
     summary
     displayUsername
     website
+    extraInfo
   }
 }
     `;

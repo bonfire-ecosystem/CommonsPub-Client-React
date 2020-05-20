@@ -41,6 +41,8 @@ const loaderFn = () => {
     require('./designer.stories.mdx'),
     require('./developer.stories.mdx'),
     require('./admin.stories.mdx'),
+    require('./palette.stories.mdx'),
+    require('./typography.stories.mdx'),
     require('../src/ui/pages/login/a.stories.mdx'),
     require('../src/ui/pages/signUp/a.stories.mdx'),
     require('../src/ui/pages/termsAndConditions/a.stories.mdx'),
@@ -58,7 +60,30 @@ const loaderFn = () => {
     require('../src/ui/pages/user/b.stories.mdx'),
     require('../src/ui/pages/settings/admin.stories.mdx'),
     require('../src/ui/pages/settings/user.stories.mdx'),
-    require('../src/ui/pages/notFound/a.stories.mdx')
+    require('../src/ui/pages/notFound/a.stories.mdx'),
+    // Modules
+    require('../src/ui/modules/ActivityPreview/a.stories.mdx'),
+    // require('../src/ui/modules/addResource/a.stories.mdx'),
+    require('../src/ui/modules/ConfirmationModal/a.stories.mdx'),
+    require('../src/ui/modules/CreateCollectionPanel/a.stories.mdx'),
+    require('../src/ui/modules/CreateCommunityPanel/a.stories.mdx'),
+    require('../src/ui/modules/EditCollectionPanel/a.stories.mdx'),
+    require('../src/ui/modules/EditCommunityPanel/a.stories.mdx'),
+    require('../src/ui/modules/EditResourcePanel/a.stories.mdx'),
+    require('../src/ui/modules/FeaturedCollections/a.stories.mdx'),
+    require('../src/ui/modules/FeaturedCommunities/a.stories.mdx'),
+    require('../src/ui/modules/FlagModal/a.stories.mdx'),
+    // require('../src/ui/modules/Footer/a.stories.mdx'),
+    require('../src/ui/modules/Header/a.stories.mdx'),
+    require('../src/ui/modules/HeroCollection/a.stories.mdx'),
+    require('../src/ui/modules/HeroCommunity/a.stories.mdx'),
+    require('../src/ui/modules/HeroUser/a.stories.mdx'),
+    require('../src/ui/modules/Loadmore/a.stories.mdx'),
+    require('../src/ui/modules/MainHeader/a.stories.mdx'),
+    require('../src/ui/modules/Previews/a.stories.mdx'),
+    require('../src/ui/modules/Sidebar/a.stories.mdx'),
+    require('../src/ui/modules/SocialText/a.stories.mdx'),
+
   ]
   // allExports.push(Intro.map(a => a))
   // allExports.push(pages.map(a => a))

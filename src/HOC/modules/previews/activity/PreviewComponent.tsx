@@ -10,17 +10,36 @@ import { getActivityMainContext } from 'fe/lib/activity/getActivityMainContext';
 
 export const PreviewComponent: FC<{
   context: ActivityContextPreviewFragment;
-}> = ({ context }) => {
+  flagged?: boolean;
+}> = ({ context, flagged }) => {
   if (context.__typename === 'Collection') {
-    return <CollectionPreviewHOC collectionId={context.id} />;
+    if (flagged) {
+      return (
+        <CollectionPreviewHOC collectionId={context.id} flagged={flagged} />
+      );
+    } else {
+      return <CollectionPreviewHOC collectionId={context.id} />;
+    }
   } else if (context.__typename === 'Comment') {
     return <CommentPreviewHOC commentId={context.id} mainComment={false} />;
   } else if (context.__typename === 'Community') {
-    return <CommunityPreviewHOC communityId={context.id} />;
+    if (flagged) {
+      return <CommunityPreviewHOC communityId={context.id} flagged={flagged} />;
+    } else {
+      return <CommunityPreviewHOC communityId={context.id} />;
+    }
   } else if (context.__typename === 'Resource') {
-    return <ResourcePreviewHOC resourceId={context.id} />;
+    if (flagged) {
+      return <ResourcePreviewHOC resourceId={context.id} flagged={flagged} />;
+    } else {
+      return <ResourcePreviewHOC resourceId={context.id} />;
+    }
   } else if (context.__typename === 'User') {
-    return <UserPreviewHOC userId={context.userId} />;
+    if (flagged) {
+      return <UserPreviewHOC userId={context.userId} flagged={flagged} />;
+    } else {
+      return <UserPreviewHOC userId={context.userId} />;
+    }
   } else {
     if (
       context.__typename === 'Like' &&

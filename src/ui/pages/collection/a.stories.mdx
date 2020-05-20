@@ -8,19 +8,23 @@ import {Sidebar} from 'ui/modules/Sidebar'
 import {getSidebarProps} from 'ui/mock/sidebar'
 import {getHeroCollectionProps} from 'ui/mock/heroCollection'
 import {activityPreviewProps} from 'ui/mock/activityPreview'
-import {ResourcePreviewProps,CommentPreviewProps, LikedCommentPreviewProps } from 'ui/mock/previews'
+import {ResourcePreviewProps, ResourcePreviewUploadedProps,CommentPreviewProps, LikedCommentPreviewProps } from 'ui/mock/previews'
 import {getLoadMoreProps} from 'ui/mock/loadmore'
 import {getMainHeaderProps} from 'ui/mock/mainHeader'
 import {Resource} from 'ui/modules/Previews/Resource'
 import {Comment} from 'ui/modules/Previews/Comment'
 import {LikedComment} from 'ui/modules/Previews/LikedComment'
 import {MainHeader} from 'ui/modules/MainHeader'
+import {ShareLink} from 'ui/modules/ShareLink'
+import {getShareLinkProps} from 'ui/mock/shareLink'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Side = () => <Sidebar {...getSidebarProps()}/>
+const Share = () => <ShareLink {...getShareLinkProps()} />
 
 <Meta title="Pages|Collection" component={Collection}/>
 
 # Collection
-Let's define a story for the `Collection` page
+The `Collection` page displays a single MoodleNet collection. It is made up of the following:
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
@@ -29,8 +33,9 @@ Let's define a story for the `Collection` page
   <Story name="Collection page">
     <WithSidebar 
       HeaderBox={Head}
-      SidebarBox={<Sidebar {...getSidebarProps()}/>}>
+      SidebarBox={Side}>
       <Collection 
+        ShareLinkBox={Share}
         collectionName="Spaced repetition"
         loadMoreActivities={getLoadMoreProps()}
         loadMoreResources={getLoadMoreProps()}
@@ -38,7 +43,7 @@ Let's define a story for the `Collection` page
         HeroCollectionBox={(<HeroCollection {...getHeroCollectionProps(true)} />)}
         ActivitiesBox={(<React.Fragment>
           <ActivityPreview {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps() }/>)} />
-          <ActivityPreview {...activityPreviewProps('Uploaded a resource', <Resource {...ResourcePreviewProps('license', 'pdf' ) }/>)} />
+          <ActivityPreview {...activityPreviewProps('Uploaded a resource', <Resource {...ResourcePreviewUploadedProps() }/>)} />
           <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
           <ActivityPreview {...activityPreviewProps('Created a comment', <Comment {...CommentPreviewProps() }/>)} />
           <ActivityPreview {...activityPreviewProps('Like a comment', <LikedComment {...LikedCommentPreviewProps() }/>)} />
@@ -47,11 +52,11 @@ Let's define a story for the `Collection` page
         </React.Fragment>)}
         ResourcesBox={(<React.Fragment>
           <Resource {...ResourcePreviewProps() } />
-          <Resource {...ResourcePreviewProps('license', 'pdf') } />
+          <Resource {...ResourcePreviewUploadedProps() } />
           <Resource {...ResourcePreviewProps() } />
-          <Resource {...ResourcePreviewProps('license', 'pdf') } />
+          <Resource {...ResourcePreviewUploadedProps() } />
           <Resource {...ResourcePreviewProps() } />
-          <Resource {...ResourcePreviewProps('license', 'pdf') } />
+          <Resource {...ResourcePreviewUploadedProps() } />
           <Resource {...ResourcePreviewProps() } />
           <Resource {...ResourcePreviewProps() } />
         </React.Fragment>)}

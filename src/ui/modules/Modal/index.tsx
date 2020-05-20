@@ -33,12 +33,13 @@ const Dialog = styled.div`
   background-color: #ffffff;
   padding: 0;
   margin: 40px auto;
-  position: absolute;
-  top: 10px;
+  position: fixed;
+  top: 50%;
   left: 50%;
   margin-left: -350px;
   border-radius: 3px;
   outline: none;
+  transform: translateY(-50%);
 
   ${media.lessThan('medium')`
     width: auto;
@@ -59,7 +60,7 @@ const Close = styled(Box)`
   right: -10px;
   top: -10px;
   cursor: pointer;
-  background: ${props => props.theme.colors.orange};
+  background: ${props => props.theme.colors.primary};
   width: 24px;
   height: 24px;
   border-radius: 40px;
@@ -106,23 +107,25 @@ export const ContainerForm = styled.div`
     height: 40px;
     background: white;
     border-radius: 2px;
-    border: 1px solid ${props => props.theme.colors.lightgray};
+    border: ${props => props.theme.colors.border};
   }
   textarea {
     line-height: 20px;
     background: white;
     border-radius: 2px;
-    border: 1px solid ${props => props.theme.colors.lightgray};
+    border: ${props => props.theme.colors.border};
     font-family: ${props => props.theme.fontFamily};
   }
 `;
 
 export const Header = styled.div`
-  padding: 16px;
-  border-bottom: 1px solid ${props => props.theme.colors.lighter};
+  padding: 0 16px;
+  padding-top: 16px;
+  // border-bottom: 1px solid ${props => props.theme.colors.lighter};
   & h5 {
     text-align: center !important;
     margin: 0 !important;
+    font-size: 18px;
   }
 `;
 

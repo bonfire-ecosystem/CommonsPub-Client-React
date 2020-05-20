@@ -6,6 +6,9 @@ import {
   PanelTitle,
   WrapperPanel
 } from 'ui/elements/Panel';
+import { Trans } from '@lingui/react';
+import { Text } from 'rebass/styled-components';
+import styled from 'ui/themes/styled';
 
 export type Props = {};
 
@@ -18,20 +21,25 @@ export const SidePanel: React.FC<Props> = props => {
             Popular hashtags
           </PanelTitle>
           <Nav>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               #pedagogy
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               #transition
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               #english
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               #template
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               #assessment
+            </NavItem>
+            <NavItem fontSize={0}>
+              <ComingSoon variant="text">
+                ✨<Trans>This feature is coming soon!</Trans>✨
+              </ComingSoon>
             </NavItem>
           </Nav>
         </Panel>
@@ -40,24 +48,34 @@ export const SidePanel: React.FC<Props> = props => {
             Popular categories
           </PanelTitle>
           <Nav>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               Humanities
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               Behavioural science
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               English
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               Romana
             </NavItem>
-            <NavItem mb={3} fontSize={1}>
+            <NavItem mb={3} fontSize={0}>
               Postgraduate
             </NavItem>
+            <ComingSoon variant="text">
+              ✨<Trans>This feature is coming soon!</Trans>✨
+            </ComingSoon>
           </Nav>
         </Panel>
       </WrapperPanel>
     </>
   );
 };
+
+const ComingSoon = styled(Text)`
+  background: aliceblue;
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+`;

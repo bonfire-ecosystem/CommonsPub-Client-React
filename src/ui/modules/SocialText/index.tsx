@@ -15,7 +15,7 @@ import styled from 'styled-components';
 const Wrapper = styled(Box)`
   width: 100%;
   position: relative;
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
   border-radius: 4px;
 `;
 const SocialTextDiv = styled(Flex)`
@@ -27,7 +27,7 @@ const SocialTextDiv = styled(Flex)`
 //   cursor: pointer;
 //   &:hover {
 //     svg {
-//       stroke: ${props => props.theme.colors.orange}
+//       stroke: ${props => props.theme.colors.primary}
 //     }
 //   }
 // `;
@@ -35,7 +35,7 @@ const SocialTextDiv = styled(Flex)`
 const SocialTextArea = styled(Textarea)`
   height: 60px;
   border-radius: 4px;
-  border: 0px solid ${props => props.theme.colors.lightgray} !important;
+  border: 0px solid ${props => props.theme.colors.light} !important;
   resize: none;
   flex: 1;
   font-size: 16px !important;

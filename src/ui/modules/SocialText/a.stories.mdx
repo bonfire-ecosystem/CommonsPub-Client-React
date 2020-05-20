@@ -1,0 +1,20 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
+import { PropsTable } from '@storybook/components';
+import SocialText from '.';
+import {Box} from 'rebass'
+import {getSidebarProps} from 'ui/mock/sidebar'
+
+<Meta title="Modules|SocialText" component={SocialText}/>
+
+# SocialText
+Let's define a story for the `SocialText` module
+
+<Preview>
+  <Story name="Sidebar">
+    <Box sx={{width: '600px', margin: '0 auto', background: "white", borderRadius: '6px'}}>
+        <SocialText placeholder="type a message..." submit={()=>console.log('action')} />
+    </Box>
+  </Story>
+</Preview>
+
+

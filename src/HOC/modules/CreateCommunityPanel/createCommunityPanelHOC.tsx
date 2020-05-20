@@ -42,6 +42,7 @@ export const CreateCommunityPanelHOC: FC<Props> = ({ done }: Props) => {
         },
         icon: vals.icon
       }).then(res => {
+        done();
         res?.data?.createCommunity?.id &&
           history.push(`/communities/${res.data.createCommunity.id}`);
       });

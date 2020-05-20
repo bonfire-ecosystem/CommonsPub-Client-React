@@ -7,6 +7,7 @@ import styled from 'ui/themes/styled';
 import { SimpleLink } from 'ui/helpers/SimpleLink';
 import { Users, Folder } from 'react-feather';
 import Button from 'ui/elements/Button';
+import { darken } from 'polished';
 
 export interface Props {
   name: string;
@@ -22,7 +23,8 @@ export interface Props {
     external: boolean;
   };
   displayUsername: string;
-  hideActons?: boolean;
+  hideActions: boolean;
+  isCreator: boolean;
   // followers: string[]
 }
 
@@ -30,13 +32,14 @@ export const Community: React.FC<Props> = ({
   name,
   icon,
   summary,
+  isCreator,
   followersCount,
   joined,
   toggleJoinFormik,
   collectionsCount,
   link,
   displayUsername,
-  hideActons
+  hideActions
   // followers
 }) => (
   <Bordered>
@@ -58,11 +61,11 @@ export const Community: React.FC<Props> = ({
           </Flex>
 
           {summary ? (
-            <Text variant="text" mt={2}>
+            <Summary variant="text" mt={2}>
               {summary.length > 90
                 ? summary.replace(/^([\s\S]{86}[^\s]*)[\s\S]*/, '$1...')
                 : summary}
-            </Text>
+            </Summary>
           ) : null}
 
           {/* <Users>
@@ -83,10 +86,11 @@ export const Community: React.FC<Props> = ({
               {collectionsCount || 0} <Trans>Collections</Trans>
             </Text>
           </MetaWrapper>
-          {hideActons ? null : (
+          {hideActions ? null : (
             <Actions my={3}>
               <Button
                 variant="outline"
+                isDisabled={isCreator ? true : false}
                 isSubmitting={toggleJoinFormik.isSubmitting}
                 onClick={toggleJoinFormik.submitForm}
               >
@@ -103,6 +107,9 @@ export const Community: React.FC<Props> = ({
 );
 
 // const Users = styled(Box)``
+const Summary = styled(Text)`
+  color: ${props => props.theme.colors.dark};
+`;
 
 const Actions = styled(Box)`
   button {
@@ -120,51 +127,18 @@ const WrapperLink = styled(SimpleLink)`
   text-decoration: none;
 `;
 
-// const Items = styled(Flex)`
-//   flex: 1;
-//   justify-content: space-around;
-// `;
-// const Items = styled(Flex)`
-//   flex: 1;
-//   justify-content: space-around;
-// `;
-
-// const Actions = styled(Box)`
-//   position: relative;
-//   z-index: 999999999999999999999999999999999999;
-//   border-top: 1px solid #dadada;
-//   padding: 8px;
-// `;
-
-// const Button = styled(Flex)`
-//   align-items: center;
-//   color: ${props => props.theme.colors.gray};
-//   cursor: pointer;
-//   a {
-//     display: flex;
-//     align-items: center;
-//     position: relative;
-//     z-index: 9;
-//   }
-//   &:hover {
-//     svg.hover {
-//       stroke: ${props => props.theme.colors.orange};
-//     }
-//   }
-// `;
-
 const Username = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   flex: 1;
 `;
 
 const Meta = styled(Box)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   // justify-content: space-evenly;
 `;
 
 const Bordered = styled(Box)`
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
   border-radius: 4px;
 `;
 
@@ -173,11 +147,13 @@ const Wrapper = styled(Box)`
   max-height: 560px;
   overflow: hidden;
   z-index: 9;
-  padding-bottom: 0;
+  // padding-bottom: 0;
   cursor: pointer;
-
+  background: ${props => props.theme.colors.appInverse};
   &:hover {
-    background: ${props => props.theme.colors.lighter};
+    background: ${props => darken('0.05', props.theme.colors.appInverse)};
+  }
+    
     text-decoration: none;
   }
   &&& a {
@@ -207,14 +183,14 @@ const WrapperImage = styled.div`
 
 // const TitleLink = styled(SimpleLink)`
 //   text-decoration: none;
-//   color: ${props => props.theme.colors.darkgray};
+//   color: ${props => props.theme.colors.mediumdark};
 //   &:hover {
 //     text-decoration: underline;
 //   }
 // `;
 
 const Title = styled(Heading)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.darker};
   font-size: 20px;
   text-decoration: none;
   word-break: break-all;

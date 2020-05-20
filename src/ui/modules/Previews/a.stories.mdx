@@ -14,14 +14,17 @@ import {Box} from 'rebass'
 import { useFormik } from 'formik';
 import {UserPreviewProps,
 ResourcePreviewProps, 
+ResourcePreviewUploadedProps,
 CommunityPreviewProps, 
 CollectionPreviewProps,
 CommentPreviewProps,
 MainCommentPreviewProps,
 LikedCommentPreviewProps,
-// FlaggedItemPreviewProps,
+FlaggedItemPreviewProps,
 ThreadPreviewProps
  } from 'ui/mock/previews'
+import { activityPreviewProps } from 'ui/mock/activityPreview';
+import { ActivityPreview } from 'ui/modules/ActivityPreview';
 
 <Meta title="Modules|Main Previews"/>
 
@@ -33,7 +36,6 @@ Let's define a story for the `User preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -53,7 +55,6 @@ Let's define a story for the `Resource via url preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -71,13 +72,12 @@ Let's define a story for the `Uploaded Resource preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
         p={2}
       >
-    <Resource {...ResourcePreviewProps('license', 'pdf' ) } />
+    <Resource {...ResourcePreviewUploadedProps() } />
     </Box>
   </Story>
 </Preview>
@@ -90,7 +90,6 @@ Let's define a story for the `Community preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -109,7 +108,6 @@ Let's define a story for the `Collection preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -128,7 +126,6 @@ Let's define a story for the `Comment preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -147,7 +144,6 @@ Let's define a story for the `Thread preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -167,7 +163,6 @@ Let's define a story for the `Main Comment preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
@@ -186,13 +181,32 @@ Let's define a story for the `Liked Comment preview` module
      <Box
         sx={{
           borderRadius: '6px',
-          background: '#fff',
           width: '600px',
           margin: '0 auto'
         }}
         p={2}
       >
     <LikedComment {...LikedCommentPreviewProps()} />
+    </Box>
+  </Story>
+</Preview> 
+
+# Flagged Item
+Let's define a story for the `Liked Comment preview` module
+
+<Preview>
+  <Story name="Flagged item preview module">
+     <Box
+        sx={{
+          borderRadius: '6px',
+          width: '600px',
+          margin: '0 auto'
+        }}
+        p={2}
+      >
+    <FlaggedItem {...FlaggedItemPreviewProps(
+       <ActivityPreview {...activityPreviewProps('Created a comment', <Comment hideActions={true} {...CommentPreviewProps() }/>)} />
+    )} />
     </Box>
   </Story>
 </Preview> 

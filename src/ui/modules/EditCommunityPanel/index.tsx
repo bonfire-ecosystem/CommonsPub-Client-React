@@ -3,7 +3,7 @@ import { i18nMark } from '@lingui/react';
 import { Input, Textarea } from '@rebass/forms';
 import { FormikHook } from 'ui/@types/types';
 import * as React from 'react';
-import DropzoneArea from '../../../components/elements/DropzoneModal';
+import DropzoneArea from 'ui/modules/DropzoneModal';
 import Alert from 'ui/elements/Alert';
 import Button from 'ui/elements/Button';
 import { clearFix } from 'polished';
@@ -133,11 +133,11 @@ const CollectionContainerForm = styled(ContainerForm)`
 `;
 
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
 `;
 
 const Description = styled(Text)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
 `;
 
 const HeroInfo = styled.div`
@@ -149,7 +149,7 @@ const HeroInfo = styled.div`
     margin: 0;
     line-height: 32px !important;
     font-size: 24px !important;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
     ${media.lessThan('medium')`
       margin-top: 8px;
     `};
@@ -159,7 +159,7 @@ const HeroInfo = styled.div`
     color: rgba(0, 0, 0, 0.8);
     font-size: 15px;
     margin-top: 8px;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
   }
   .--rtl & {
     margin-right: 16px;

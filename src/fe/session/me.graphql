@@ -18,6 +18,7 @@ fragment UseMeData on Me {
   user{
     id
     ...SidebarMeUser
+    extraInfo
   }
 }
 

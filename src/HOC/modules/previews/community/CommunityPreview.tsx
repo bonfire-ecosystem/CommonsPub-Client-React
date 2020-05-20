@@ -9,10 +9,11 @@ import { useFormik } from 'formik';
 
 export interface Props {
   communityId: Community['id'];
+  flagged?: boolean;
 }
 
-export const CommunityPreviewHOC: FC<Props> = ({ communityId }) => {
-  const { community, toggleJoin } = useCommunityPreview(communityId);
+export const CommunityPreviewHOC: FC<Props> = ({ communityId, flagged }) => {
+  const { community, toggleJoin, isCreator } = useCommunityPreview(communityId);
 
   const toggleJoinFormik = useFormik({
     initialValues: {},
@@ -22,7 +23,7 @@ export const CommunityPreviewHOC: FC<Props> = ({ communityId }) => {
     if (!community) {
       return null;
     }
-
+    const hideActions = flagged ? true : false;
     const {
       icon,
       isLocal,
@@ -39,6 +40,7 @@ export const CommunityPreviewHOC: FC<Props> = ({ communityId }) => {
     const props: CommunityPreviewProps = {
       icon: icon?.url || '',
       name,
+      isCreator,
       summary: summary || '',
       collectionsCount: collectionCount || 0,
       joined: !!myFollow,
@@ -49,7 +51,8 @@ export const CommunityPreviewHOC: FC<Props> = ({ communityId }) => {
         url: isLocal ? `/communities/${communityId}` : canonicalUrl || '',
         external: !isLocal
       },
-      displayUsername
+      displayUsername,
+      hideActions: hideActions
     };
     return props;
   }, [community, toggleJoinFormik]);

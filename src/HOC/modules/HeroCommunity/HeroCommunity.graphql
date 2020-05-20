@@ -3,9 +3,7 @@ fragment HeroCommunityData on Community  {
     displayUsername
     name
     summary
-    icon{
- id, url }
-
+    icon{ id, url }
     followerCount
     myFollow { id }
     myFlag { id }

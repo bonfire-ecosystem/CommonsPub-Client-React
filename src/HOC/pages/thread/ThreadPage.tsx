@@ -12,12 +12,15 @@ import {
 import { getActivityActor } from 'fe/lib/activity/getActivityActor';
 import { useThreadComments } from 'fe/comment/thread/useThreadComments';
 import { PreviewIndex } from 'HOC/modules/previews';
+import { useFormikPage } from 'fe/lib/helpers/usePage';
 
 export interface ThreadPage {
   threadId: Thread['id'];
 }
 export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
   const { commentPage } = useThreadComments(threadId);
+  const [loadMoreComments] = useFormikPage(commentPage);
+
   const thread = useThreadPreview(threadId);
   const uiProps = useMemo<null | Props>(() => {
     const { context, mainComment } = thread;
@@ -34,12 +37,11 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
 
     const activityProps: Pick<
       ActivityPreviewProps,
-      'status' | 'communityLink' | 'communityName' | 'link' | 'event'
+      'status' | 'communityLink' | 'communityName' | 'event'
     > = {
       communityLink: `/communities/${communityId}`,
       communityName,
-      event: 'Created Comment',
-      link: '',
+      event: 'started a discussion',
       status: ActivityPreviewStatus.Loaded
     };
 
@@ -49,7 +51,7 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
           ...activityProps,
           actor: mainComment.creator
             ? getActivityActor(mainComment.creator)
-            : { icon: '', link: '', name: '' },
+            : null,
           preview: (
             <CommentPreviewHOC commentId={mainComment.id} mainComment={true} />
           ),
@@ -66,6 +68,7 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
               key={comment.id}
               {...{
                 ...activityProps,
+                event: 'replied',
                 actor: comment.creator
                   ? getActivityActor(comment.creator)
                   : { icon: '', link: '', name: '' },
@@ -73,6 +76,7 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
                   <CommentPreviewHOC
                     commentId={comment.id}
                     mainComment={false}
+                    hideActions={true}
                   />
                 ),
                 createdAt: comment.createdAt
@@ -89,10 +93,11 @@ export const ThreadPage: FC<ThreadPage> = ({ threadId }) => {
       communityIcon,
       communityId,
       communityName,
-      isCommunityContext: thread.context?.__typename === 'Community'
+      isCommunityContext: thread.context?.__typename === 'Community',
+      loadMoreComments
     };
 
     return props;
-  }, [thread, commentPage]);
+  }, [thread, commentPage, loadMoreComments]);
   return uiProps && <ThreadPageUI {...uiProps} />;
 };

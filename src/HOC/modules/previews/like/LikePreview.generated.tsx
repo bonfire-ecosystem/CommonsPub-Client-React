@@ -19,7 +19,7 @@ import { CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 
 export type LikePreviewFragment = (
   { __typename: 'Like' }
-  & Pick<Types.Like, 'id'>
+  & Pick<Types.Like, 'id' | 'createdAt'>
   & { context: (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
@@ -41,6 +41,7 @@ export type LikePreviewFragment = (
 export const LikePreviewFragmentDoc = gql`
     fragment LikePreview on Like {
   id
+  createdAt
   context {
     ... on Community {
       ...CommunityPreview

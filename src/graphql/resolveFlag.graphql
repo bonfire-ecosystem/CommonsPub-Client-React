@@ -1,5 +1,0 @@
-mutation resolveFlagMutation($flagId: String!) {
-  resolveFlag(flagId: $flagId){
-    context { __typename }
-  }
-}

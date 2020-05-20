@@ -5,7 +5,8 @@ import {
   useRemoveFeaturedMutation
 } from 'fe/mutation/feature/useMutateFeature.generated';
 import { Collection, Community, Feature } from 'graphql/types.generated';
-import { useCallback, useMemo } from 'react';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
 
 export type Actor = Collection | Community;
 
@@ -53,7 +54,7 @@ export const useFeaturedContext = (ctx: UseFeaturedContext) => {
   //   [featuredCollections, featuredCommunities, ctx]
   // );
 
-  const toggleFeatured = useCallback(async () => {
+  const toggleFeatured = useCallOrNotifyMustLogin(async () => {
     if (!ctx.isFeatured) {
       const { id, __typename } = ctx.actor;
       if (!id || !__typename || mutating) {

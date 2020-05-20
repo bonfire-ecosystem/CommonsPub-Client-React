@@ -19,28 +19,11 @@ export enum Status {
 
 const SidebarComponent = styled(Flex)`
   width: 240px;
-  ${media.lessThan('medium')`
-      display: none;
-  `};
 `;
 
 const InternalWrapper = styled(Box)<{ isOpen: boolean }>`
   transition: 'all 250ms ease';
-flex: 1;
-// ${media.greaterThan('1281px')`
-//width: 300px !important;
-//`}
-//${media.lessThan('1280px')`
-//width: 88px;
-//`}
-//${media.lessThan('10240px')`
-//width: 68px;
-//`}
-//${media.lessThan('860px')`
-//position: relative;
-//left: ${props => (props.isOpen ? '0' : '-300px')};
-//width: ${props => (props.isOpen ? '100%' : '0')};
-//`}
+  flex: 1;
 `;
 
 const SidebarFixed = styled(Box)`
@@ -90,10 +73,10 @@ const CommunityLink = styled(NavLink)`
   }
   &.active {
     > div {
-      background: ${props => props.theme.colors.orange};
+      background: ${props => props.theme.colors.primary};
     }
     div {
-      color: white !important;
+      color: ${props => props.theme.colors.appInverse} !important;
     }
     position: relative;
   }
@@ -107,22 +90,14 @@ const SidebarLink = styled(NavLink)`
     height: 36px;
   }
   &.active {
-    color: ${props => props.theme.colors.orange};
-    position: relative;
-    &:before {
-      position: absolute;
-      content: '';
-      left: -10px;
-      top: 24px;
-      width: 8px;
-      border-radius: 100px;
-      height: 8px;
-      display: block;
-      background: ${props => props.theme.colors.orange};
+    div {
+      color: ${props => props.theme.colors.primary};
+      position: relative;
     }
   }
   div {
-    color: ${props => (props.isActive ? props.theme.colors.orange : 'inherit')};
+    color: ${props =>
+      props.isActive ? props.theme.colors.primary : props.theme.colors.darker};
   }
 `;
 
@@ -131,7 +106,7 @@ const NavItem = styled(Flex)`
   padding: 8px;
   margin-bottom: 8px;
   &:hover {
-    background: ${props => props.theme.colors.lightgray};
+    background: ${props => props.theme.colors.medium};
   }
   ${media.lessThan('1280px')`
 img {
@@ -141,19 +116,18 @@ img {
 `;
 
 const ItemTitle = styled(Text)`
-font-size: 15px;
-a:focus,
-      a:active {
-          color: inherit;
-      }
-${ellipsis('220px')};
-// ${media.lessThan('1280px')`
-//display: none;
-//`};
+  font-size: 14px;
+  font-weight: 600;
+  color: ${props => props.theme.colors.darker};
+  a:focus,
+  a:active {
+    color: inherit;
+  }
+  ${ellipsis('220px')};
 `;
 
 // const Right = styled(Box)`
-// color: ${props => props.theme.colors.gray};
+// color: ${props => props.theme.colors.medium};
 // //${media.lessThan('1280px')`
 // //display: none;
 // //`};
@@ -184,21 +158,22 @@ export interface CommunityPreview {
 
 interface SidebarLoaded {
   status: Status.Loaded;
-  isOpenSidebar?: boolean | null;
+  isSidebarOpen: boolean;
   communities: CommunityPreview[];
 }
 
 export interface SidebarLoading {
   status: Status.Loading;
-  isOpenSidebar?: boolean | null;
+  isSidebarOpen: boolean;
 }
 
 export type Props = SidebarLoaded | SidebarLoading;
 
 export const Sidebar: React.FC<Props> = props => {
+  // console.log('isSidebarOpen ' + (props.isSidebarOpen == true));
   return (
     <>
-      {props.isOpenSidebar == true || props.isOpenSidebar == null ? (
+      {props.isSidebarOpen == true ? (
         <SidebarComponent>
           <InternalWrapper>
             <SidebarFixed>

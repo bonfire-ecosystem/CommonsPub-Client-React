@@ -7,11 +7,13 @@ import { Collection, ResourceInput } from 'graphql/types.generated';
 import { useMemo } from 'react';
 import { CollectionResourcesQueryRefetch } from '../collection/useCollectionResources.generated';
 import * as GQL from './useAddResource.generated';
+import { DEFAULT_PAGE_SIZE } from 'mn-constants';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
 
 export interface AddResource {
   collectionId: Collection['id'];
   resource: ResourceInput;
-  content: File;
+  content: File | string;
   icon: Maybe<File | string>;
 }
 export const useAddResource = () => {
@@ -19,13 +21,8 @@ export const useAddResource = () => {
     createResource,
     createResourceStatus
   ] = GQL.useAddResourceCreateResourceMutation();
-  return useMemo(() => {
-    const create = async ({
-      collectionId,
-      content,
-      icon,
-      resource
-    }: AddResource) => {
+  const create = useCallOrNotifyMustLogin(
+    async ({ collectionId, content, icon, resource }: AddResource) => {
       if (createResourceStatus.loading) {
         return;
       }
@@ -37,11 +34,19 @@ export const useAddResource = () => {
           content: getUploadInput(content),
           icon: getMaybeUploadInput(icon, null)
         },
-        refetchQueries: [CollectionResourcesQueryRefetch({ collectionId })]
+        refetchQueries: [
+          CollectionResourcesQueryRefetch({
+            collectionId,
+            limit: DEFAULT_PAGE_SIZE
+          })
+        ]
       });
-    };
+    },
+    [createResourceStatus, createResource]
+  );
+  return useMemo(() => {
     return {
       create
     };
-  }, [createResourceStatus, createResource]);
+  }, [create]);
 };

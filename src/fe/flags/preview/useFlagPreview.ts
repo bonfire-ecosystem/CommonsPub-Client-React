@@ -1,12 +1,13 @@
 import { Flag } from 'graphql/types.generated';
-import { useMemo, useCallback } from 'react';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
+import { AllFlagsQueryRefetch } from '../all/useAllFlags.generated';
 import {
-  useFlagPreviewDataQuery,
+  useDeactivateFlaggedUserMutation,
   useDeleteFlagContextMutation,
   useDeleteFlagMutation,
-  useDeactivateFlaggedUserMutation
+  useFlagPreviewDataQuery
 } from './useFlagPreview.generated';
-import { AllFlagsQueryRefetch } from '../all/useAllFlags.generated';
 
 export const useFlagPreview = (flagId: Flag['id']) => {
   const flagQ = useFlagPreviewDataQuery({ variables: { flagId } });
@@ -21,7 +22,7 @@ export const useFlagPreview = (flagId: Flag['id']) => {
   ] = useDeactivateFlaggedUserMutation();
 
   const flag = flagQ.data?.flag;
-  const deactivateFlaggedUser = useCallback(() => {
+  const deactivateFlaggedUser = useCallOrNotifyMustLogin(async () => {
     if (
       !flag ||
       flag.context.__typename !== 'User' ||
@@ -35,7 +36,7 @@ export const useFlagPreview = (flagId: Flag['id']) => {
     });
   }, [flag]);
 
-  const deleteFlagContext = useCallback(() => {
+  const deleteFlagContext = useCallOrNotifyMustLogin(async () => {
     if (
       !flag ||
       flag.context.__typename === 'User' ||
@@ -54,7 +55,7 @@ export const useFlagPreview = (flagId: Flag['id']) => {
     ]);
   }, [flag]);
 
-  const ignoreFlag = useCallback(() => {
+  const ignoreFlag = useCallOrNotifyMustLogin(async () => {
     if (!flag || deleteFlagStatus.loading) {
       return;
     }

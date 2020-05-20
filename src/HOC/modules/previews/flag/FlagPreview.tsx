@@ -1,9 +1,13 @@
-import React, { FC, useMemo } from 'react';
-import { Flag } from 'graphql/types.generated';
-import { FlaggedItem, FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
 import { useFlagPreview } from 'fe/flags/preview/useFlagPreview';
-import { PreviewComponent } from '../activity/PreviewComponent';
+import { getActivityActor } from 'fe/lib/activity/getActivityActor';
+import { getCommunityInfoStrings } from 'fe/lib/activity/getContextCommunityInfo';
 import { useFormik } from 'formik';
+import { Flag } from 'graphql/types.generated';
+import React, { FC, useMemo } from 'react';
+import { ActivityPreview, Status } from 'ui/modules/ActivityPreview';
+import { FlaggedItem, FlaggedProps } from 'ui/modules/Previews/FlaggedItem';
+import { PreviewComponent } from '../activity/PreviewComponent';
+import { CommentPreviewHOC } from '../comment/CommentPreview';
 
 interface FlagPreviewHOC {
   flagId: Flag['id'];
@@ -17,7 +21,38 @@ export const FlagPreviewHOC: FC<FlagPreviewHOC> = ({ flagId }) => {
   } = useFlagPreview(flagId);
 
   const FlaggedItemContextElement: FlaggedProps['FlaggedItemContextElement'] = useMemo(() => {
-    return flag ? <PreviewComponent context={flag.context} /> : <></>;
+    if (!flag) {
+      return <></>;
+    } else if (flag.context.__typename === 'Comment') {
+      const comment = flag.context;
+      const { communityLink, communityName } = getCommunityInfoStrings(comment);
+      const CommentPreview = (
+        <CommentPreviewHOC
+          commentId={comment.id}
+          mainComment={false}
+          hideActions={true}
+        />
+      );
+      const actor = flag.creator && getActivityActor(flag.creator);
+
+      return (
+        <ActivityPreview
+          actor={actor}
+          createdAt={comment.createdAt}
+          event={'commented'}
+          communityLink={communityLink}
+          communityName={communityName}
+          status={Status.Loaded}
+          preview={CommentPreview}
+        />
+      );
+    } else {
+      return flag ? (
+        <PreviewComponent context={flag.context} flagged={true} />
+      ) : (
+        <></>
+      );
+    }
   }, [flag]);
 
   const blockUserFormik: FlaggedProps['blockUserFormik'] = useFormik({

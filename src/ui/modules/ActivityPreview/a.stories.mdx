@@ -2,7 +2,7 @@ import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
 import { PropsTable } from '@storybook/components';
 import { ActivityPreview } from '.';
 import { CollectionPreviewProps, CommunityPreviewProps, ResourcePreviewProps, UserPreviewProps, CommentPreviewProps, LikedCommentPreviewProps, 
-// FlaggedItemPreviewProps 
+ FlaggedItemPreviewProps 
 } from 'ui/mock/previews';
 import { activityPreviewProps } from 'ui/mock/activityPreview';
 import { Comment } from 'ui/modules/Previews/Comment';
@@ -89,6 +89,19 @@ Let's define a story for the `Collection preview` module
   <Story name="Liked a comment">
     <Box p={2} width={"600px"}>
       <ActivityPreview {...activityPreviewProps('Like a comment', <LikedComment {...LikedCommentPreviewProps() }/>)} />
+    </Box>
+  </Story>
+</Preview>
+
+# Flagged a comment
+Let's define a story for the `Collection preview` module
+
+<Preview>
+  <Story name="Flagged a comment">
+    <Box p={2} width={"600px"}>
+      <ActivityPreview {...activityPreviewProps('Flag a comment', <FlaggedItem {...FlaggedItemPreviewProps(
+       <ActivityPreview {...activityPreviewProps('Created a comment', <Comment hideActions={true} {...CommentPreviewProps() }/>)} />
+    )} />)} />
     </Box>
   </Story>
 </Preview>

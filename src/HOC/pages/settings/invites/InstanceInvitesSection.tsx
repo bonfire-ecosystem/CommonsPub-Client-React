@@ -3,6 +3,7 @@ import Invites, { Props } from 'ui/pages/settings/invites';
 import { useInstanceRegistrationAllowLists } from 'fe/settings/instance/registration/allowlist/instanceRegistrationAllowLists';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useFormikPage } from 'fe/lib/helpers/usePage';
 
 export interface InstanceInvitesSection {}
 
@@ -17,7 +18,7 @@ export const InstanceInvitesSection: FC<InstanceInvitesSection> = () => {
     listEmailsPage,
     sendInviteEmail
   } = useInstanceRegistrationAllowLists();
-
+  const [loadMoreEmails] = useFormikPage(listEmailsPage);
   const formikAddEmail = useFormik<{ email: string }>({
     initialValues: { email: '' },
     validationSchema: withEmailValidation,
@@ -53,7 +54,8 @@ export const InstanceInvitesSection: FC<InstanceInvitesSection> = () => {
       formikAddEmail,
       formikRemoveEmail,
       formikSendInvite,
-      emailsList
+      emailsList,
+      loadMoreEmails
     };
   }, [formikAddEmail, formikRemoveEmail, emailsList]);
   return <Invites {...props} />;

@@ -17,7 +17,7 @@ import {
 } from 'react-feather';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import { Input, Textarea } from '@rebass/forms';
-import DropzoneArea from '../../../components/elements/DropzoneModal';
+import DropzoneArea from 'ui/modules/DropzoneModal';
 import { ContainerForm, Actions } from 'ui/modules/Modal';
 import Button from 'ui/elements/Button';
 // import { useHistory } from 'react-router';
@@ -30,11 +30,8 @@ import {
 
 const tt = {
   placeholders: {
-    name: i18nMark('Choose a name for the community'),
-    summary: i18nMark(
-      'Please describe who might be interested in this community and what kind of collections it is likely to contain...'
-    ),
-    icon: i18nMark('Enter the URL of an image to represent the community'),
+    name: i18nMark('Display Name'),
+    summary: i18nMark('Please tell us a little bit about yourself...'),
     location: i18nMark('Choose a location'),
     website: i18nMark('Enter a URL to share more info about you')
   }
@@ -108,7 +105,7 @@ export const Settings: React.FC<Props> = ({
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Box sx={{ width: '600px' }}>
+            <SettingsWrapper>
               <Switch>
                 <Route path={`${basePath}/preferences`}>{Preferences}</Route>
                 <Route path={`${basePath}/instance`}>{Instance}</Route>
@@ -141,7 +138,7 @@ export const Settings: React.FC<Props> = ({
                           </Img>
                         </WrapperHero>
                       </FlexProfile>
-                      <HeroInfo ml={3}>
+                      <HeroInfo mt={2} ml={3}>
                         <CollectionContainerForm>
                           <Input
                             placeholder={tt.placeholders.name}
@@ -209,31 +206,35 @@ export const Settings: React.FC<Props> = ({
                   </ProfileBox>
                 </Route>
               </Switch>
-            </Box>
+            </SettingsWrapper>
           </Wrapper>
         </WrapperCont>
-        <RepoLink variant="text" my={3} mt={2}>
+        {/* <RepoLink variant="text" my={3} mt={2}>
           <a href="https://gitlab.com/moodlenet/meta/-/issues" target="_blank">
             <Trans>Want to report a bug?</Trans>
           </a>
-        </RepoLink>
+        </RepoLink> */}
       </HomeBox>
     </MainContainer>
   );
 };
 
-const RepoLink = styled(Text)`
-  text-align: right;
-  width: 100%;
-  a {
-    text-decoration: underline;
-    font-size: 12px;
-    color: ${props => props.theme.colors.gray};
-    &:hover {
-      color: ${props => props.theme.colors.darkgray};
-    }
-  }
+const SettingsWrapper = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
 `;
+
+// const RepoLink = styled(Text)`
+//   text-align: right;
+//   width: 100%;
+//   a {
+//     text-decoration: underline;
+//     font-size: 12px;
+//     color: ${props => props.theme.colors.dark};
+//     &:hover {
+//       color: ${props => props.theme.colors.darkest};
+//     }
+//   }
+// `;
 
 const Sidebar = ({ basePath, isAdmin }) => {
   return (
@@ -371,7 +372,7 @@ const SectionTitle = styled(Flex)`
 const CollectionContainerForm = styled(ContainerForm)`
   input {
     background: #fbfbfb;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
     border: 0;
     font-weight: 700;
   }
@@ -389,8 +390,8 @@ const Img = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 6px;
-  background: ${props => props.theme.colors.lightgray};
-  border: 3px solid white;
+  background: ${props => props.theme.colors.light};
+  border: 3px solid ${props => props.theme.colors.light};
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -420,13 +421,13 @@ const FlexProfile = styled(Flex)`
 const ProfileBox = styled(Box)``;
 
 const Username = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   font-size: 14px;
 `;
 
 const Location = styled(Flex)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.medium};
   font-weight: 500;
   line-height: 26px;
   font-size: 14px;
@@ -435,7 +436,7 @@ const Location = styled(Flex)`
   span {
     margin-right: 8px;
     & svg {
-      stroke: ${props => props.theme.colors.gray};
+      stroke: ${props => props.theme.colors.medium};
       vertical-align: text-bottom;
     }
     .--rtl & {
@@ -446,7 +447,7 @@ const Location = styled(Flex)`
 `;
 
 const RelevantLink = styled(Flex)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.medium};
   font-weight: 500;
   line-height: 26px;
   font-size: 14px;
@@ -455,7 +456,7 @@ const RelevantLink = styled(Flex)`
   span {
     margin-right: 8px;
     & svg {
-      stroke: ${props => props.theme.colors.gray};
+      stroke: ${props => props.theme.colors.medium};
       vertical-align: text-bottom;
     }
     .--rtl & {
@@ -479,7 +480,7 @@ const Hero = styled.div`
   position: relative;
   border-radius: 6px;
   & p {
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
     padding: 0 24px;
     margin-left: 120px;
     margin: 0;
@@ -510,7 +511,7 @@ const Icon = styled(Box)`
   display: flex;
   align-items: center;
   svg {
-    stroke: ${props => props.theme.colors.gray};
+    stroke: ${props => props.theme.colors.medium};
     width: 40px;
   }
 `;
@@ -541,7 +542,7 @@ export const WrapperPanel = styled(Flex)`
 `;
 
 export const Panel = styled(Box)`
-  background: #fff;
+  background: ${props => props.theme.colors.appInverse};
   border-radius: 4px;
   align-items: stretch;
   border: 0 solid black;
@@ -567,10 +568,10 @@ export const PanelTitle = styled(Text)`
 export const Nav = styled(Box)``;
 
 export const NavItem = styled(Text)`
-color: ${props => props.theme.colors.darkgray}
+color: ${props => props.theme.colors.mediumdark}
 border-bottom: 1px solid ${props => props.theme.colors.lighter};
 a {
-  color: ${props => props.theme.colors.darkgray}
+  color: ${props => props.theme.colors.mediumdark}
   text-decoration: none;
   font-weight: 700;
   &.active {

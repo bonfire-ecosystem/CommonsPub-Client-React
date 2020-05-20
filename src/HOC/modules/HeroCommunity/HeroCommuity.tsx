@@ -18,7 +18,9 @@ export interface HeroCommunity {
 
 export const HeroCommunity: FC<HeroCommunity> = ({ communityId, basePath }) => {
   const { isAdmin } = useMe();
-  const { toggleJoin, community, canModify } = useCommunity(communityId);
+  const { toggleJoin, community, canModify, isCreator } = useCommunity(
+    communityId
+  );
 
   const toggleJoinFormik = useFormik<{}>({
     initialValues: {},
@@ -41,6 +43,7 @@ export const HeroCommunity: FC<HeroCommunity> = ({ communityId, basePath }) => {
         status: Status.Loaded,
         canModify,
         isAdmin,
+        isCreator,
         following: !!community.myFollow,
         isFlagged: !!community.myFlag,
         icon: community.icon?.url || '',
@@ -59,7 +62,7 @@ export const HeroCommunity: FC<HeroCommunity> = ({ communityId, basePath }) => {
       }
     };
     return props;
-  }, [isAdmin, community, canModify, toggleJoinFormik, basePath]);
+  }, [isAdmin, community, canModify, toggleJoinFormik, basePath, isCreator]);
 
   return <HeroCommunityUI {...heroProps} />;
 };

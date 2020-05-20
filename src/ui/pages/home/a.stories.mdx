@@ -20,12 +20,13 @@ import {Comment} from 'ui/modules/Previews/Comment'
 import {Thread} from 'ui/modules/Previews/Thread'
 import {LikedComment} from 'ui/modules/Previews/LikedComment'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Side = () => <Sidebar {...getSidebarProps()}/>
 
-<Meta title="Pages|My Moodlenet" component={Home}/>
+<Meta title="Pages|My MoodleNet" component={Home}/>
 
 
 # Home
-Let's define a story for the `Home` page
+The `Home` (or '**My MoodleNet**') page shows the user timeline, with links to all communities and all collections on the local instance. It is made up of the following:
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
@@ -37,7 +38,7 @@ Let's define a story for the `Home` page
   <Story name="Home page">
     <WithSidebar 
       HeaderBox={Head}
-      SidebarBox={<Sidebar {...getSidebarProps()}/>}>
+      SidebarBox={Side}>
         <Home 
         InboxElements={<React.Fragment>
           <ActivityPreview key={1} {...activityPreviewProps('Added a link', <Resource {...ResourcePreviewProps() }/>)} />

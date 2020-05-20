@@ -3,8 +3,11 @@ import { PropsTable } from '@storybook/components';
 import { Settings } from '.';
 import {Box} from 'rebass'
 import {getEditProfilePropsAdmin} from 'ui/mock/settings'
+import {MainHeader} from 'ui/modules/MainHeader'
+import {getMainHeaderProps} from 'ui/mock/mainHeader'
 
-import {Guest} from 'ui/templates/guest'
+import {WithoutSidebar} from 'ui/templates/withoutSidebar'
+const Head = () => <MainHeader {...getMainHeaderProps() } />
 
 <Meta title="Pages|Settings - Admin" component={Settings}/>
 
@@ -20,9 +23,11 @@ Let's define a story for the `Settings` page - Admin user
 
 <Preview>
   <Story name="Settings page - Admin user">
-    <Guest>
+    <WithoutSidebar
+     HeaderBox={Head}
+    >
       <Settings {...getEditProfilePropsAdmin()}/>
-    </Guest>
+    </WithoutSidebar>
   </Story>
 </Preview>
 

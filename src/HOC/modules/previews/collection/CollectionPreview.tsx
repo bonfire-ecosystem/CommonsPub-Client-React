@@ -9,9 +9,10 @@ import { useFormik } from 'formik';
 
 export interface Props {
   collectionId: Collection['id'];
+  flagged?: boolean;
 }
 
-export const CollectionPreviewHOC: FC<Props> = ({ collectionId }) => {
+export const CollectionPreviewHOC: FC<Props> = ({ collectionId, flagged }) => {
   const { collection, toggleFollow } = useCollectionPreview(collectionId);
   const toggleFollowFormik = useFormik({
     initialValues: {},
@@ -22,6 +23,9 @@ export const CollectionPreviewHOC: FC<Props> = ({ collectionId }) => {
     if (!collection) {
       return null;
     }
+
+    const hideActions = flagged ? true : false;
+
     const {
       icon,
       isLocal,
@@ -44,7 +48,8 @@ export const CollectionPreviewHOC: FC<Props> = ({ collectionId }) => {
       name,
       summary: summary || '',
       totalResources: resourceCount || null,
-      toggleFollowFormik
+      toggleFollowFormik,
+      hideActions: hideActions
     };
     return props;
   }, [collection, toggleFollowFormik]);

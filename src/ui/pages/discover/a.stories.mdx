@@ -26,12 +26,13 @@ import {FeaturedCollections} from 'ui/modules/FeaturedCollections'
 import {getFeaturedCommunitiesProps} from 'ui/mock/featuredCommunities'
 import {getFeaturedCollectionsProps} from 'ui/mock/featuredCollections'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Side = () => <Sidebar {...getSidebarProps()}/>
 
 <Meta title="Pages|Discover" component={Discover}/>
 
 
 # Discover
-Let's define a story for the `Discover` page
+The `Discover` page displays featured communities, featured collections, and the timeline of the local instance. It is made up of the following:
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
@@ -43,7 +44,7 @@ Let's define a story for the `Discover` page
   <Story name="Discover page">
     <WithSidebar 
       HeaderBox={Head}
-      SidebarBox={<Sidebar {...getSidebarProps()}/>}>
+      SidebarBox={Side}>
         <Discover 
         basePath={"/"}
         LoadMoreFormik={getLoadMoreProps()}

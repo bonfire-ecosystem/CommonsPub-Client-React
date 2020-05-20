@@ -25,7 +25,7 @@ export const LoadMore: React.FC<Props> = props => {
 };
 
 const Wrapper = styled(Box)`
-  background: white;
+  background: ${props => props.theme.colors.appInverse};
   button {
     width: 100%;
   }

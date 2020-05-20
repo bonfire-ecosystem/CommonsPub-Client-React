@@ -1,15 +1,15 @@
 import * as Types from '../../../../graphql/types.generated';
 
 import { CommentPreviewFragment } from '../comment/CommentPreview.generated';
-import { UserPreviewFragment } from '../user/UserPreview.generated';
 import { ResourcePreviewFragment } from '../resource/ResourcePreview.generated';
 import { CollectionPreviewFragment } from '../collection/CollectionPreview.generated';
 import { CommunityPreviewFragment } from '../community/CommunityPreview.generated';
+import { UserPreviewFragment } from '../user/UserPreview.generated';
 import gql from 'graphql-tag';
+import { UserPreviewFragmentDoc } from '../user/UserPreview.generated';
 import { CommunityPreviewFragmentDoc } from '../community/CommunityPreview.generated';
 import { CollectionPreviewFragmentDoc } from '../collection/CollectionPreview.generated';
 import { ResourcePreviewFragmentDoc } from '../resource/ResourcePreview.generated';
-import { UserPreviewFragmentDoc } from '../user/UserPreview.generated';
 import { CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 
 
@@ -19,8 +19,11 @@ import { CommentPreviewFragmentDoc } from '../comment/CommentPreview.generated';
 
 export type FlagPreviewFragment = (
   { __typename: 'Flag' }
-  & Pick<Types.Flag, 'id' | 'message' | 'isResolved'>
-  & { context: (
+  & Pick<Types.Flag, 'id' | 'message' | 'isResolved' | 'createdAt'>
+  & { creator: Types.Maybe<(
+    { __typename: 'User' }
+    & UserPreviewFragment
+  )>, context: (
     { __typename: 'Collection' }
     & CollectionPreviewFragment
   ) | (
@@ -43,6 +46,10 @@ export const FlagPreviewFragmentDoc = gql`
   id
   message
   isResolved
+  creator {
+    ...UserPreview
+  }
+  createdAt
   context {
     ... on Community {
       ...CommunityPreview
@@ -61,8 +68,8 @@ export const FlagPreviewFragmentDoc = gql`
     }
   }
 }
-    ${CommunityPreviewFragmentDoc}
+    ${UserPreviewFragmentDoc}
+${CommunityPreviewFragmentDoc}
 ${CollectionPreviewFragmentDoc}
 ${ResourcePreviewFragmentDoc}
-${UserPreviewFragmentDoc}
 ${CommentPreviewFragmentDoc}`;

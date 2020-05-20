@@ -5,6 +5,7 @@ import {
 import { ToggleFormik } from './formik';
 
 export const getHeroCommunityProps = (
+  isCreator = false,
   isAdmin = false,
   following = true,
   icon = 'https://live.staticflickr.com/855/30064665718_d43727c1b8_b.jpg',
@@ -15,6 +16,7 @@ export const getHeroCommunityProps = (
   return {
     community: {
       isAdmin,
+      isCreator,
       // isFeatured: false,
       basePath: '/',
       status: HeroCommunityStatus.Loaded,

@@ -1,14 +1,15 @@
-import { useCallback, useMemo } from 'react';
-import Maybe from 'graphql/tsutils/Maybe';
+import { isOptimisticId, OPTIMISTIC_ID_STRING } from 'fe/lib/helpers/mutations';
 import * as GQL from 'fe/mutation/like/useMutateLike.generated';
+import Maybe from 'graphql/tsutils/Maybe';
 import {
-  Resource,
   // Community,
   // Collection,
   // User,
-  Comment
+  Comment,
+  Resource
 } from 'graphql/types.generated';
-import { OPTIMISTIC_ID_STRING, isOptimisticId } from 'fe/lib/helpers/mutations';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
 
 type Typename = Exclude<
   // | Collection['__typename']
@@ -28,7 +29,7 @@ export const useLikeContext = (
   const [likeMut, likeMutStatus] = GQL.useLikeMutation();
   const [unlikeMut, unlikeMutStatus] = GQL.useUnlikeMutation();
   const mutating = likeMutStatus.loading || unlikeMutStatus.loading;
-  const toggleLike = useCallback(async () => {
+  const toggleLike = useCallOrNotifyMustLogin(async () => {
     if (!contextId || mutating) {
       return;
     }

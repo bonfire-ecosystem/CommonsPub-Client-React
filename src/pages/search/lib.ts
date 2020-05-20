@@ -6,14 +6,13 @@ import {
   useSearchUnfollowMutation,
   SearchHostIndexAndMyFollowingsDocument
 } from './SearchData.generated';
-import { Hit } from './Hits';
 import { useMemo, useCallback } from 'react';
+import Maybe from 'graphql/tsutils/Maybe';
+import { Hit } from 'fe/search/Hits';
 // import { GetSidebarQueryDocument } from 'graphql/getSidebar.generated';
 
-type Q = SearchHostIndexAndMyFollowingsQuery;
+type Q = Maybe<SearchHostIndexAndMyFollowingsQuery>;
 export const useHit = (info: Q, hit: Hit) => {
-  const moodleLMSURL = useMemo(() => getLMSURL(info), [info]);
-
   const [followHit, followHitResult] = useSearchFollowMutation();
   const [unfollowHit, unfollowResult] = useSearchUnfollowMutation();
 
@@ -63,10 +62,9 @@ export const useHit = (info: Q, hit: Hit) => {
       isFollowable,
       follow,
       unfollow,
-      mutating,
-      moodleLMSURL
+      mutating
     };
-  }, [isFollowing, isFollowable, follow, unfollow, mutating, moodleLMSURL]);
+  }, [isFollowing, isFollowable, follow, unfollow, mutating]);
 };
 
 // export const isHitLocal = (hit: Hit, info: Q) => {
@@ -113,10 +111,7 @@ export const hitFollowingId = (
 export const getCollectionFollows = (
   info: Q
 ): SearchFollowedCollectionFragment[] => {
-  const collectionFollowsEdges =
-    info.me &&
-    info.me.user.collectionFollows &&
-    info.me.user.collectionFollows.edges;
+  const collectionFollowsEdges = info?.me?.user?.collectionFollows?.edges;
   if (!collectionFollowsEdges) {
     return [];
   }
@@ -132,10 +127,7 @@ export const getCollectionFollows = (
 export const getCommunityFollows = (
   info: Q
 ): SearchFollowedCommunityFragment[] => {
-  const communityFollowsEdges =
-    info.me &&
-    info.me.user.communityFollows &&
-    info.me.user.communityFollows.edges;
+  const communityFollowsEdges = info?.me?.user?.communityFollows?.edges;
   if (!communityFollowsEdges) {
     return [];
   }
@@ -146,16 +138,4 @@ export const getCommunityFollows = (
         context.__typename === 'Community'
     );
   return communityFollows;
-};
-
-export const getLMSURL = (info: Q): any => {
-  const url =
-    info.me &&
-    info.me.user &&
-    info.me.user.extraInfo &&
-    info.me.user.extraInfo.preferred_moodle_lms_url;
-  if (!url) {
-    return null;
-  }
-  return url;
 };

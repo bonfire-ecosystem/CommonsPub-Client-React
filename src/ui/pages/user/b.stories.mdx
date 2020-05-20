@@ -21,13 +21,14 @@ import {WithSidebar} from 'ui/templates/withSidebar'
 import {MainHeader} from 'ui/modules/MainHeader'
 import {Sidebar} from 'ui/modules/Sidebar'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Side = () => <Sidebar {...getSidebarProps()}/>
 
 
 <Meta title="Pages|Profile" component={User}/>
 
 
 # Profile
-Let's define a story for the `User` page
+The `Profile` shows the profile page of a MoodleNet user. This is made up of the following components:
 
 - **[Story](#story)**
 - **[Building blocks](#modules)**
@@ -39,7 +40,7 @@ Let's define a story for the `User` page
   <Story name="Profile page">
     <WithSidebar 
       HeaderBox={Head}
-      SidebarBox={<Sidebar {...getSidebarProps()}/>}>
+      SidebarBox={Side}>
         <User 
         totalCommunities={"23"}
         totalActivities={"23"}

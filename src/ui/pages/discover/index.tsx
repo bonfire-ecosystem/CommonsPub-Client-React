@@ -24,7 +24,7 @@ export interface Props {
   ActivitiesBox: JSX.Element;
   CommunitiesBoxes: JSX.Element;
   CollectionsBoxes: JSX.Element;
-  LoadMoreFormik?: FormikHook;
+  LoadMoreFormik: FormikHook | null;
 }
 export const Discover: React.FC<Props> = ({
   basePath,
@@ -88,7 +88,7 @@ const WrapperFeatured = styled(Flex)`
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: white;
+  background: ${props => props.theme.colors.appInverse};
   border-radius: 8px;
   max-height: 270px;
 `;

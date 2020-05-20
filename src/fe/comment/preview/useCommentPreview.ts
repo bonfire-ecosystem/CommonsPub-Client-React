@@ -12,12 +12,28 @@ export const useCommentPreview = (commentId: Comment['id']) => {
     commentPreviewQ.data?.comment?.likerCount,
     'Comment'
   );
-  const { reply } = useReplyComment(commentPreviewQ.data?.comment);
+  const threadContext = commentPreviewQ.data?.comment?.thread?.context;
+  const community =
+    threadContext?.__typename === 'Resource'
+      ? threadContext.collection?.community
+      : threadContext?.__typename === 'Collection'
+      ? threadContext.community
+      : threadContext?.__typename === 'Community'
+      ? threadContext
+      : undefined;
+  const canReply = !!community?.myFollow;
+  const { reply } = useReplyComment(
+    commentPreviewQ.data?.comment,
+    community?.id,
+    commentPreviewQ.data?.comment?.creator?.userName
+  );
   return useMemo(() => {
     return {
       comment: commentPreviewQ.data?.comment,
+      community,
       toggleLike,
-      reply
+      reply,
+      canReply
     };
-  }, [commentPreviewQ, toggleLike, reply]);
+  }, [commentPreviewQ, community, toggleLike, reply, canReply]);
 };

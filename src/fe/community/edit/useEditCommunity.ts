@@ -1,11 +1,12 @@
+import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
 import Maybe from 'graphql/tsutils/Maybe';
 import { Community, CommunityUpdateInput } from 'graphql/types.generated';
-import { useCallback, useMemo } from 'react';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
 import {
   useEditCommunityDataQuery,
   useEditCommunityMutation
 } from './useEditCommunity.generated';
-import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
 
 export interface UpdateCommunity {
   community: CommunityUpdateInput;
@@ -17,7 +18,7 @@ export const useEditCommunity = (communityId: Community['id']) => {
     variables: { communityId }
   });
 
-  const edit = useCallback(
+  const edit = useCallOrNotifyMustLogin(
     async ({ community, icon }: UpdateCommunity) => {
       if (editMutStatus.loading) {
         return;

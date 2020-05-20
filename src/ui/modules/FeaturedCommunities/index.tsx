@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro';
 import React, { useRef, SFC, ComponentType } from 'react';
-import Slider, { Settings } from 'react-slick';
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import styled from 'ui/themes/styled';
@@ -14,12 +14,12 @@ export const Title = styled(Flex)`
   font-size: 15px;
   font-weight: 700;
   padding: 8px;
-  border-bottom: 1px solid ${props => props.theme.colors.lightgray};
+  border-bottom: ${props => props.theme.colors.border};
   margin: 0;
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
   & h5 {
     margin: 0;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
     display: inline-block;
     flex: 1;
     padding: 0;
@@ -37,13 +37,13 @@ export const RightContext = styled(Flex)`
     display: inline-block;
     height: 30px;
     & svg {
-      color: ${props => props.theme.colors.darkgray} !important;
+      color: ${props => props.theme.colors.mediumdark} !important;
       vertical-align: middle;
       height: 30px;
     }
     &:hover {
       & svg {
-        color: ${props => props.theme.colors.darkgray} !important;
+        color: ${props => props.theme.colors.mediumdark} !important;
       }
     }
   }
@@ -57,7 +57,7 @@ const ActionContainer = styled(Flex)`
 
 const ActionItem = styled(Flex)`
   display: inline-flex;
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.medium};
   cursor: pointer;
   padding-right: 10px;
   button {
@@ -66,7 +66,7 @@ const ActionItem = styled(Flex)`
   }
   &:hover {
     svg.hover {
-      stroke: ${props => props.theme.colors.orange};
+      stroke: ${props => props.theme.colors.primary};
     }
   }
 `;
@@ -127,7 +127,7 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
       <Box px={2}>
         <Slider
           ref={c => (sliderRef.current = c || undefined)}
-          {...sliderSettings}
+          {...sliderSettings(props.featuredCommunities.length)}
         >
           {props.featuredCommunities.map(community => (
             <div key={community.id}>
@@ -155,26 +155,26 @@ export const FeaturedCommunities: SFC<FeaturedCommunitiesData> = props => {
 
 export default FeaturedCommunities;
 
-const sliderSettings: Settings = {
+const sliderSettings = slidesToShow => ({
   dots: false,
   arrows: false,
   infinite: true,
   autoplay: false,
   speed: 500,
-  slidesToShow: 3,
+  slidesToShow: slidesToShow > 3 ? 3 : slidesToShow,
   slidesToScroll: 1,
   responsive: [
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: slidesToShow > 3 ? 3 : slidesToShow,
         slidesToScroll: 1
       }
     },
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: slidesToShow > 2 ? 2 : slidesToShow,
         slidesToScroll: 1
       }
     },
@@ -186,4 +186,4 @@ const sliderSettings: Settings = {
       }
     }
   ]
-};
+});

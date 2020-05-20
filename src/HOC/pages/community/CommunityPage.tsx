@@ -64,7 +64,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
     const CollectionsBox = (
       <>
         {collectionsPage.edges.map(collection => (
-          <Box m={2} key={collection.id}>
+          <Box key={collection.id}>
             <CollectionPreviewHOC
               collectionId={collection.id}
               key={collection.id}
@@ -77,7 +77,7 @@ export const CommunityPage: FC<CommunityPage> = ({ communityId, basePath }) => {
     const ThreadsBox = (
       <>
         {threadsPage.edges.map(thread => (
-          <Box mx={3} my={1} key={thread.id}>
+          <Box my={1} key={thread.id}>
             <ThreadPreviewHOC threadId={thread.id} />
           </Box>
         ))}

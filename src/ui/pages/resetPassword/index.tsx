@@ -4,10 +4,10 @@ import styled from 'ui/themes/styled';
 import Button from 'ui/elements/Button';
 import { Input } from '@rebass/forms';
 import { FormikHook } from 'ui/@types/types';
-import { logo_large_url } from 'mn-constants';
 import Alert from 'ui/elements/Alert';
 import { AlertWrapper } from 'ui/modules/Modal';
 import { i18nMark } from '@lingui/react';
+import LogoContainer from 'ui/elements/Logo';
 
 export interface ResetPasswordFormValues {
   email: string;
@@ -29,7 +29,7 @@ export const ResetPassword: React.FC<Props> = ({ formik }) => {
       <Container>
         <LoginWrapper>
           <FormWrapper>
-            <Logo />
+            <LogoContainer />
             <Input
               placeholder={tt.placeholders.email}
               name="email"
@@ -75,9 +75,10 @@ const LoginWrapper = styled.div`
 
 const Container = styled.div`
   margin: 0 auto;
-  width: 432px;
+  max-width: 900px;
   margin-top: 60px;
   padding: 16px;
+  padding-bottom: 50px;
   & button {
     margin-top: 16px;
     width: 100%;
@@ -89,18 +90,7 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled.div`
-  background: url(${logo_large_url});
-  width: 300px;
-  display: block;
-  height: 100px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 0 auto;
-  margin-bottom: 40px;
-`;
-
 const FormWrapper = styled.div`
   grid-area: form;
+  width: 432px;
 `;

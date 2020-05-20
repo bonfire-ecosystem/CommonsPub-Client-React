@@ -8,7 +8,7 @@ import { clearFix } from 'polished';
 import media from 'styled-media-query';
 import styled from 'ui/themes/styled';
 import { Flex, Text, Box, Heading } from 'rebass/styled-components';
-import DropzoneArea from '../../../components/elements/DropzoneModal';
+import DropzoneArea from 'ui/modules/DropzoneModal';
 import Alert from 'ui/elements/Alert';
 import {
   Actions,
@@ -138,11 +138,11 @@ const CollectionContainerForm = styled(ContainerForm)`
 `;
 
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
 `;
 
 const Description = styled(Text)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
 `;
 
 const HeroInfo = styled.div`
@@ -154,7 +154,7 @@ const HeroInfo = styled.div`
     margin: 0;
     line-height: 32px !important;
     font-size: 24px !important;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
     ${media.lessThan('medium')`
       margin-top: 8px;
     `};
@@ -164,7 +164,7 @@ const HeroInfo = styled.div`
     color: rgba(0, 0, 0, 0.8);
     font-size: 15px;
     margin-top: 8px;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
   }
   .--rtl & {
     margin-right: 16px;

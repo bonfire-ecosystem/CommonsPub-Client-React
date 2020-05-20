@@ -1,44 +1,33 @@
 import * as React from 'react';
 import { Box, Text } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
-import { logo_large_url } from 'mn-constants';
+import { Link } from 'react-router-dom';
+import Button from 'ui/elements/Button';
+import { Trans } from '@lingui/macro';
+import LogoContainer from 'ui/elements/Logo';
 
 const LoginWrapper = styled.div`
   display: grid;
   grid-column-gap: 16px;
   grid-template-columns: 1fr;
-  grid-template-areas: 'form';
+  grid-template-areas: 'form' 'footer';
 `;
 
 const Container = styled.div`
   margin: 0 auto;
-  width: 432px;
+  width: 100%;
+  max-width: 900px;
   margin-top: 60px;
   padding: 16px;
-  & button {
-    margin-top: 16px;
-    width: 100%;
-    color: #fff !important;
-    text-transform: uppercase
-      &:hover {
-      background: #d67218 !important;
-    }
+  padding-bottom: 50px;
+ 
   }
 `;
 
-const Logo = styled.div`
-  background: url(${logo_large_url});
-  width: 300px;
-  display: block;
-  height: 100px;
-  margin: 0 auto;
-  margin-bottom: 24px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+const FormWrapper = styled(Box)`
+  margin-bottom: 100px;
+  width: 432px;
 `;
-
-const FormWrapper = styled(Box)``;
 
 export interface Props {
   result:
@@ -54,27 +43,58 @@ export interface Props {
 
 export const ConfirmEmail: React.FC<Props> = ({ result }) => {
   return (
-    <Container>
-      <LoginWrapper>
-        <FormWrapper>
-          <Logo />
-          <Box sx={{ textAlign: 'center' }}>
-            {!result ? (
-              <Text variant="text">Checking ...</Text>
-            ) : result.error === null ? (
-              <Text variant="text">
-                Email confirmed! Welcome {result.username}!
-              </Text>
-            ) : (
-              <Text variant="text">
-                Error in email confirmation: {result.error}
-              </Text>
-            )}
-          </Box>
-        </FormWrapper>
-      </LoginWrapper>
-    </Container>
+    <>
+      <Container>
+        <LoginWrapper>
+          <FormWrapper>
+            <LogoContainer />
+            <Wrapper>
+              <Box>
+                {!result ? (
+                  <Text variant="text">Checking ...</Text>
+                ) : result.error === null ? (
+                  <>
+                    <Text variant="text">Email confirmed</Text>
+                    <Text
+                      variant="text"
+                      sx={{ fontWeight: 'bold', marginTop: '5px' }}
+                    >
+                      Welcome {result.username}!
+                    </Text>
+                  </>
+                ) : (
+                  <Text variant="text">
+                    Error in email confirmation: {result.error}
+                  </Text>
+                )}
+              </Box>
+              <Browse>
+                <Link to={'/'}>
+                  <Button mt={3} variant="primary">
+                    <Trans>Sign in</Trans>
+                  </Button>
+                </Link>
+              </Browse>
+            </Wrapper>
+          </FormWrapper>
+        </LoginWrapper>
+      </Container>
+    </>
   );
 };
 
 export default ConfirmEmail;
+
+const Browse = styled(Box)`
+  text-align: center;
+  margin-top: 10px;
+`;
+
+const Wrapper = styled.div`
+  background: #fff;
+  border-radius: 4px;
+  height: inherit;
+  padding: 30px 20px;
+  text-align: center;
+  height: fit-content;
+`;

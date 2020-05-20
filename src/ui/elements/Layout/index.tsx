@@ -31,9 +31,6 @@ export const HomeBox = styled(Flex)`
   ${media.lessThan('1005px')`
   max-width: 100%;
   `};
-  // ${media.lessThan('1280px')`
-  // top: 60px;
-  // `}
 `;
 
 export const WrapperCont = styled(Flex)`
@@ -49,7 +46,7 @@ export const WrapperCont = styled(Flex)`
   flex-shrink: 0;
   margin: 0px;
   min-height: 0px;
-  background: white;
+  // background: ${props => props.theme.colors.appInverse};
   min-width: 0px;
   padding: 0px;
   position: relative;
@@ -82,29 +79,32 @@ export const Wrapper = styled(Flex)`
 `;
 
 export const MenuList = styled(Flex)`
-  border-bottom: 1px solid ${props => props.theme.colors.lightgray};
+  border-bottom: ${props => props.theme.colors.border};
   padding: 12px 8px;
+  background: ${props => props.theme.colors.appInverse};
   a {
     font-weight: 700;
     text-decoration: none;
     margin-right: 8px;
-    color: ${props => props.theme.colors.gray};
+    color: ${props => props.theme.colors.darker};
     letterspacing: 1px;
     font-size: 14px;
     padding: 4px 8px;
     white-space: nowrap;
     &.active {
-      color: #ffffff;
-      background: ${props => props.theme.colors.orange};
+      color: ${props => props.theme.colors.lighter};
+      background: ${props => props.theme.colors.primary};
       border-radius: 4px;
     }
   }
 `;
 
 export const ObjectsList = styled(Box)`
-  > div {
-    margin: 4px;
+  background: ${props => props.theme.colors.appInverse};
+  &.replies > div {
     margin-bottom: 0;
+  }
+  > div {
     &:last-of-type {
       margin-bottom: 4px;
     }

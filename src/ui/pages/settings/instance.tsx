@@ -7,7 +7,7 @@ import { FormikHook } from 'ui/@types/types';
 import Button from 'ui/elements/Button';
 import ConfirmationModal from 'ui/modules/ConfirmationModal';
 import Modal, { Actions, ContainerForm, Row } from 'ui/modules/Modal';
-// import DropzoneArea from '../../../components/elements/DropzoneModal';
+// import DropzoneArea from 'ui/modules/DropzoneModal';
 import styled from 'ui/themes/styled';
 import { LocaleContext } from 'context/global/localizationCtx';
 import { LoadMore } from 'ui/modules/Loadmore';
@@ -22,7 +22,7 @@ export interface Props {
   formikAddDomain: FormikHook<WithDomain>;
   formikRemoveDomain: FormikHook<WithDomain>;
   domainsList: string[];
-  loadMoreDomains?: FormikHook; // FIX ME after add LoadMoreFormik
+  loadMoreDomains: FormikHook | null;
 }
 
 export interface WithDomain {
@@ -126,11 +126,11 @@ const Instance: React.FC<Props> = ({
       {formikRemoveDomain.values.domain && (
         <Modal closeModal={() => formikRemoveDomain.setValues({ domain: '' })}>
           <ConfirmationModal
-            cancel={() => formikRemoveDomain.setValues({ domain: '' })}
+            done={() => formikRemoveDomain.setValues({ domain: '' })}
             formik={formikRemoveDomain}
-            modalAction={i18n._(`Delete domain from whitelist`)}
+            modalAction={i18n._(`Delete domain from allowlist`)}
             modalDescription={i18n._(
-              `Are you sure you want to delete ${formikRemoveDomain.values.domain} from whitelist?`
+              `Are you sure you want to delete ${formikRemoveDomain.values.domain} from allowlist?`
             )}
             modalTitle={i18n._(`Delete`)}
           />
@@ -155,7 +155,7 @@ const Instance: React.FC<Props> = ({
 
 const DomainText = styled(Text)`
   flex:1;
-  // color: ${props => props.theme.colors.gray};
+  // color: ${props => props.theme.colors.medium};
 `;
 
 const DomainContainerForm = styled(ContainerForm)`
@@ -171,7 +171,7 @@ const DomainWrapper = styled.div`
 const DomainInput = styled(Input)`
   && {
     flex: 1;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
   }
 `;
 
@@ -188,7 +188,7 @@ const Delete = styled(Box)`
   justify-content: space-around;
   align-items: center;
   svg{
-    stroke: ${props => props.theme.colors.gray};
+    stroke: ${props => props.theme.colors.medium};
   }
   &:hover {
     // background: ${props => props.theme.colors.lighter};

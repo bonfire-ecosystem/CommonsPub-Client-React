@@ -1,11 +1,15 @@
 import { Trans } from '@lingui/react';
 import * as React from 'react';
-import { Eye, EyeOff } from 'react-feather';
+import { Eye, EyeOff, Archive } from 'react-feather';
 import { Box, Flex, Heading, Text } from 'rebass/styled-components';
 import { FormikHook } from 'ui/@types/types';
-import Avatar from 'ui/elements/Avatar';
-import { SimpleLink } from 'ui/helpers/SimpleLink';
+// import Avatar from 'ui/elements/Avatar';
+// import { SimpleLink } from 'ui/helpers/SimpleLink';
 import styled from 'ui/themes/styled';
+import { typography } from 'mn-constants';
+import { darken } from 'polished';
+import { NavLink } from 'react-router-dom';
+
 export interface Props {
   link: {
     url: string;
@@ -32,53 +36,45 @@ export const Collection: React.FC<Props> = ({
   toggleFollowFormik,
   hideActions
 }) => {
+  // const { push } = useHistory();
   return (
-    // <WrapperLink to={link.url}>
-    <Bordered px={2} m={2} mb={1}>
-      <Box mt={2}>
-        <Avatar src={icon} />
-      </Box>
+    <Bordered mb={1}>
+      <WrapperLink to={link.url} />
+      <AvatarCollection src={icon} />
       <Infos ml={3}>
         <Flex>
           <Box flex={1}>
-            <TitleLink link={link}>
-              <Title>
-                {name.length > 80
-                  ? name.replace(/^(.{76}[^\s]*).*/, '$1...')
-                  : name}
-              </Title>
-            </TitleLink>
-            <Username>+{displayUsername}</Username>
+            <Title>
+              {name.length > 80
+                ? name.replace(/^(.{76}[^\s]*).*/, '$1...')
+                : name}
+            </Title>
+            {/* <C>+{displayUsername}</Username> */}
           </Box>
         </Flex>
-        <Text variant="text" mt={1} mb={2}>
+        <Summary variant="text" mt={1} mb={2}>
           {summary && summary.length > 140
             ? summary.replace(/^([\s\S]{140}[^\s]*)[\s\S]*/, '$1...')
             : summary}
-        </Text>
+        </Summary>
+        <MetaWrapper mt={2} alignItems="center">
+          <Archive size={18} />
+          <Text ml={2} variant="suptitle">
+            {totalResources || 0} <Trans>Resources</Trans>
+          </Text>
+        </MetaWrapper>
+
         <Meta mt={2}>
-          <Flex alignSelf="center" mr={3} alignItems="center">
-            <Text fontSize={'10px'} variant="suptitle">
-              {totalResources || 0} <Trans>Resources</Trans>
-            </Text>
-          </Flex>
           {hideActions ? null : (
-            <ActionItem onClick={toggleFollowFormik.submitForm}>
+            <ActionItem
+              isFollowing={isFollowing ? true : false}
+              onClick={toggleFollowFormik.submitForm}
+            >
               <ActionIcon>
                 {isFollowing ? (
-                  <EyeOff
-                    className="hover"
-                    strokeWidth="1"
-                    color="rgba(0,0,0,.4)"
-                    size="20"
-                  />
+                  <EyeOff strokeWidth="1" size="18" />
                 ) : (
-                  <Eye
-                    className="hover"
-                    strokeWidth="1"
-                    color="rgba(0,0,0,.4)"
-                    size="20"
-                  />
+                  <Eye strokeWidth="1" size="18" />
                 )}
               </ActionIcon>
               <Text
@@ -92,25 +88,72 @@ export const Collection: React.FC<Props> = ({
           )}
         </Meta>
       </Infos>
-
-      {/* <Box m={2} px={2}>
-        <Items>
-          
-        </Items>
-      </Box> */}
     </Bordered>
-    // </WrapperLink>
   );
 };
 
-// const Items = styled(Flex)`
-//   flex: 1;
-//   justify-content: start;
-// `;
+const WrapperLink = styled(NavLink)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+`;
 
-const ActionItem = styled(Flex)`
+const MetaWrapper = styled(Flex)`
+  color: ${props => props.theme.colors.dark};
+  svg  {
+    margin: 0;
+  }
+`;
+
+const Summary = styled(Text)`
+  color: ${props => props.theme.colors.dark};
+`;
+const AvatarCollection = styled(Box)<{ src?: string }>`
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  min-width: 48px;
+  height: 48px;
+  padding: 15%;
+  background-color: transparent;
+  background-image: url("${props => props.src}");
+  background-size: cover;
+  background-position: center center;
+`;
+
+const ActionItem = styled(Flex)<{ isFollowing?: boolean }>`
   align-items: center;
-  color: ${props => props.theme.colors.gray};
+  margin-top: 16px;
+  margin-bottom: 8px;
+
+  color: ${props =>
+    props.isFollowing
+      ? props.theme.colors.lighter
+      : props.theme.colors.mediumdark};
+  div {
+    color: ${props =>
+      props.isFollowing
+        ? props.theme.colors.lighter
+        : props.theme.colors.mediumdark};
+  }
+  background: ${props =>
+    props.isFollowing
+      ? props.theme.colors.secondary
+      : props.theme.colors.mediumlight};
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-right: 8px;
+  text-align: center;
+  font-size: ${typography.size.s1};
+  svg {
+    stroke: ${props =>
+      props.isFollowing
+        ? props.theme.colors.lighter
+        : props.theme.colors.mediumdark};
+  }
   cursor: pointer;
   a {
     display: flex;
@@ -119,8 +162,15 @@ const ActionItem = styled(Flex)`
     z-index: 9;
   }
   &:hover {
+    background: ${props =>
+      darken(
+        '0.1',
+        props.isFollowing
+          ? props.theme.colors.secondary
+          : props.theme.colors.mediumlight
+      )};
     svg.hover {
-      stroke: ${props => props.theme.colors.orange};
+      stroke: ${props => props.theme.colors.mediumdark};
     }
   }
 `;
@@ -139,31 +189,45 @@ const ActionIcon = styled(Box)`
   }
 `;
 
-const TitleLink = styled(SimpleLink)`
-  text-decoration: none;
-  color: ${props => props.theme.colors.darkgray};
-  * {
-    text-decoration: none;
-  }
-  a {
-    text-decoration: none;
-  }
-`;
+// const TitleLink = styled(SimpleLink)`
+//   text-decoration: none;
+//   color: ${props => props.theme.colors.darker};
+//   background: red;
+//   > a {
+//     text-decoration: none;
+//   }
+// `;
 
 const Meta = styled(Flex)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.medium};
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
 `;
 
-const Username = styled(Text)`
-  color: ${props => props.theme.colors.gray};
-  flex: 1;
-  font-size: 13px;
-  text-transform: lowercase;
-`;
+// const Username = styled(Text)`
+//   color: ${props => props.theme.colors.mediumdark};
+//   flex: 1;
+//   font-size: 14px;
+//   text-transform: lowercase;
+// `;
 
 const Bordered = styled(Flex)`
   border-radius: 4px;
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
+  background: ${props => props.theme.colors.appInverse};
+  text-decoration: none;
+  position: relative;
+  &:hover {
+    background: ${props => darken('0.05', props.theme.colors.appInverse)};
+  }
+  * {
+    text-decoration: none !important;
+    &:hover {
+      text-decoration: none !important;
+    }
+  }
 `;
 
 const Infos = styled(Box)`
@@ -174,8 +238,9 @@ const Infos = styled(Box)`
   }
 `;
 const Title = styled(Heading)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.darker};
   font-size: 20px;
   text-decoration: none;
   word-break: break-all;
+  margin-top: 8px;
 `;

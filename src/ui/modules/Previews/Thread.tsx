@@ -30,19 +30,17 @@ export const Thread: React.SFC<CommentProps> = ({
         {title || 'no title'}
       </Text> */}
       <NavLink to={link}>
-        <Text variant="text">{content}</Text>
-        <Flex sx={{ marginTop: '2px' }} alignItems="center">
+        <Summary variant="text">{content}</Summary>
+        <Flex mt={1} alignItems="center">
           <Flex flex={1}>
             <Date>{DateTime.fromSQL(createdAt).toRelative()}</Date>
             <Spacer mx={1}>·</Spacer>
             <Meta>
-              {totalReplies + ' '}
-              <Trans>Replies</Trans>
+              {totalReplies || 0} <Trans>Replies</Trans>
             </Meta>
             <Spacer mx={1}>·</Spacer>
             <Meta>
-              {totalLikes + ' '}
-              <Trans>Likes</Trans>
+              {totalLikes || 0} <Trans>Stars</Trans>
             </Meta>
           </Flex>
           <Flex>
@@ -55,6 +53,9 @@ export const Thread: React.SFC<CommentProps> = ({
     </Wrapper>
   );
 };
+const Summary = styled(Text)`
+  color: ${props => props.theme.colors.dark};
+`;
 
 const Member = styled(Box)<{ src: string }>`
   max-width: 28px !important;
@@ -69,26 +70,26 @@ const Member = styled(Box)<{ src: string }>`
 `;
 
 const Meta = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   font-size: 13px;
 `;
 
 const Spacer = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
 `;
 
 const Date = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   font-size: 13px;
 `;
 
 const Wrapper = styled(Box)`
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
   border-radius: 4px;
-  background: white;
+  background: ${props => props.theme.colors.appInverse};
   cursor: pointer;
   &:hover {
     background: ${props => props.theme.colors.lighter};

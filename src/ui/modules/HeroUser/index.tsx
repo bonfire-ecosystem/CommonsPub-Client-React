@@ -110,19 +110,19 @@ export const HeroUser: FC<Props> = props => {
           </HeroAction>
         </FlexProfile>
         <HeroInfo ml={3}>
-          <Text
+          <HeroTitle
             sx={{ fontSize: '18px' }}
             mt={2}
             variant="heading"
             fontWeight={'bold'}
           >
             {props.name}
-          </Text>
+          </HeroTitle>
           <Username mt={1} fontSize={2}>
             @{props.displayUsername}
             {props.me && props.isAdmin && <AdminBadge ml={2}>Admin</AdminBadge>}
           </Username>
-          <Text
+          <Summary
             variant="text"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(props.summary)
@@ -150,9 +150,9 @@ export const HeroUser: FC<Props> = props => {
 
 const AdminBadge = styled(Box)`
   padding: 1px 8px;
-  border: 1px solid ${props => props.theme.colors.orange};
+  border: 1px solid ${props => props.theme.colors.primary};
   border-radius: 2px;
-  color: ${props => props.theme.colors.orange};
+  color: ${props => props.theme.colors.primary};
   display: inline-block;
 `;
 
@@ -163,16 +163,24 @@ const More = styled(Box)`
   height: 40px;
   display: flex;
   align-items: center;
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
   border-radius: 4px;
   svg {
     margin: 0 auto;
-    stroke: ${props => props.theme.colors.gray};
+    stroke: ${props => props.theme.colors.mediumdark};
   }
 `;
 
 const HeroAction = styled(Flex)`
   align-items: center;
+`;
+
+const Summary = styled(Text)`
+  color: ${props => props.theme.colors.mediumdark};
+`;
+
+const HeroTitle = styled(Text)`
+  color: ${props => props.theme.colors.darker};
 `;
 
 const FlexProfile = styled(Flex)`
@@ -184,16 +192,18 @@ const FlexProfile = styled(Flex)`
 `};
 `;
 
-const ProfileBox = styled(Box)``;
+const ProfileBox = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+`;
 
 const Username = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   font-size: 14px;
 `;
 
 const Location = styled(Flex)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   line-height: 26px;
   font-size: 14px;
@@ -202,7 +212,7 @@ const Location = styled(Flex)`
   span {
     margin-right: 8px;
     & svg {
-      stroke: ${props => props.theme.colors.gray};
+      stroke: ${props => props.theme.colors.mediumdark};
       vertical-align: text-bottom;
     }
     .--rtl & {
@@ -215,9 +225,9 @@ const Location = styled(Flex)`
 const HeroBg = styled.div<{ src: string }>`
   height: 250px;
   margin: -4px;
-  background: ${props => props.theme.colors.lightgray};
+  background: ${props => props.theme.colors.light};
   background-image: url(${props =>
-    props.src ? props.src : props.theme.colors.lightgray});
+    props.src ? props.src : props.theme.colors.light});
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -237,8 +247,8 @@ const Img = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 6px;
-  background: ${props => props.theme.colors.lightgray};
-  border: 3px solid white;
+  background: ${props => props.theme.colors.light};
+  border: 3px solid ${props => props.theme.colors.appInverse};
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -252,7 +262,7 @@ const Hero = styled.div`
   position: relative;
   border-radius: 6px;
   & p {
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
     padding: 0 24px;
     margin-left: 120px;
     margin: 0;

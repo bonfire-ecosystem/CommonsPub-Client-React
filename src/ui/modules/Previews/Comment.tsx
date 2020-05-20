@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'ui/themes/styled';
 import { Box, Text, Flex } from 'rebass/styled-components';
-import SocialText from 'ui/modules/SocialText';
-import { i18nMark, Trans } from '@lingui/react';
-import { LocaleContext } from '../../../context/global/localizationCtx';
+// import SocialText from 'ui/modules/SocialText';
+import { Trans } from '@lingui/react';
+// import { LocaleContext } from '../../../context/global/localizationCtx';
 import { FormikHook } from 'ui/@types/types';
-import { MessageCircle, Star, MoreHorizontal, Flag } from 'react-feather';
+import { Star, MoreHorizontal, Flag, CornerDownLeft } from 'react-feather';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import DOMPurify from 'dompurify';
 
 import Modal from 'ui/modules/Modal';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { typography } from 'mn-constants';
+import { darken } from 'polished';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
@@ -23,22 +25,22 @@ export interface ReplyActions {
 export interface CommentProps {
   FlagModal: null | React.ComponentType<{ done(): unknown }>;
   like: LikeActions;
-  reply: ReplyActions;
+  reply: ReplyActions | null;
   content: string;
   url: string;
   isFlagged: boolean;
   hideActions?: boolean;
 }
 
-const tt = {
-  placeholders: {
-    name: i18nMark('Post a reply'),
-    summary: i18nMark(
-      'Please describe what the collection is for and what kind of resources it is likely to contain...'
-    ),
-    image: i18nMark('Enter the URL of an image to represent the collection')
-  }
-};
+// const tt = {
+//   placeholders: {
+//     name: i18nMark('Post a reply'),
+//     summary: i18nMark(
+//       'Please describe what the collection is for and what kind of resources it is likely to contain...'
+//     ),
+//     image: i18nMark('Enter the URL of an image to represent the collection')
+//   }
+// };
 
 export const Comment: React.SFC<CommentProps> = ({
   content,
@@ -49,89 +51,86 @@ export const Comment: React.SFC<CommentProps> = ({
   isFlagged,
   hideActions
 }) => {
-  const [talkModalVisible, showTalkModal] = React.useState(false);
-  const { i18n } = React.useContext(LocaleContext);
+  // const [talkModalVisible, showTalkModal] = React.useState(false);
+  // const { i18n } = React.useContext(LocaleContext);
   const [isOpenFlagModal, setOpenFlagModal] = React.useState(false);
   const [isOpen, onOpen] = React.useState(false);
-
   return (
     <Wrapper>
-      <Link to={url}>
-        <Text
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
-          sx={{ textDecoration: 'none' }}
-          variant="text"
-          mb={2}
-        />
-      </Link>
+      {/* <Link to={url}> */}
+      <Summary
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
+        sx={{ textDecoration: 'none' }}
+        variant="text"
+        mb={2}
+      />
+      {/* </Link> */}
       {hideActions ? null : (
         <Actions mt={2}>
-          {talkModalVisible && (
-            <SocialText
-              placeholder={i18n._(tt.placeholders.name)}
-              defaultValue={''}
-              submit={msg => {
-                showTalkModal(false);
-                reply.replyFormik.setValues({ replyMessage: msg });
-                reply.replyFormik.submitForm();
-              }}
-            />
-          )}
+          {/* {talkModalVisible && (
+            <Box mb={2}>
+              <SocialText
+                placeholder={i18n._(tt.placeholders.name)}
+                defaultValue={''}
+                submit={msg => {
+                  showTalkModal(false);
+                  reply.replyFormik.setValues({ replyMessage: msg });
+                  reply.replyFormik.submitForm();
+                }}
+              />
+            </Box>
+          )} */}
+
           <Box>
             <Items>
-              <ActionItem onClick={() => showTalkModal(!talkModalVisible)}>
-                <ActionIcon>
-                  <MessageCircle
-                    className="hover"
-                    strokeWidth="1"
-                    color="rgba(0,0,0,.4)"
-                    size="20"
-                  />
-                </ActionIcon>
-                <Text
-                  ml={1}
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
-                >
-                  <Trans>Comment</Trans>
-                </Text>
-              </ActionItem>
-              <ActionItem ml={4} onClick={like.toggleLikeFormik.submitForm}>
-                <ActionIcon>
-                  <Star
-                    className="hover"
-                    color={like.iLikeIt ? '#ED7E22' : 'rgba(0,0,0,.4)'}
-                    strokeWidth="1"
-                    size="20"
-                  />
-                </ActionIcon>
-                <Text
-                  variant={'suptitle'}
-                  sx={{ textTransform: 'capitalize' }}
-                  ml={1}
-                >
-                  {like.totalLikes + ' '} <Trans>Favourite</Trans>
-                </Text>
+              <ActionItem>
+                <NavLink to={url}>
+                  <ActionIcon>
+                    <CornerDownLeft
+                      className="hover"
+                      strokeWidth="1"
+                      color="rgba(0,0,0,.4)"
+                      size="18"
+                    />
+                  </ActionIcon>
+                  <ActionText
+                    ml={1}
+                    variant={'text'}
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    <Trans>Reply</Trans>
+                  </ActionText>
+                </NavLink>
               </ActionItem>
               <ActionItem
-                ml={4}
+                liked={like.iLikeIt ? true : false}
+                onClick={like.toggleLikeFormik.submitForm}
+              >
+                <ActionIcon>
+                  <Star strokeWidth="1" size="18" />
+                </ActionIcon>
+                <ActionText
+                  variant={'text'}
+                  sx={{ textTransform: 'capitalize' }}
+                  ml={1}
+                >
+                  {like.totalLikes + ' '} <Trans>Star</Trans>
+                </ActionText>
+              </ActionItem>
+              <ActionItem
                 onClick={() => onOpen(true)}
                 sx={{ position: 'relative' }}
               >
                 <ActionIcon>
-                  <MoreHorizontal
-                    className="hover"
-                    size={20}
-                    color="rgba(0,0,0,.4)"
-                  />
+                  <MoreHorizontal className="hover" size={18} />
                 </ActionIcon>
-                <Text
-                  variant={'suptitle'}
+                <ActionText
+                  variant={'text'}
                   sx={{ textTransform: 'capitalize' }}
                   ml={1}
                 >
-                  {/* <Trans>More</Trans> */}
-                </Text>
+                  <Trans>More</Trans>
+                </ActionText>
                 {isOpen && (
                   <Dropdown orientation="bottom" cb={onOpen}>
                     {FlagModal && (
@@ -158,9 +157,32 @@ export const Comment: React.SFC<CommentProps> = ({
           </Box>
         </Actions>
       )}
+      {/* <Forked>
+        <b>SoapDog</b> forked this discussion: Yeah, they've wrote a lot of
+        stuff... (3)
+      </Forked> */}
     </Wrapper>
   );
 };
+
+// const Forked = styled(Box)`
+//   padding: 8px;
+//   border-top: ${props => props.theme.colors.border};
+//   border-bottom: ${props => props.theme.colors.border};
+//   margin-top: 16px;
+//   font-size: ${typography.size.s1};
+//   margin-left: -16px;
+//   margin-right: -16px;
+//   margin-bottom: -16px;
+//   color: ${props => props.theme.colors.mediumdark};
+// `;
+
+const Summary = styled(Text)`
+  color: ${props => props.theme.colors.dark};
+  img {
+    width: 100%;
+  }
+`;
 
 const Items = styled(Flex)`
   flex: 1;
@@ -168,14 +190,41 @@ const Items = styled(Flex)`
 `;
 
 const Actions = styled(Box)`
+  // border-top: ${props => props.theme.colors.border};
+  margin-top: 16px;
   position: relative;
   z-index: 999999999999999999999999999999999999;
+  margin-top: 16px;
 `;
 
-const ActionItem = styled(Flex)`
+const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props => props.theme.colors.gray};
+  color: ${props =>
+    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  div {
+    color: ${props =>
+      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  }
+  &:hover {
+    background: ${props =>
+      props.liked
+        ? darken('0.1', props.theme.colors.secondary)
+        : darken('0.05', props.theme.colors.mediumlight)};
+  }
   cursor: pointer;
+  background: ${props =>
+    props.liked
+      ? props.theme.colors.secondary
+      : props.theme.colors.mediumlight};
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-right: 8px;
+  text-align: center;
+  font-size: ${typography.size.s1};
+  svg {
+    stroke: ${props =>
+      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  }
   a {
     display: flex;
     align-items: center;
@@ -184,7 +233,8 @@ const ActionItem = styled(Flex)`
   }
   &:hover {
     svg.hover {
-      stroke: ${props => props.theme.colors.orange};
+      stroke: ${props => props.theme.colors.mediumdark};
+      // fill: ${props => props.theme.colors.mediumdark};
     }
   }
 `;
@@ -203,8 +253,12 @@ const ActionIcon = styled(Box)`
   }
 `;
 
+const ActionText = styled(Text)`
+  font-size: ${typography.size.s1};
+`;
+
 const Wrapper = styled(Box)`
-  background: white;
+  background: ${props => props.theme.colors.appInverse};
   a {
     text-decoration: none
     &:hover {

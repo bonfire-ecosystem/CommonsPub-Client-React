@@ -8,7 +8,7 @@ import {
   Wrapper,
   WrapperCont,
   List,
-  ObjectsList,
+  // ObjectsList,
   MainContainer,
   HomeBox,
   MenuList
@@ -22,11 +22,11 @@ export enum HomePageTab {
 
 export interface Props {
   // tab: HomePageTab;
-  nextCommunitiesFormik?: FormikHook;
-  nextCollectionsFormik?: FormikHook;
-  nextInboxFormik?: FormikHook;
-  FollowedCommunitiesElements: JSX.Element;
-  FollowedCollectionsElements: JSX.Element;
+  // nextCommunitiesFormik?: FormikHook;
+  // nextCollectionsFormik?: FormikHook;
+  nextInboxFormik: FormikHook | null;
+  // FollowedCommunitiesElements: JSX.Element;
+  // FollowedCollectionsElements: JSX.Element;
   InboxElements: JSX.Element;
   basePath: string;
 }
@@ -34,12 +34,12 @@ export interface Props {
 export const Home: React.FC<Props> = ({
   basePath,
   InboxElements,
-  nextInboxFormik,
-  nextCommunitiesFormik,
-  nextCollectionsFormik,
-  FollowedCommunitiesElements,
-  FollowedCollectionsElements
-}: Props) => {
+  nextInboxFormik
+}: // nextCommunitiesFormik,
+// nextCollectionsFormik,
+// FollowedCommunitiesElements,
+// FollowedCollectionsElements
+Props) => {
   return (
     <MainContainer>
       <HomeBox>
@@ -47,7 +47,7 @@ export const Home: React.FC<Props> = ({
           <Wrapper>
             <Menu basePath={basePath} />
             <Switch>
-              <Route path={`${basePath}/mycommunities`}>
+              {/* <Route path={`${basePath}/mycommunities`}>
                 <ObjectsList>{FollowedCommunitiesElements}</ObjectsList>
                 {nextCommunitiesFormik && (
                   <LoadMore LoadMoreFormik={nextCommunitiesFormik} />
@@ -58,7 +58,7 @@ export const Home: React.FC<Props> = ({
                 {nextCollectionsFormik && (
                   <LoadMore LoadMoreFormik={nextCollectionsFormik} />
                 )}
-              </Route>
+              </Route> */}
               <Route path={`${basePath}`}>
                 <List>{InboxElements}</List>
                 {nextInboxFormik && (
@@ -83,12 +83,12 @@ const Menu = ({ basePath }: { basePath: string }) => {
         <Trans>My Timeline</Trans>
       </NavLink>
       <>
-        <NavLink to={`${basePath}/mycommunities`}>
+        {/* <NavLink to={`${basePath}/mycommunities`}>
           <Trans>Joined communities</Trans>
         </NavLink>
         <NavLink to={`${basePath}/mycollections`}>
           <Trans>Followed collections</Trans>
-        </NavLink>
+        </NavLink> */}
       </>
     </MenuList>
   );

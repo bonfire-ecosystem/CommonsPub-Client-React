@@ -13,11 +13,12 @@ export const WithSidebarTemplate: FC<WithSidebarTemplate> = ({ children }) => {
     if (!user) {
       return null;
     }
-    const sidebarHocProps: Sidebar = {
-      user
-    };
+    // const sidebarHocProps: Sidebar = {
+    //   user
+    // };
     const props: SidebarProps = {
-      SidebarBox: <Sidebar {...sidebarHocProps} />,
+      // SidebarBox: <Sidebar {...sidebarHocProps} />,
+      SidebarBox: Sidebar,
       HeaderBox: MainHeaderHOC
     };
     return props;

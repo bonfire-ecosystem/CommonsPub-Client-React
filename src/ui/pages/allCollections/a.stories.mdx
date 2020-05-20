@@ -11,12 +11,13 @@ import {Sidebar} from 'ui/modules/Sidebar'
 import {getSidebarProps} from 'ui/mock/sidebar'
 import {getMainHeaderProps} from 'ui/mock/mainHeader'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Side = () => <Sidebar {...getSidebarProps()}/>
 
 <Meta title="Pages|AllCollections" component={AllCollections}/>
 
 
 # AllCollections
-Let's define a story for the `AllCollections` page
+The `AllCollections` page displays all of the collections on the current MoodleNet instance. It is made up of the following:
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
@@ -25,7 +26,7 @@ Let's define a story for the `AllCollections` page
   <Story name="AllCollections page">
     <WithSidebar 
       HeaderBox={Head}
-      SidebarBox={<Sidebar {...getSidebarProps()}/>}>
+      SidebarBox={Side}>
         <AllCollections 
           basePath="/"
           CollectionsBoxes={[

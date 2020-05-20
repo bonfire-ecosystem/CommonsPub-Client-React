@@ -14,10 +14,10 @@ export type AddEmailDomainToAllowListMutationVariables = {
 
 export type AddEmailDomainToAllowListMutation = (
   { __typename: 'RootMutationType' }
-  & { createRegisterEmailDomainAccess: Types.Maybe<(
+  & { createRegisterEmailDomainAccess: (
     { __typename: 'RegisterEmailDomainAccess' }
     & Pick<Types.RegisterEmailDomainAccess, 'domain' | 'id'>
-  )> }
+  ) }
 );
 
 export type RemoveEmailDomainFromAllowListMutationVariables = {
@@ -40,10 +40,10 @@ export type AddEmailToAllowListMutationVariables = {
 
 export type AddEmailToAllowListMutation = (
   { __typename: 'RootMutationType' }
-  & { createRegisterEmailAccess: Types.Maybe<(
+  & { createRegisterEmailAccess: (
     { __typename: 'RegisterEmailAccess' }
     & Pick<Types.RegisterEmailAccess, 'email' | 'id'>
-  )> }
+  ) }
 );
 
 export type RemoveEmailFromAllowListMutationVariables = {
@@ -79,8 +79,8 @@ export type InstanceRegisterEmailAccessesQueryVariables = {
 export type InstanceRegisterEmailAccessesQuery = (
   { __typename: 'RootQueryType' }
   & { registerEmailAccesses: (
-    { __typename: 'RegisterEmailAccessPage' }
-    & Pick<Types.RegisterEmailAccessPage, 'totalCount'>
+    { __typename: 'RegisterEmailAccessesPage' }
+    & Pick<Types.RegisterEmailAccessesPage, 'totalCount'>
     & { pageInfo: (
       { __typename: 'PageInfo' }
       & FullPageInfoFragment
@@ -101,8 +101,8 @@ export type InstanceRegisterEmailDomainAccessesQueryVariables = {
 export type InstanceRegisterEmailDomainAccessesQuery = (
   { __typename: 'RootQueryType' }
   & { registerEmailDomainAccesses: (
-    { __typename: 'RegisterEmailDomainAccessPage' }
-    & Pick<Types.RegisterEmailDomainAccessPage, 'totalCount'>
+    { __typename: 'RegisterEmailDomainAccessesPage' }
+    & Pick<Types.RegisterEmailDomainAccessesPage, 'totalCount'>
     & { pageInfo: (
       { __typename: 'PageInfo' }
       & FullPageInfoFragment

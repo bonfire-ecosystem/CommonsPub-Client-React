@@ -5,7 +5,6 @@ import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router';
 import { Text, Flex } from 'rebass/styled-components';
 import { Dropdown } from '../Dropdown';
-import { related_urls } from 'mn-constants';
 
 const List = styled.div<{ lined?: boolean }>`
   padding: 8px;
@@ -32,7 +31,7 @@ const Item = styled(Flex)`
     text-decoration: none;
   }
   &:hover {
-    color: ${props => props.theme.colors.orange};
+    color: ${props => props.theme.colors.primary};
   }
 `;
 
@@ -82,17 +81,10 @@ export const DropdownSidebar: React.FC<Props> = ({
       </List>
       <List lined>
         <Item variant="link">
-          <a href={related_urls.terms_users} target="blank">
+          <a href="/terms" target="_blank">
             <Trans>Code of Conduct</Trans>
           </a>
         </Item>
-
-        <Item variant="link">
-          <a href={related_urls.feedback} target="blank">
-            <Trans>Feedback &amp; Suggestions</Trans>
-          </a>
-        </Item>
-
         <Text
           style={{
             fontWeight: 600,
@@ -102,7 +94,7 @@ export const DropdownSidebar: React.FC<Props> = ({
             color: '#3c3c3c'
           }}
         >
-          v0.10 beta
+          v1.0 beta
         </Text>
       </List>
       <List>

@@ -1,0 +1,61 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
+
+import { colors, nord } from 'mn-constants';
+
+<Meta title="Design System|Colors" />
+
+# Main theme
+
+<ColorPalette>
+  <ColorItem title="theme.colors.app" subtitle="Orange" colors={[colors.app]} />
+  <ColorItem title="theme.colors.appInverse" subtitle="Blue" colors={[colors.appInverse]} />
+  <ColorItem title="theme.colors.primary" subtitle="Orange" colors={[colors.primary]} />
+  <ColorItem title="theme.colors.secondary" subtitle="Blue" colors={[colors.secondary]} />
+  <ColorItem title="theme.colors.tertiary" subtitle="Grey" colors={[colors.tertiary]} />
+  <ColorItem title="theme.colors.positive" subtitle="Green" colors={[colors.positive]} />
+  <ColorItem title="theme.colors.warning" subtitle="Ochre" colors={[colors.warning]} />
+  <ColorItem title="theme.colors.negative" subtitle="Red" colors={[colors.negative]} />
+  <ColorItem
+    title="Monochrome"
+    colors={[
+      colors.darkest,
+      colors.darker,
+      colors.dark,
+      colors.mediumdark,
+      colors.medium,
+      colors.mediumlight,
+      colors.light,
+      colors.lighter,
+      colors.lightest,
+    ]}
+  />
+</ColorPalette>
+
+
+
+# Dark theme
+
+<ColorPalette>
+  <ColorItem title="theme.nord.app" subtitle="Orange" colors={[nord.app]} />
+  <ColorItem title="theme.nord.appInverse" subtitle="Blue" colors={[nord.appInverse]} />
+  <ColorItem title="theme.nord.primary" subtitle="Orange" colors={[nord.primary]} />
+  <ColorItem title="theme.nord.secondary" subtitle="Blue" colors={[nord.secondary]} />
+  <ColorItem title="theme.nord.tertiary" subtitle="Grey" colors={[nord.tertiary]} />
+  <ColorItem title="theme.nord.positive" subtitle="Green" colors={[nord.positive]} />
+  <ColorItem title="theme.nord.warning" subtitle="Ochre" colors={[nord.warning]} />
+  <ColorItem title="theme.nord.negative" subtitle="Red" colors={[nord.negative]} />
+  <ColorItem
+    title="Monochrome"
+    colors={[
+      nord.darkest,
+      nord.darker,
+      nord.dark,
+      nord.mediumdark,
+      nord.medium,
+      nord.mediumlight,
+      nord.light,
+      nord.lighter,
+      nord.lightest,
+    ]}
+  />
+</ColorPalette>

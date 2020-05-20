@@ -4,20 +4,40 @@ import { getActivityMainContext } from './getActivityMainContext';
 import Maybe from 'graphql/tsutils/Maybe';
 
 export const getEventString = (activity: Maybe<ActivityPreviewFragment>) => {
-  if (!activity?.context) {
+  return activity
+    ? getEventStringByContext(activity.context, activity.verb)
+    : '';
+};
+export const getEventStringByContext = (
+  context: ActivityPreviewFragment['context'],
+  verb: ActivityVerb
+) => {
+  if (!context) {
     return '';
   }
-  const verb =
-    activity.context.__typename === 'Flag'
-      ? 'Flagged'
-      : activity.context.__typename === 'Like'
-      ? 'Liked'
-      : activity.context.__typename === 'Follow'
-      ? 'Followed'
-      : activity.verb === ActivityVerb.Created
-      ? `Created`
-      : `Updated`; //activity.verb === ActivityVerb.Updated
+  const mainContext = getActivityMainContext(context);
+  if (!mainContext) {
+    return '';
+  }
+  const { __typename } = mainContext;
+  const event =
+    context.__typename === 'Flag'
+      ? `Flagged a ${__typename}`
+      : context.__typename === 'Like'
+      ? `Starred a ${__typename}`
+      : context.__typename === 'Follow'
+      ? `Followed a ${__typename}`
+      : context.__typename === 'Resource'
+      ? `Added a ${__typename}`
+      : context.__typename === 'Comment'
+      ? context.inReplyTo
+        ? `Replied to a discussion`
+        : `Started a discussion`
+      : verb === ActivityVerb.Created
+      ? `Created a ${__typename}`
+      : verb === ActivityVerb.Updated
+      ? `Updated a ${__typename}`
+      : `Acted on a ${__typename}`;
 
-  const mainContext = getActivityMainContext(activity.context);
-  return mainContext ? `${verb} ${mainContext.__typename}` : '';
+  return event;
 };

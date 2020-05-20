@@ -4,17 +4,11 @@ import { Flex, Box } from 'rebass/styled-components';
 import SocialText from 'ui/modules/SocialText';
 import { Trans } from '@lingui/react';
 import Button from 'ui/elements/Button';
-import {
-  Nav,
-  NavItem,
-  Panel,
-  PanelTitle,
-  WrapperPanel
-} from 'ui/elements/Panel';
+
 import styled from 'ui/themes/styled';
 import { FormikHook } from 'ui/@types/types';
 import Modal from 'ui/modules/Modal';
-import { Header } from 'ui/modules/Header';
+// import { Header } from 'ui/modules/Header';
 import { LoadMore } from 'ui/modules/Loadmore';
 import {
   Wrapper,
@@ -25,6 +19,7 @@ import {
   MenuList,
   ObjectsList
 } from 'ui/elements/Layout';
+import { SidePanel } from 'ui/modules/SidePanel';
 
 export interface Props {
   isJoined: boolean;
@@ -37,9 +32,9 @@ export interface Props {
   basePath: string;
   newThreadFormik: null | FormikHook<{ text: string }>;
   CreateCollectionPanel: React.ComponentType<{ done(): any }>;
-  loadMoreActivities: FormikHook | undefined;
-  loadMoreCollections: FormikHook | undefined;
-  loadMoreThreads: FormikHook | undefined;
+  loadMoreActivities: FormikHook | null;
+  loadMoreCollections: FormikHook | null;
+  loadMoreThreads: FormikHook | null;
 }
 
 export const Community: React.FC<Props> = ({
@@ -71,7 +66,7 @@ export const Community: React.FC<Props> = ({
       <HomeBox>
         <WrapperCont>
           <Wrapper>
-            <Header name={communityName} />
+            {/* <Header name={communityName} /> */}
             <Switch>
               <Route exact path={`${basePath}`}>
                 <>
@@ -107,7 +102,7 @@ export const Community: React.FC<Props> = ({
                 <>
                   {HeroCommunityBox}
                   <Menu basePath={basePath} />
-                  <WrapSocialText mt={3} px={3} pb={3} mb={2}>
+                  <WrapSocialText p={3} mb={2}>
                     {newThreadFormik && (
                       <SocialText
                         placeholder="Start a new thread..."
@@ -125,59 +120,16 @@ export const Community: React.FC<Props> = ({
                 </>
               </Route>
               <Route path={`${basePath}/members`}>
-                <FollowersMenu basePath={`${basePath}/members`} />
-                <ObjectsList>{FollowersBoxes}</ObjectsList>
+                <Container>
+                  <FollowersMenu basePath={`${basePath}/members`} />
+                  <ObjectsList>{FollowersBoxes}</ObjectsList>
+                </Container>
               </Route>
             </Switch>
           </Wrapper>
         </WrapperCont>
       </HomeBox>
-      <WrapperPanel>
-        <Panel>
-          <PanelTitle fontSize={0} fontWeight={'bold'}>
-            Popular hashtags
-          </PanelTitle>
-          <Nav>
-            <NavItem mb={3} fontSize={1}>
-              #pedagogy
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              #transition
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              #english
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              #template
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              #assessment
-            </NavItem>
-          </Nav>
-        </Panel>
-        <Panel>
-          <PanelTitle fontSize={0} fontWeight={'bold'}>
-            Popular categories
-          </PanelTitle>
-          <Nav>
-            <NavItem mb={3} fontSize={1}>
-              Humanities
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              Behavioural science
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              English
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              Romana
-            </NavItem>
-            <NavItem mb={3} fontSize={1}>
-              Postgraduate
-            </NavItem>
-          </Nav>
-        </Panel>
-      </WrapperPanel>
+      <SidePanel />
     </MainContainer>
   );
 };
@@ -200,14 +152,20 @@ const Menu = ({ basePath }: { basePath: string }) => (
   </MenuList>
 );
 
+const Container = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+`;
+
 const WrapButton = styled(Flex)`
-  background: white;
+  background: ${props => props.theme.colors.appInverse};
   button {
     width: 100%;
     height: 50px;
   }
 `;
 
-const WrapSocialText = styled(Box)``;
+const WrapSocialText = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+`;
 
 export default Community;

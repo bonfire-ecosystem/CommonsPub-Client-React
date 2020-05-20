@@ -9,20 +9,20 @@ const Wrapper = styled(Box)<{ bg?: string; size?: string }>`
     props.size === 'm'
       ? '140px'
       : props.size === 'l'
-        ? '200px'
-        : props.size === 's'
-          ? '36px'
-          : '48px'};
+      ? '200px'
+      : props.size === 's'
+      ? '32px'
+      : '48px'};
   height: ${props =>
     props.size === 'm'
       ? '140px'
       : props.size === 'l'
-        ? '200px'
-        : props.size === 's'
-          ? '36px'
-          : '48px'};
+      ? '200px'
+      : props.size === 's'
+      ? '32px'
+      : '48px'};
   background-color: ${props =>
-    props.bg ? 'transparent' : props.theme.colors.lightgray};
+    props.bg ? 'transparent' : props.theme.colors.light};
   background-image: url("${props => props.bg}");
   background-size: cover;
   background-position: center center;
@@ -34,7 +34,7 @@ const Wrapper = styled(Box)<{ bg?: string; size?: string }>`
     align-items: center;
     line-height: normal;
     font-weight: 700;
-    ${props => props.theme.colors.darkgray};
+    ${props => props.theme.colors.mediumdark};
   }
 `;
 const Avatar: React.FC<{

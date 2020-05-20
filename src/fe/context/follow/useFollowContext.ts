@@ -1,33 +1,46 @@
+import { MyCollectionFollowsQueryRefetch } from 'fe/collection/myFollowed/myFollowedCollections.generated';
+import { MyCommunityFollowsQueryRefetch } from 'fe/community/myFollowed/myFollowedCommunities.generated';
+import { mnCtx } from 'fe/lib/graphql/ctx';
 import { isOptimisticId, OPTIMISTIC_ID_STRING } from 'fe/lib/helpers/mutations';
 import * as GQL from 'fe/mutation/follow/useMutateFollow.generated';
-import Maybe from 'graphql/tsutils/Maybe';
-import { Collection, Community, Thread, User } from 'graphql/types.generated';
-import { useCallback, useMemo } from 'react';
-import { MyCommunityFollowsQueryRefetch } from 'fe/community/myFollowed/myFollowedCommunities.generated';
-import { CommunityFollowersQueryRefetch } from 'fe/user/followers/community/useCommunityFollowers.generated';
 import { CollectionFollowersQueryRefetch } from 'fe/user/followers/collection/useCollectionFollowers.generated';
-import { MyCollectionFollowsQueryRefetch } from 'fe/collection/myFollowed/myFollowedCollections.generated';
+import { CommunityFollowersQueryRefetch } from 'fe/user/followers/community/useCommunityFollowers.generated';
+import Maybe from 'graphql/tsutils/Maybe';
+import { Collection, Community, User } from 'graphql/types.generated';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
 
-type Context = Collection | Community | Thread | User;
+type Context = Collection | Community | User; //| Thread;
 
 export type UseFollowContext = Maybe<
-  Pick<Context, 'id' | 'myFollow' | 'followerCount' | '__typename'>
+  Pick<Context, 'id' | 'myFollow' | 'followerCount' | '__typename' | 'name'>
 >;
 
 export const useFollowContext = (ctx: UseFollowContext) => {
   const [followMut, followMutStatus] = GQL.useFollowMutation();
   const [unfollowMut, unfollowMutStatus] = GQL.useUnfollowMutation();
   const mutating = followMutStatus.loading || unfollowMutStatus.loading;
-  const toggleFollow = useCallback(async () => {
-    const { id, followerCount, myFollow, __typename } = ctx || {};
+  const toggleFollow = useCallOrNotifyMustLogin(async () => {
+    const { id, followerCount, myFollow, __typename, name } = ctx || {};
     if (!id || mutating) {
       return;
     }
     if (!myFollow) {
+      const context = mnCtx({
+        ctx:
+          __typename === 'Collection'
+            ? `Following Collection ${name}`
+            : __typename === 'User'
+            ? `Following User ${name}`
+            : __typename === 'Community'
+            ? `Joined Community ${name}`
+            : void 0
+      });
       return followMut({
         variables: {
           contextId: id
         },
+        context,
         optimisticResponse: optimisticFollow(
           __typename,
           id,
@@ -47,12 +60,24 @@ export const useFollowContext = (ctx: UseFollowContext) => {
             : []
       });
     } else {
+      const context = mnCtx({
+        ctx:
+          __typename === 'Collection'
+            ? `Unfollowing Collection ${name}`
+            : __typename === 'User'
+            ? `Unfollowing User ${name}`
+            : __typename === 'Community'
+            ? `Leaving Community ${name}`
+            : void 0
+      });
+
       return isOptimisticId(myFollow.id)
         ? undefined
         : unfollowMut({
             variables: {
               contextId: myFollow.id
             },
+            context,
             optimisticResponse: optimisticUnfollow(
               __typename,
               id,

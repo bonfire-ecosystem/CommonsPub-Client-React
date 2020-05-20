@@ -9,10 +9,11 @@ import {
 import { MyFollowedCommunityDataFragment } from 'fe/community/myFollowed/myFollowedCommunities.generated';
 
 export interface Sidebar {
+  isSidebarOpen: boolean;
   //FIXME: delete commented out stuff
   // user: SidebarMeUserFragment;
 }
-export const Sidebar: FC<Sidebar> = (/* { user } */) => {
+export const Sidebar: FC<Sidebar> = (/* { user } */ { isSidebarOpen }) => {
   const { myCommunityFollowsPage } = useMyFollowedCommunities();
   const communities = useMemo(
     () =>
@@ -37,10 +38,11 @@ export const Sidebar: FC<Sidebar> = (/* { user } */) => {
 
   const propsUI = useMemo<PropsUI>(() => {
     const props: PropsUI = {
+      isSidebarOpen,
       status: StatusUI.Loaded,
       communities
     };
     return props;
-  }, [communities]);
+  }, [communities, isSidebarOpen]);
   return <SidebarUI {...propsUI} />;
 };

@@ -31,7 +31,7 @@ export type UseMeDataFragment = (
   & Pick<Types.Me, 'isInstanceAdmin' | 'email' | 'isConfirmed' | 'wantsEmailDigest' | 'wantsNotifications'>
   & { user: (
     { __typename: 'User' }
-    & Pick<Types.User, 'id'>
+    & Pick<Types.User, 'id' | 'extraInfo'>
     & SidebarMeUserFragment
   ) }
 );
@@ -46,6 +46,7 @@ export const UseMeDataFragmentDoc = gql`
   user {
     id
     ...SidebarMeUser
+    extraInfo
   }
 }
     ${SidebarMeUserFragmentDoc}`;

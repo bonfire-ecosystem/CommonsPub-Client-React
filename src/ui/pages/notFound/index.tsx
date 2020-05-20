@@ -1,27 +1,37 @@
 import { Trans } from '@lingui/macro';
 import * as React from 'react';
-import { Heading } from 'rebass/styled-components';
+import { Heading, Box } from 'rebass/styled-components';
 import styled from 'ui/themes/styled';
-import { WrapperPanel } from 'ui/elements/Panel';
+// import { WrapperPanel } from 'ui/elements/Panel';
+import LogoContainer from 'ui/elements/Logo';
 
-const Wrapper = styled.div`
-  width: 600px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+const Container = styled.div`
+  margin: 0 auto;
+  width: 432px;
+  margin-top: 60px;
+  padding: 16px;
+  & button {
+    margin-top: 16px;
+    width: 100%;
+    color: #fff !important;
+    text-transform: uppercase
+      &:hover {
+      background: #d67218 !important;
+    }
+  }
 `;
 
 export const NotFound = () => {
   return (
     <>
-      <Wrapper>
-        <Heading>
-          <Trans>🤔 Page not found</Trans>
-        </Heading>
-      </Wrapper>
-      <WrapperPanel />
+      <Container>
+        <Box sx={{ textAlign: 'center' }}>
+          <LogoContainer />
+          <Heading>
+            <Trans>🤔 Page not found</Trans>
+          </Heading>
+        </Box>
+      </Container>
     </>
   );
 };

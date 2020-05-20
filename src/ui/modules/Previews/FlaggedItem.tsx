@@ -8,6 +8,8 @@ import Modal from 'ui/modules/Modal';
 import { FormikHook } from 'ui/@types/types';
 import ConfirmationModal from '../ConfirmationModal';
 import { LocaleContext } from 'context/global/localizationCtx';
+import { darken } from 'polished';
+import { typography } from 'mn-constants';
 
 export interface FlaggedProps {
   FlaggedItemContextElement: JSX.Element;
@@ -33,22 +35,17 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
 
   return (
     <Wrapper>
-      <Bordered p={2}>{FlaggedItemContextElement}</Bordered>
-      <Text sx={{ textDecoration: 'none' }} variant="text" mb={2} mt={2}>
+      <Reason>{FlaggedItemContextElement}</Reason>
+      <Text variant="text" pt={2}>
         {reason}
       </Text>
-      <Actions mt={2}>
+      <Actions>
         <Box>
           <Items>
             {type === 'User' ? (
               <ActionItem onClick={() => setOpenBlock(true)}>
                 <ActionIcon>
-                  <Slash
-                    className="hover"
-                    color="rgba(0,0,0,.4)"
-                    strokeWidth="1"
-                    size="20"
-                  />
+                  <Slash strokeWidth="1" size="18" />
                 </ActionIcon>
                 <Text
                   variant={'suptitle'}
@@ -61,12 +58,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
             ) : (
               <ActionItem onClick={() => setOpenDelete(true)}>
                 <ActionIcon>
-                  <XCircle
-                    className="hover"
-                    color="rgba(0,0,0,.4)"
-                    strokeWidth="1"
-                    size="20"
-                  />
+                  <XCircle strokeWidth="1" size="18" />
                 </ActionIcon>
                 <Text
                   variant={'suptitle'}
@@ -77,7 +69,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
                 </Text>
               </ActionItem>
             )}
-            <ActionItem ml={4} onClick={() => setOpenIgnore(true)}>
+            <ActionItem ml={2} onClick={() => setOpenIgnore(true)}>
               <ActionIcon className="unflag">
                 <Flag className="hover" strokeWidth="1" size="16" />
               </ActionIcon>
@@ -93,7 +85,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
           {isOpenDelete && (
             <Modal closeModal={() => setOpenDelete(false)}>
               <ConfirmationModal
-                cancel={() => setOpenDelete(false)}
+                done={() => setOpenDelete(false)}
                 formik={deleteContentFormik}
                 modalAction={i18n._(`Delete flagged content`)}
                 modalDescription={i18n._(
@@ -106,7 +98,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
           {isOpenBlock && (
             <Modal closeModal={() => setOpenBlock(false)}>
               <ConfirmationModal
-                cancel={() => setOpenBlock(false)}
+                done={() => setOpenBlock(false)}
                 formik={blockUserFormik}
                 modalAction={i18n._(`Delete user`)}
                 modalDescription={i18n._(
@@ -119,7 +111,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
           {isOpenIgnore && (
             <Modal closeModal={() => setOpenIgnore(false)}>
               <ConfirmationModal
-                cancel={() => setOpenIgnore(false)}
+                done={() => setOpenIgnore(false)}
                 formik={ignoreFlagFormik}
                 modalAction={i18n._(`Ignore flag`)}
                 modalDescription={i18n._(
@@ -135,6 +127,12 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
   );
 };
 
+const Reason = styled(Box)`
+  color: ${props => props.theme.colors.dark};
+  background: ${props => props.theme.colors.appInverse};
+  border-left: 3px solid ${props => props.theme.colors.light};
+`;
+
 const Items = styled(Flex)`
   flex: 1;
   justify-content: start;
@@ -143,26 +141,36 @@ const Items = styled(Flex)`
 const Actions = styled(Box)`
   position: relative;
   z-index: 999999999999999999999999999999999999;
+  margin-top: 16px;
 `;
 
-const ActionItem = styled(Flex)`
+const ActionItem = styled(Flex)<{ liked?: boolean }>`
   align-items: center;
-  color: ${props => props.theme.colors.gray};
+  color: ${props =>
+    props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  div {
+    color: ${props =>
+      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
+  }
+  &:hover {
+    background: ${props =>
+      props.liked
+        ? darken('0.1', props.theme.colors.secondary)
+        : darken('0.05', props.theme.colors.mediumlight)};
+  }
   cursor: pointer;
-  .unflag {
-    position: relative;
-    &:after {
-      display: block;
-      content: '';
-      width: 0px;
-      height: 25px;
-      transform: rotateZ(-45deg);
-      position: absolute;
-      left: 14px;
-      border-right: 3px solid #fff;
-      border-left: 1px solid;
-      top: 1px;
-    }
+  background: ${props =>
+    props.liked
+      ? props.theme.colors.secondary
+      : props.theme.colors.mediumlight};
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-right: 8px;
+  text-align: center;
+  font-size: ${typography.size.s1};
+  svg {
+    stroke: ${props =>
+      props.liked ? props.theme.colors.lighter : props.theme.colors.mediumdark};
   }
   a {
     display: flex;
@@ -170,17 +178,10 @@ const ActionItem = styled(Flex)`
     position: relative;
     z-index: 9;
   }
-  .hover {
-    stroke: ${props => props.theme.colors.gray};
-  }
   &:hover {
-    svg {
-      &.hover {
-        stroke: ${props => props.theme.colors.orange};
-      }
-    }
-    .unflag:after {
-      border-left-color: ${props => props.theme.colors.orange};
+    svg.hover {
+      stroke: ${props => props.theme.colors.mediumdark};
+      // fill: ${props => props.theme.colors.mediumdark};
     }
   }
 `;
@@ -200,10 +201,10 @@ const ActionIcon = styled(Box)`
 `;
 
 const Wrapper = styled(Box)`
-  background: white;
+  background: ${props => props.theme.colors.appInverse};
 `;
 
-const Bordered = styled(Box)`
-  border: 1px solid ${props => props.theme.colors.lightgray};
-  border-radius: 4px;
-`;
+// const Bordered = styled(Box)`
+//   border: ${props => props.theme.colors.border};
+//   border-radius: 4px;
+// `;

@@ -15,7 +15,7 @@ import {
 } from 'ui/modules/Modal';
 import styled from 'ui/themes/styled';
 // import { clearFix } from 'polished';
-import DropzoneArea from '../../../components/elements/DropzoneModal';
+import DropzoneArea from 'ui/modules/DropzoneModal';
 import { LocaleContext } from '../../../context/global/localizationCtx';
 
 // these icons must match the types and order of the `accepted_license_types` configured in constants.tsx
@@ -40,20 +40,22 @@ export interface Props {
   cancel: () => any;
   formik: FormikHook<ResourceFormValues>;
   acceptedLicenses: string[];
+  hideIconField: boolean;
 }
 
 export interface ResourceFormValues {
   license: string;
   name: string;
   summary: string;
-  resource?: File;
-  icon?: File | string;
+  resource: File | null;
+  icon: File | string | null;
 }
 
 export const UploadResource: React.FC<Props> = ({
   cancel,
   formik,
-  acceptedLicenses
+  acceptedLicenses,
+  hideIconField
 }) => {
   const [license0, license1, license2] = acceptedLicenses;
   const { i18n } = React.useContext(LocaleContext);
@@ -72,7 +74,7 @@ export const UploadResource: React.FC<Props> = ({
   const initialIconUrl =
     'string' === typeof formik.values.icon ? formik.values.icon : '';
   return (
-    <div>
+    <Wrapper>
       <Row>
         <label>
           <Trans>Resource</Trans>
@@ -143,20 +145,23 @@ export const UploadResource: React.FC<Props> = ({
           </>
         </ContainerForm>
       </Row>
-      <Row>
-        <label>
-          <Trans>Image</Trans>
-        </label>
-        <ContainerForm>
-          <Box sx={{ width: '120px', height: '120px' }}>
-            <DropzoneArea
-              initialUrl={initialIconUrl}
-              onFileSelect={onIconFileSelect}
-              filePattern={'image/*'}
-            />
-          </Box>
-        </ContainerForm>
-      </Row>
+      {hideIconField ? null : (
+        <Row>
+          <label>
+            <Trans>Image</Trans>
+          </label>
+          <ContainerForm>
+            <Box sx={{ width: '120px', height: '120px' }}>
+              <DropzoneArea
+                initialUrl={initialIconUrl}
+                onFileSelect={onIconFileSelect}
+                filePattern={'image/*'}
+              />
+            </Box>
+          </ContainerForm>
+        </Row>
+      )}
+
       <Row>
         <LabelWrapper>
           <label>
@@ -214,11 +219,15 @@ export const UploadResource: React.FC<Props> = ({
           <Trans>Cancel</Trans>
         </Button>
       </Actions>
-    </div>
+    </Wrapper>
   );
 };
 
 export default UploadResource;
+
+const Wrapper = styled(Box)`
+  background: ${props => props.theme.colors.appInverse};
+`;
 
 const LabelWrapper = styled.div`
   width: 200px;
@@ -277,7 +286,7 @@ const FormInput = styled(Input)`
   height: 40px;
   background: white;
   border-radius: 2px;
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
 `;
 
 const SubmitButton = styled(Button)`

@@ -21,13 +21,14 @@ import {Comment} from 'ui/modules/Previews/Comment'
 import {Thread} from 'ui/modules/Previews/Thread'
 import {LikedComment} from 'ui/modules/Previews/LikedComment'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
+const Side = () => <Sidebar {...getSidebarProps()}/>
 
 
 <Meta title="Pages|Community" component={Community}/>
 
 
 # Community
-The community is where things happen in moodlenet.
+The `Community` page displays a single MoodleNet community. It is made up of the following:
 - **[Story](#story)**
 - **[Building blocks](#modules)**
 - **[Props](#props)**
@@ -38,7 +39,7 @@ The community is where things happen in moodlenet.
   <Story name="community page">
     <WithSidebar 
       HeaderBox={Head}
-      SidebarBox={<Sidebar {...getSidebarProps()}/>}>
+      SidebarBox={Side}>
       <Community {...{
         isJoined: true,
         communityName: "OER licensing",

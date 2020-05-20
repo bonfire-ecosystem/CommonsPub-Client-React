@@ -2,7 +2,7 @@ import React from 'react';
 import { EditProfile, Props as EditProfileProps } from 'ui/pages/settings';
 import { useFormik } from 'formik';
 import { action } from '@storybook/addon-actions';
-import Preferences from 'ui/pages/settings/preferences';
+import Preferences, { EditPreferences } from 'ui/pages/settings/preferences';
 import { getActor } from './actor';
 import { getActions } from './activityPreview';
 import { Collection } from 'ui/modules/Previews/Collection';
@@ -40,12 +40,16 @@ export const getEditProfileProps = (): EditProfileProps => {
       });
     }
   });
+  const preferencesFormik = useFormik<EditPreferences>({
+    initialValues: { moodleWebsite: '' },
+    onSubmit: () => {}
+  });
   return {
     formik,
     basePath: '/',
     displayUsername: '@estrella@home.moodle.net',
     isAdmin: false,
-    Preferences: <Preferences />,
+    Preferences: <Preferences formik={preferencesFormik} />,
     Flags: <div>Flags section </div>, //FIXME
     Instance: <div>Instance section </div>, //FIXME
     Invites: <div>Invites section </div>, //FIXME,
@@ -104,8 +108,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11',
-    link: 'https://picsum.photos/80/80'
+    createdAt: '2018-11-11'
   };
 
   const activityCollectionPreviewProps: ActivityLoaded = {
@@ -175,8 +178,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11',
-    link: 'https://picsum.photos/80/80'
+    createdAt: '2018-11-11'
   };
 
   const activityResourcePreviewProps: ActivityLoaded = {
@@ -218,6 +220,10 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
             FlagModal={({ done }) => {
               return <></>;
             }}
+            // sendToMoodle={null}
+            MoodlePanel={({ done }) => {
+              return <></>;
+            }}
           />
         }
         ignoreFlagFormik={useFormik({
@@ -253,8 +259,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11',
-    link: 'https://picsum.photos/80/80'
+    createdAt: '2018-11-11'
   };
 
   const activityUserPreviewProps: ActivityLoaded = {
@@ -321,8 +326,7 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
     ),
     status: ActivityStatus.Loaded,
     actor: getActor(),
-    createdAt: '2018-11-11',
-    link: 'https://picsum.photos/80/80'
+    createdAt: '2018-11-11'
   };
 
   const ActivitiesBox = (
@@ -397,12 +401,16 @@ export const getEditProfilePropsAdmin = (): EditProfileProps => {
       });
     }
   });
+  const preferencesFormik = useFormik<EditPreferences>({
+    initialValues: { moodleWebsite: '' },
+    onSubmit: () => {}
+  });
 
   return {
     formik,
     basePath: '/',
     displayUsername: '@ammaarah@home.moodle.net',
-    Preferences: <Preferences />,
+    Preferences: <Preferences formik={preferencesFormik} />,
     Invites: (
       <Emails
         emailsList={[

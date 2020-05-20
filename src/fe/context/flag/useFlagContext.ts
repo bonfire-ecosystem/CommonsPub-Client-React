@@ -1,15 +1,16 @@
-import { useCallback, useMemo } from 'react';
-import Maybe from 'graphql/tsutils/Maybe';
+import { AllFlagsQueryRefetch } from 'fe/flags/all/useAllFlags.generated';
+import { isOptimisticId, OPTIMISTIC_ID_STRING } from 'fe/lib/helpers/mutations';
 import * as GQL from 'fe/mutation/flag/useMutateFlag.generated';
+import Maybe from 'graphql/tsutils/Maybe';
 import {
-  Resource,
+  Collection,
   Comment,
   Community,
-  Collection,
+  Resource,
   User
 } from 'graphql/types.generated';
-import { OPTIMISTIC_ID_STRING, isOptimisticId } from 'fe/lib/helpers/mutations';
-import { AllFlagsQueryRefetch } from 'fe/flags/all/useAllFlags.generated';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
 
 type Context = Collection | Comment | Community | User | Resource;
 
@@ -21,7 +22,7 @@ export const useFlagContext = (ctx: Maybe<UseFollowContext>) => {
   const [flagMut, flagMutStatus] = GQL.useFlagMutation();
   const [unflagMut, unflagMutStatus] = GQL.useUnflagMutation();
   const mutating = flagMutStatus.loading || unflagMutStatus.loading;
-  const flag = useCallback(
+  const flag = useCallOrNotifyMustLogin(
     async (message: string) => {
       if (!ctx || ctx.myFlag || mutating) {
         return;
@@ -38,7 +39,7 @@ export const useFlagContext = (ctx: Maybe<UseFollowContext>) => {
     [ctx, mutating]
   );
 
-  const unflag = useCallback(async () => {
+  const unflag = useCallOrNotifyMustLogin(async () => {
     if (!ctx || !ctx.myFlag || mutating) {
       return;
     }

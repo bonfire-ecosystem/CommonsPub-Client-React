@@ -1,11 +1,12 @@
-import { useCallback, useMemo } from 'react';
-import { useCreateThreadMutation } from 'fe/mutation/createThread/useCreateThread.generated';
-import Maybe from 'graphql/tsutils/Maybe';
-import { CommunityThreadsQueryRefetch } from 'fe/thread/community/useCommunityThreads.generated';
-import { Community } from 'graphql/types.generated';
-import { DEFAULT_PAGE_SIZE } from 'mn-constants';
 import { CommunityOutboxActivitiesQueryRefetch } from 'fe/activities/outbox/community/useCommunityOutboxActivities.generated';
 import { InstanceOutboxActivitiesQueryRefetch } from 'fe/activities/outbox/instance/useInstanceOutboxActivities.generated';
+import { useCreateThreadMutation } from 'fe/mutation/createThread/useCreateThread.generated';
+import { CommunityThreadsQueryRefetch } from 'fe/thread/community/useCommunityThreads.generated';
+import Maybe from 'graphql/tsutils/Maybe';
+import { Community } from 'graphql/types.generated';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { DEFAULT_PAGE_SIZE } from 'mn-constants';
+import { useMemo } from 'react';
 
 export type ContextTypes = Community;
 export type Context = Pick<ContextTypes, '__typename' | 'id'>;
@@ -16,7 +17,7 @@ export const useCreateThreadContext = (
 ) => {
   const [createThreadMut, createThreadMutStatus] = useCreateThreadMutation();
   const mutating = createThreadMutStatus.loading;
-  const createThread = useCallback(
+  const createThread = useCallOrNotifyMustLogin(
     async (content: string) => {
       if (!contextId || mutating) {
         return;

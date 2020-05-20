@@ -13,69 +13,42 @@
 
 import * as React from 'react';
 
-import styled from '../../themes/styled';
+import styled from 'ui/themes/styled';
 import { Heading, Box, Flex, Text, Button } from 'rebass/styled-components';
 // import { NavLink } from 'react-router-dom';
 import { Trans } from '@lingui/macro';
 import Avatar from 'ui/elements/Avatar';
-import { Hit } from './Hits';
+import { Hit } from '../../fe/search/Hits';
 import { useHit } from './lib';
 import { SearchHostIndexAndMyFollowingsQuery } from './SearchData.generated';
+import { useLMSHit } from 'fe/lib/moodleLMS/useSendToMoodle';
+import Modal from 'ui/modules/Modal';
+import Maybe from 'graphql/tsutils/Maybe';
 
-const PlaceholderImg = require('../../components/elements/Icons/resourcePlaceholder.png');
-
-// interface Props {
-//   icon: string;
-//   image?: string;
-//   title: string;
-//   summary: string;
-//   url: string;
-//   type: string;
-//   moodleLMSURL?: any;
-// }
-// icon={hit.icon || hit.image}
-// title={hit.name}
-// summary={hit.summary}
-// url={hit.url || hit.canonicalUrl || ''}
-// type={hit.index_type}
-// moodleLMSURL={
-//   moodle_core_download_url
-//     ? moodle_core_download_url +
-//       `&sourceurl=` +
-//       encodeURIComponent(hit.url) +
-//       `&moodleneturl=` +
-//       encodeURIComponent(hit.canonicalUrl||'') +
-//       `&name=` +
-//       encodeURIComponent(hit.name) +
-//       `&description=` +
-//       encodeURIComponent(hit.summary)
-//     : null
-// }
+// const PlaceholderImg = require('../../components/elements/Icons/resourcePlaceholder.png');
 
 interface Props {
   hit: Hit;
-  moodle_core_download_url: string;
-  myInfo: SearchHostIndexAndMyFollowingsQuery;
+  myInfo: Maybe<SearchHostIndexAndMyFollowingsQuery>;
 }
 
-const Resource: React.FC<Props> = ({
-  hit,
-  moodle_core_download_url,
-  myInfo
-}) => {
+const Resource: React.FC<Props> = ({ hit, myInfo }) => {
   const props = {
-    icon: hit.icon || hit.image,
+    icon: hit.icon,
     title: hit.name,
     summary: hit.summary,
-    url: hit.url || hit.canonicalUrl || '',
-    type: hit.index_type,
-    moodleLMSURL: moodle_core_download_url
+    url: hit.canonicalUrl || '',
+    type: hit.index_type
   };
   const hitCtl = useHit(myInfo, hit);
+  const { LMSPrefsPanel } = useLMSHit(
+    hit.index_type === 'Resource' ? hit : null
+  );
+  const [isOpenMoodleModal, setOpenMoodleModal] = React.useState(false);
   return (
     <Wrapper p={3}>
       <WrapperLink target="blank" href={props.url}>
-        <Avatar size="m" src={props.icon || PlaceholderImg} />
+        <Avatar size="m" src={props.icon} />
         <Infos ml={3}>
           <Title>
             {props.title.length > 80
@@ -109,21 +82,15 @@ const Resource: React.FC<Props> = ({
           )}
         </Button>
       )}
-      {(!props.moodleLMSURL && !hitCtl.moodleLMSURL) ||
-      props.type != 'Resource' ? null : (
-        <form
-          method="post"
-          action={
-            (props.moodleLMSURL || hitCtl.moodleLMSURL) +
-            '/admin/tool/moodlenet/import.php'
-          }
-          target="_blank"
-        >
-          <input type="hidden" name="resourceurl" value={hit.url} />
-          <Button variant="outline">
-            <Trans>To Moodle</Trans>
-          </Button>
-        </form>
+      {hit.index_type === 'Resource' && (
+        <Button variant="outline" onClick={() => setOpenMoodleModal(true)}>
+          <Trans>To Moodle</Trans>
+        </Button>
+      )}
+      {isOpenMoodleModal && (
+        <Modal closeModal={() => setOpenMoodleModal(false)}>
+          <LMSPrefsPanel done={() => setOpenMoodleModal(false)} />
+        </Modal>
       )}
     </Wrapper>
   );
@@ -144,7 +111,7 @@ const Type = styled(Text)`
 //     min-width: 80px;
 //     border-width: 1px !important;
 //     line-height: 25px;
-//     color: ${props => props.theme.colors.lightgray} svg {
+//     color: ${props => props.theme.colors.light} svg {
 //       color: inherit !important;
 //     }
 //   }
@@ -182,7 +149,7 @@ const Infos = styled(Box)`
   }
 `;
 const Title = styled(Heading)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
   font-size: 20px;
   text-decoration: none;
 `;

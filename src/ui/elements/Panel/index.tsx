@@ -1,9 +1,10 @@
 import styled from '../../themes/styled';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
+import { typography } from 'mn-constants';
 
 export const WrapperPanel = styled(Flex)`
-  width: 300px;
+  width: 240px;
   align-items: stretch;
   border: 0 solid black;
   box-sizing: border-box;
@@ -46,7 +47,7 @@ export const PanelInner = styled(Flex)`
 `;
 
 export const Panel = styled(Box)`
-  background: #fff;
+  background: ${props => props.theme.colors.appInverse};
   border-radius: 4px;
   align-items: stretch;
   border: 0 solid black;
@@ -64,9 +65,12 @@ export const Panel = styled(Box)`
 `;
 
 export const PanelTitle = styled(Text)`
-  text-transform: uppercase;
-  border-bottom: 4px solid ${props => props.theme.colors.lighter};
+  text-transform: capitalize;
+  border-bottom: ${props => props.theme.colors.border};
   padding: 16px;
+  color: ${props => props.theme.colors.darker};
+  font-size: ${typography.size.s1};
+  font-weight: 600;
 `;
 
 export const Nav = styled(Box)`
@@ -74,9 +78,10 @@ export const Nav = styled(Box)`
 `;
 
 export const NavItem = styled(Text)`
-color: ${props => props.theme.colors.darkgray}
+color: ${props => props.theme.colors.dark}
+font-size: ${typography.size.s2};
 a {
-  color: ${props => props.theme.colors.darkgray}
+  color: ${props => props.theme.colors.dark}
   text-decoration: none;
 }
   `;

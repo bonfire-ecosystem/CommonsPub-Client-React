@@ -11,6 +11,7 @@ import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
 import { NavLink } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+// import { typography } from 'mn-constants';
 
 export enum Status {
   Loading,
@@ -19,7 +20,8 @@ export enum Status {
 
 export interface CommunityLoaded {
   status: Status.Loaded;
-  isAdmin?: boolean;
+  isAdmin: boolean;
+  isCreator: boolean;
   // isFeatured: boolean;
   basePath: string;
   icon: string;
@@ -76,17 +78,20 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
             />
           )}
           <Info mt={3}>
-            <MembersTot to={`${c.basePath}/members`}>
-              <Text variant="suptitle">
-                <Total mr={2}>{c.totalMembers}</Total> <Trans>Members</Trans>
-              </Text>
-            </MembersTot>
+            <InfoCommunity>
+              {/* <Badge mr={2}>Featured</Badge> */}
+              <MembersTot to={`${c.basePath}/members`}>
+                <Text variant="suptitle">
+                  <Total mr={2}>{c.totalMembers}</Total> <Trans>Members</Trans>
+                </Text>
+              </MembersTot>
+            </InfoCommunity>
             <Actions>
               <Button
                 mr={2}
                 variant={c.following ? 'danger' : 'primary'}
                 isSubmitting={c.toggleJoinFormik.isSubmitting}
-                isDisabled={c.toggleJoinFormik.isSubmitting}
+                isDisabled={c.toggleJoinFormik.isSubmitting || c.isCreator}
                 onClick={c.toggleJoinFormik.submitForm}
               >
                 {c.following ? <Trans>Leave</Trans> : <Trans>Join</Trans>}
@@ -152,9 +157,21 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
     </>
   );
 };
+
+const InfoCommunity = styled(Flex)`
+  align-items: center;
+`;
+
+// const Badge = styled(Box)`
+//   border: 1px solid ${props => props.theme.colors.secondary};
+//   padding: 4px;
+//   border-radius: 4px;
+//   color:  ${props => props.theme.colors.secondary};
+//   font-size: ${typography.size.s1}
+// `
+
 const AdminDropdownItem = styled(DropdownItem)`
-    border-top: 1px solid ${props =>
-      darken('0.1', props.theme.colors.lightgray)};
+    border-top: 1px solid ${props => darken('0.1', props.theme.colors.light)};
     // svg {
     //   stroke: ${props => darken('0.1', props.theme.colors.primary)};
     // }
@@ -167,19 +184,20 @@ const More = styled(Box)`
   height: 40px;
   display: flex;
   align-items: center;
-  border: 1px solid ${props => props.theme.colors.lightgray};
+  border: ${props => props.theme.colors.border};
   border-radius: 4px;
   svg {
     margin: 0 auto;
-    stroke: ${props => props.theme.colors.gray};
+    stroke: ${props => props.theme.colors.mediumdark};
   }
 `;
 
 const Info = styled(Flex)`
   align-items: center;
+  justify-content: space-between;
 `;
 const Total = styled(Text)`
-  color: ${props => props.theme.colors.orange};
+  color: ${props => props.theme.colors.primary};
 `;
 
 const Title = styled(Text)`
@@ -198,7 +216,7 @@ const Actions = styled(Flex)`
 `;
 
 const Username = styled(Text)`
-  color: ${props => props.theme.colors.gray};
+  color: ${props => props.theme.colors.mediumdark};
   font-weight: 500;
   text-transform: lowercase;
 `;
@@ -234,7 +252,7 @@ const MembersTot = styled(NavLink)`
 const Hero = styled(Box)`
   width: 100%;
   position: relative;
-  background: #fff;
+  background: ${props => props.theme.colors.appInverse};
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 `;
@@ -244,7 +262,7 @@ const Background = styled.div`
   height: 250px;
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: ${props => props.theme.colors.gray};
+  background-color: ${props => props.theme.colors.medium};
   position: relative;
   margin: 0 auto;
   border-radius: 4px;
@@ -267,14 +285,5 @@ const HeroInfo = styled.div`
     }
   }
 `;
-
-// const SettingsButton = styled.div`
-//   margin-right: 16px;
-
-//   .--rtl & {
-//     margin-right: 0px;
-//     margin-left: 16px;
-//   }
-// `;
 
 export default HeroCommunity;

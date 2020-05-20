@@ -75,7 +75,7 @@ const Img = styled.div`
 `;
 const Infos = styled.div``;
 const Title = styled(Text)`
-  color: ${props => props.theme.colors.darkgray};
+  color: ${props => props.theme.colors.mediumdark};
   ${ellipsis('200px')};
 `;
 
@@ -84,7 +84,7 @@ const Remove = styled(Box)`
   right: -9px;
   top: 0px;
   cursor: pointer;
-  background: ${props => props.theme.colors.gray};
+  background: ${props => props.theme.colors.medium};
   width: 20px;
   height: 20px;
   border-radius: 20px;

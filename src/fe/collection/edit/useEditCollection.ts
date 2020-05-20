@@ -1,11 +1,12 @@
+import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
 import Maybe from 'graphql/tsutils/Maybe';
 import { Collection, CollectionUpdateInput } from 'graphql/types.generated';
-import { useCallback, useMemo } from 'react';
+import { useCallOrNotifyMustLogin } from 'HOC/lib/notifyMustLogin';
+import { useMemo } from 'react';
 import {
   useEditCollectionDataQuery,
   useEditCollectionMutation
 } from './useEditCollection.generated';
-import { getMaybeUploadInput } from 'fe/mutation/upload/getUploadInput';
 
 export interface EditCollection {
   collection: CollectionUpdateInput;
@@ -17,7 +18,7 @@ export const useEditCollection = (collectionId: Collection['id']) => {
     variables: { collectionId }
   });
 
-  const edit = useCallback(
+  const edit = useCallOrNotifyMustLogin(
     async ({ collection, icon }: EditCollection) => {
       if (editMutStatus.loading) {
         return;

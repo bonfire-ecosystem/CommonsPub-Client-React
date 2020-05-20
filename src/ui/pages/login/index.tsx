@@ -1,24 +1,20 @@
 import { Trans } from '@lingui/macro';
 import { i18nMark } from '@lingui/react';
-import { clearFix } from 'polished';
 import * as React from 'react';
 import media from 'styled-media-query';
 import { FormikHook } from 'ui/@types/types';
 import { Link } from 'react-router-dom';
-// import SignupModal from '../../components/elements/SignupModal';
 import styled from 'ui/themes/styled';
 import { Box, Text } from 'rebass/styled-components';
 import Button from 'ui/elements/Button';
 import { Input } from '@rebass/forms';
 import { Panel, WrapperPanel } from 'ui/elements/Panel';
+import LogoContainer from 'ui/elements/Logo';
 // const MnetLogin = require('static/img/login.jpg');
 import {
   INSTANCE_DESCRIPTION,
-  INSTANCE_TAGLINE,
   INSTANCE_PROMPT,
-  logo_large_url,
-  instance_bg_img,
-  related_urls
+  instance_bg_img
 } from 'mn-constants'; // + instance_bg_img
 
 let tt = {
@@ -43,10 +39,7 @@ export const Login: React.FC<Props> = ({ formik }) => {
     <>
       <Container>
         <LoginWrapper>
-          <Header>
-            <Logo />
-            <Tagline>{INSTANCE_TAGLINE}</Tagline>
-          </Header>
+          <LogoContainer isHome={true} />
           <FormWrapper>
             <Form>
               <LoginForm>
@@ -128,36 +121,6 @@ export const Login: React.FC<Props> = ({ formik }) => {
               </Panel>
             </WrapperPanel>
           </Right>
-
-          <Footer mt={3}>
-            <ul>
-              <li>
-                <a href={related_urls.project_homepage} target="blank">
-                  <Trans>About</Trans>
-                </a>
-              </li>
-              <li>
-                <a href={related_urls.terms_users} target="blank">
-                  <Trans>Code of Conduct</Trans>
-                </a>
-              </li>
-              <li>
-                <a href={related_urls.code} target="blank">
-                  <Trans>Open source</Trans>
-                </a>
-              </li>
-              <li>
-                <a href={related_urls.feedback} target="blank">
-                  <Trans>Feedback</Trans>
-                </a>
-              </li>
-              <li>
-                <a href={related_urls.terms_cookies} target="blank">
-                  <Trans>Privacy notice</Trans>
-                </a>
-              </li>
-            </ul>
-          </Footer>
         </LoginWrapper>
       </Container>
     </>
@@ -178,27 +141,9 @@ const Background = styled(Box)`
 `;
 // FIX ME add background: url(${instance_bg_img}); after add image to constants
 
-const Tagline = styled.h5`
-  font-size: 16px;
-  margin-top: 8px;
-  margin-bottom: 40px;
-  color: #000000a1;
-  font-weight: 500;
-`;
-
 const Infos = styled(Box)``;
 
 const Info = styled(Box)``;
-
-const Logo = styled.div`
-  background: url(${logo_large_url});
-  width: 300px;
-  display: inline-block;
-  height: 100px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-`;
 
 const LoginWrapper = styled.div`
   display: grid;
@@ -216,11 +161,7 @@ const Container = styled.div`
   margin: 0 auto;
   max-width: 900px;
   margin-top: 60px;
-`;
-
-const Header = styled.div`
-  grid-area: header;
-  text-align: center;
+  padding-bottom: 50px;
 `;
 
 const FormWrapper = styled.div`
@@ -228,7 +169,7 @@ const FormWrapper = styled.div`
 `;
 
 const Form = styled.div`
-  background: #fff;
+  background: ${props => props.theme.colors.appInverse};
   border-radius: 4px;
   height: inherit;
   border: 1px solid #dddfe2;
@@ -247,41 +188,14 @@ const Right = styled(Box)`
   }
 `;
 
-const Footer = styled(Box)`
-grid-area: footer
-border-top: 1px solid rgba(0,0,0,.2);
-padding-top: 24px;
-& ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex: 1;
-  ${clearFix()}
-  & li {
-    float: left;
-    margin-right: 16px;
-    font-size: 13px;
-    & a {
-      color: rgba(0,0,0,.45);
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-`;
-
 const Browse = styled(Box)`
-  background: #fff;
+  background: ${props => props.theme.colors.appInverse};
   a {
     text-decoration: none;
-    color: ${props => props.theme.colors.darkgray};
+    color: ${props => props.theme.colors.mediumdark};
+    button {
+      color: ${props => props.theme.colors.mediumdark} !important;
+    }
   }
 `;
 
