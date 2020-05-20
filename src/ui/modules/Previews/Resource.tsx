@@ -87,11 +87,11 @@ export const Resource: React.FC<Props> = ({
             </>
           ) : (
             <>
-              <ActionItem>
+              <LinkResource>
                 <a href={link} target="_blank">
                   <TextLink flex={1}>{link}</TextLink>
                 </a>
-              </ActionItem>
+              </LinkResource>
             </>
           )}
           <Summary variant="text" mt={2}>
@@ -172,6 +172,25 @@ export const Resource: React.FC<Props> = ({
     </Bordered>
   );
 };
+
+const LinkResource = styled(Box)`
+  align-items: center;
+  color: ${props => props.theme.colors.mediumdark};
+  cursor: pointer;
+
+  text-align: center;
+  font-size: ${typography.size.s2};
+  text-decoration: none;
+  margin-top: 4px;
+  a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 9;
+    text-decoration: none;
+  }
+`;
+
 const Summary = styled(Text)`
   color: ${props => props.theme.colors.dark};
 `;
