@@ -7,23 +7,21 @@ export const SENTRY_KEY = process.env.REACT_APP_SENTRY_API_KEY;
 export const DEFAULT_PAGE_SIZE =
   parseInt(`${process.env.REACT_APP_DEFAULT_PAGE_SIZE}`) || 15;
 
-export const APP_NAME = 'MoodleNet';
+export const APP_NAME = 'CommonsPub';
 export const INSTANCE_DESCRIPTION =
-  process.env.INSTANCE_DESCRIPTION || 'An instance of MoodleNet.';
+  'Federated app for open and cooperative networks.';
 export const INVITE_ONLY_TEXT =
   process.env.REACT_APP_INVITE_ONLY_TEXT ||
   'Please note, signups on this instance are currently invite-only.';
-export const INSTANCE_TAGLINE = 'Share. Curate. Discuss.';
+export const INSTANCE_TAGLINE = 'CommonsPub - join up, federate, cooperate';
 export const INSTANCE_PROMPT =
   "You don't need to sign up to preview what people are sharing and discussing publicly.";
 export const prompt_signin = 'Sign in';
-export const my_timeline = 'My MoodleNet';
+export const my_timeline = 'My Timeline';
 export const instance_bg_img =
-  'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/login.jpg';
-export const logo_large_url =
-  'https://moodle.net/images/logos/moodlenet-logo.png';
-export const logo_small_url =
-  'https://gitlab.com/moodlenet/frontend/-/raw/develop/src/static/img/logo.jpg';
+  'http://nycicarus.org/images/mad-solidarity-fists.png';
+export const logo_large_url = 'http://commonspub.org/logo-small.png';
+export const logo_small_url = 'http://commonspub.org/logo-small.png';
 
 export const terms_markdown_text = {
   // replace the text as needed
@@ -35,17 +33,17 @@ export const terms_markdown_text = {
 
 export const terms_markdown_urls = {
   // replace the URLs as needed, or enable/disable to use `terms_markdown_text` instead
-  enabled: true,
-  terms_users: 'https://moodle.net/terms/users.md',
-  terms_cookies: 'https://moodle.net/terms/cookies.md',
-  terms_indexing: 'https://moodle.net/terms/indexing.md'
+  enabled: false,
+  terms_users: '',
+  terms_cookies: '',
+  terms_indexing: ''
 };
 
 export const terms_privacy = {
   // replace the URLs as needed, or enable/disable to use `text_markdown` instead
-  enabled: true,
+  enabled: false,
   // replace the URL with that of your instance's privacy policy (in markdown format)
-  url_markdown: 'https://moodle.net/terms/privacy.md',
+  url_markdown: '',
   // replace the text as needed (in markdown format as well)
   text_markdown:
     'This site uses cookies and follows GDPR rules. Contact the instance operators if you want your data exported or deleted.'
@@ -53,9 +51,10 @@ export const terms_privacy = {
 
 export const related_urls = {
   // replace the URLs as needed
-  project_homepage: 'https://moodle.net',
-  code: 'https://gitlab.com/moodlenet',
-  feedback: 'https://changemap.co/moodle/moodlenet/'
+  project_homepage: 'https://commonspub.org',
+  code: 'https://gitlab.com/CommonsPub',
+  feedback: 'https://zo.team',
+  localisation: 'https://www.transifex.com/moodlenet/moodlenet/'
 };
 
 export const IS_DEV = NODE_ENV === 'development';
@@ -74,22 +73,17 @@ export const locales = Object.keys(languages) as LocaleKey[];
 
 const mothershipAppId = process.env.REACT_APP_MOTHERSHIP_API_ID;
 const mothershipApiKey = process.env.REACT_APP_MOTHERSHIP_API_KEY;
-const mothershipEnv = process.env.REACT_APP_MOTHERSHIP_ENV;
-
 export const mothershipCreds =
   mothershipAppId && mothershipApiKey
     ? {
         appId: mothershipAppId,
-        apiKey: mothershipApiKey,
-        indexName: mothershipEnv
+        apiKey: mothershipApiKey
       }
     : null;
 export const searchDisabled = !mothershipCreds;
 
 export const max_file_size = '10MB';
 
-export const accepted_file_types =
-  '.pdf, .rtf, .docx, .doc, .odt, .ott, .xls, .xlsx, .ods, .ots, .csv, .ppt, .pps, .pptx, .odp, .otp, .odg, .otg, .odc, .ogg, .mp3, .flac, .m4a, .wav, .mp4, .mkv, .flv, .avi, .gif, .jpg, .jpeg, .png, .svg, .webm, .eps, .tex, .mbz';
 
 // these licenses must match the icons (in the same order) configured in the UploadResource UI module
 // please use standard identifiers from https://spdx.org/licenses/preview/ in order to preserve interoperability

@@ -34,16 +34,16 @@ export const terms_markdown_text = {
 export const terms_markdown_urls = {
   // replace the URLs as needed, or enable/disable to use `terms_markdown_text` instead
   enabled: false,
-  terms_users: 'https://moodle.net/terms/users.md',
-  terms_cookies: 'https://moodle.net/terms/cookies.md',
-  terms_indexing: 'https://moodle.net/terms/indexing.md'
+  terms_users: '',
+  terms_cookies: '',
+  terms_indexing: ''
 };
 
 export const terms_privacy = {
   // replace the URLs as needed, or enable/disable to use `text_markdown` instead
-  enabled: true,
+  enabled: false,
   // replace the URL with that of your instance's privacy policy (in markdown format)
-  url_markdown: 'https://moodle.net/terms/privacy.md',
+  url_markdown: '',
   // replace the text as needed (in markdown format as well)
   text_markdown:
     'This site uses cookies and follows GDPR rules. Contact the instance operators if you want your data exported or deleted.'
@@ -51,9 +51,10 @@ export const terms_privacy = {
 
 export const related_urls = {
   // replace the URLs as needed
-  project_homepage: 'https://moodle.net',
-  code: 'https://gitlab.com/moodlenet',
-  feedback: 'https://changemap.co/moodle/moodlenet/'
+  project_homepage: 'https://commonspub.org',
+  code: 'https://gitlab.com/CommonsPub',
+  feedback: 'https://zo.team',
+  localisation: 'https://www.transifex.com/moodlenet/moodlenet/'
 };
 
 export const IS_DEV = NODE_ENV === 'development';
@@ -83,8 +84,6 @@ export const searchDisabled = !mothershipCreds;
 
 export const max_file_size = '10MB';
 
-export const accepted_file_types =
-  '.pdf, .rtf, .docx, .doc, .odt, .ott, .xls, .xlsx, .ods, .ots, .csv, .ppt, .pps, .pptx, .odp, .otp, .odg, .otg, .odc, .ogg, .mp3, .flac, .m4a, .wav, .mp4, .mkv, .flv, .avi, .gif, .jpg, .jpeg, .png, .svg, .webm, .eps, .tex, .mbz';
 
 // these licenses must match the icons (in the same order) configured in the UploadResource UI module
 // please use standard identifiers from https://spdx.org/licenses/preview/ in order to preserve interoperability

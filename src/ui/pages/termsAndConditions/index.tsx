@@ -12,6 +12,7 @@ import media from 'styled-media-query';
 import { Panel } from 'ui/elements/Panel';
 import styled from '../../themes/styled';
 import LogoContainer from 'ui/elements/Logo';
+import APP_NAME from 'mn-constants'
 
 export interface Props {}
 
@@ -52,7 +53,7 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
               </Box>
               <Text variant="suptitle">
                 {' '}
-                Please read the following. By using this instance of MoodleNet
+                Please read the following. By using this instance of {APP_NAME}
                 you are consenting to these agreements.
               </Text>
             </Aware>
