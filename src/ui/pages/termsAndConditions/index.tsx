@@ -1,6 +1,11 @@
 import useAxios from 'axios-hooks';
 import Markdown from 'markdown-to-jsx';
-import { terms_markdown_text, terms_markdown_urls } from 'mn-constants';
+import {
+  terms_markdown_text,
+  terms_markdown_urls,
+  terms_privacy,
+  APP_NAME
+} from 'mn-constants';
 import * as React from 'react';
 import { Eye } from 'react-feather';
 import { Box, Flex, Text } from 'rebass/styled-components';
@@ -34,37 +39,38 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
         <LogoContainer />
         <Flex mt={2}>
           <Right>
-            {terms_markdown_urls.enabled && (
-              <>
-                <Aware green mb={3} mt={3} p={3}>
-                  <Box mr={2}>
-                    <Eye size="20" color="white" />
-                  </Box>
-                  <Text variant="suptitle">
-                    {' '}
-                    Please read the following. By signing up your are consenting
-                    to these agreements.
-                  </Text>
-                </Aware>
-                <Panel className="extra">
-                  <Box p={3}>
-                    <Markdown>
-                      {terms_users.data || terms_users_text.data}
-                    </Markdown>
-                  </Box>
-                  <Box p={3}>
-                    <Markdown>
-                      {terms_cookies.data || terms_cookies_text.data}
-                    </Markdown>
-                  </Box>
-                  <Box p={3}>
-                    <Markdown>
-                      {terms_indexing.data || terms_indexing_text.data}
-                    </Markdown>
-                  </Box>
-                </Panel>
-              </>
-            )}
+            <Aware green mb={3} mt={3} p={3}>
+              <Box mr={2}>
+                <Eye size="20" color="white" />
+              </Box>
+              <Text variant="suptitle">
+                {' '}
+                Please read the following. By using this instance of {APP_NAME}
+                you are consenting to these agreements.
+              </Text>
+            </Aware>
+            <Panel className="extra">
+              <Box p={3}>
+                <Markdown>{terms_users.data || terms_users_text.data}</Markdown>
+              </Box>
+              <Box p={3}>
+                {terms_privacy.enabled ? (
+                  <Markdown>
+                    {privacy_url_text.data || terms_privacy_text.data}
+                  </Markdown>
+                ) : null}
+              </Box>
+              <Box p={3}>
+                <Markdown>
+                  {terms_cookies.data || terms_cookies_text.data}
+                </Markdown>
+              </Box>
+              <Box p={3}>
+                <Markdown>
+                  {terms_indexing.data || terms_indexing_text.data}
+                </Markdown>
+              </Box>
+            </Panel>
           </Right>
         </Flex>
       </LoginWrapper>
