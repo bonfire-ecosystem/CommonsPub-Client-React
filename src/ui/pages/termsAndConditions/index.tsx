@@ -3,8 +3,7 @@ import Markdown from 'markdown-to-jsx';
 import {
   terms_markdown_text,
   terms_markdown_urls,
-  terms_privacy,
-  APP_NAME
+  terms_privacy
 } from 'mn-constants';
 import * as React from 'react';
 import { Eye } from 'react-feather';
@@ -52,7 +51,7 @@ const TermsAndConditionsPage: React.FC<Props> = ({}) => {
               </Box>
               <Text variant="suptitle">
                 {' '}
-                Please read the following. By using this instance of {APP_NAME}
+                Please read the following. By using this instance of MoodleNet
                 you are consenting to these agreements.
               </Text>
             </Aware>

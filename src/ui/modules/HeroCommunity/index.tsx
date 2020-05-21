@@ -10,8 +10,7 @@ import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { FormikHook } from 'ui/@types/types';
 import { NavLink } from 'react-router-dom';
-import DOMPurify from 'dompurify';
-// import { typography } from 'mn-constants';
+import { MD_Comment } from 'ui/elements/Layout/comment';
 
 export enum Status {
   Loading,
@@ -69,13 +68,9 @@ export const HeroCommunity: FC<Props> = ({ community: c }) => {
           </Title>
           <Username fontSize={1}>@{c.fullName}</Username>
           {c.summary && (
-            <Summary
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(c.summary)
-              }}
-              variant="text"
-              mt={2}
-            />
+            <Box mt={2}>
+              <MD_Comment content={c.summary} />
+            </Box>
           )}
           <Info mt={3}>
             <InfoCommunity>
@@ -206,11 +201,6 @@ font-size: 20px !important;
 `};
 `;
 
-const Summary = styled(Text)`
-  ${media.lessThan('medium')`
-    display: none;
-`};
-`;
 const Actions = styled(Flex)`
   align-items: center;
 `;

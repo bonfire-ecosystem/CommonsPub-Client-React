@@ -10,7 +10,7 @@ import { LocaleContext } from '../../../context/global/localizationCtx';
 import Select from 'react-select';
 import { ActionContext } from '../../../context/global/actionCtx';
 import { setLang } from '../../../redux/localization';
-import { languages, locales, APP_NAME } from '../../../mn-constants';
+import { languages, locales } from '../../../mn-constants';
 import { FormikHook } from 'ui/@types/types';
 import { Label, Input } from '@rebass/forms';
 
@@ -110,7 +110,7 @@ const Preferences: React.FC<Props> = props => (
             href="https://www.transifex.com/moodlenet/moodlenet/"
             target="_blank"
           >
-            <Trans>Want to contibute to {APP_NAME} translation?</Trans>
+            <Trans>Want to contibute to MoodleNet translation?</Trans>
           </a>
         </TransifexLink>
       </Box>
