@@ -10,7 +10,7 @@ import { LocaleContext } from '../../../context/global/localizationCtx';
 import Select from 'react-select';
 import { ActionContext } from '../../../context/global/actionCtx';
 import { setLang } from '../../../redux/localization';
-import { languages, locales } from '../../../mn-constants';
+import { languages, locales, APP_NAME } from '../../../mn-constants';
 import { FormikHook } from 'ui/@types/types';
 import { Label, Input } from '@rebass/forms';
 import {APP_NAME, related_urls} from 'mn-constants'

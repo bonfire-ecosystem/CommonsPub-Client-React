@@ -1,1 +1,1 @@
-export { theme as moodlenet } from './default.theme';
+export { theme as primary } from './default.theme';
