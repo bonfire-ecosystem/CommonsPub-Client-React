@@ -10,10 +10,10 @@ import { LocaleContext } from '../../../context/global/localizationCtx';
 import Select from 'react-select';
 import { ActionContext } from '../../../context/global/actionCtx';
 import { setLang } from '../../../redux/localization';
-import { languages, locales, APP_NAME } from '../../../mn-constants';
+import { languages, locales } from '../../../mn-constants';
 import { FormikHook } from 'ui/@types/types';
 import { Label, Input } from '@rebass/forms';
-import {APP_NAME, related_urls} from 'mn-constants'
+import { APP_NAME, related_urls } from 'mn-constants';
 
 // const Header = styled(Flex)`
 //   border-bottom: ${props => props.theme.colors.border};
@@ -107,11 +107,8 @@ const Preferences: React.FC<Props> = props => (
           </ContainerForm>
         </Row>
         <TransifexLink variant="text" my={3} mt={2}>
-          <a
-            href={related_urls.localisation}
-            target="_blank"
-          >
-            <Trans>Want to contibute to {APP_NAME} translation?</Trans>
+          <a href={related_urls.localisation} target="_blank">
+            <Trans>Want to contibute to MoodleNet translation?</Trans>
           </a>
         </TransifexLink>
       </Box>

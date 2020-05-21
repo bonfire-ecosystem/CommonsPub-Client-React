@@ -7,12 +7,13 @@ import { Trans } from '@lingui/react';
 import { FormikHook } from 'ui/@types/types';
 import { Star, MoreHorizontal, Flag, CornerDownLeft } from 'react-feather';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
 
 import Modal from 'ui/modules/Modal';
 import { NavLink } from 'react-router-dom';
 import { typography } from 'mn-constants';
 import { darken } from 'polished';
+import { MD_Comment } from 'ui/elements/Layout/comment';
 
 export interface LikeActions {
   toggleLikeFormik: FormikHook<{}>;
@@ -58,12 +59,13 @@ export const Comment: React.SFC<CommentProps> = ({
   return (
     <Wrapper>
       {/* <Link to={url}> */}
-      <Summary
+      <MD_Comment content={content} />
+      {/* <Summary
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
         sx={{ textDecoration: 'none' }}
         variant="text"
         mb={2}
-      />
+      /> */}
       {/* </Link> */}
       {hideActions ? null : (
         <Actions mt={2}>
@@ -177,12 +179,12 @@ export const Comment: React.SFC<CommentProps> = ({
 //   color: ${props => props.theme.colors.mediumdark};
 // `;
 
-const Summary = styled(Text)`
-  color: ${props => props.theme.colors.dark};
-  img {
-    width: 100%;
-  }
-`;
+// const Summary = styled(Text)`
+//   color: ${props => props.theme.colors.dark};
+//   img {
+//     width: 100%;
+//   }
+// `;
 
 const Items = styled(Flex)`
   flex: 1;

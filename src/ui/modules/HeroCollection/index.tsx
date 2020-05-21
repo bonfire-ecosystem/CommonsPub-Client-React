@@ -13,7 +13,7 @@ import Button from 'ui/elements/Button';
 import { Dropdown, DropdownItem } from 'ui/modules/Dropdown';
 import { Settings, MoreVertical, Flag as FlagIcon, Star } from 'react-feather';
 import { FormikHook } from 'ui/@types/types';
-import DOMPurify from 'dompurify';
+import { MD_Comment } from 'ui/elements/Layout/comment';
 
 export enum Status {
   Loading,
@@ -78,11 +78,10 @@ export const HeroCollection: FC<Props> = ({ collection: c }) => {
           <Username mt={1} fontSize={2}>
             +{c.fullName}
           </Username>
-          <Description
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(c.summary) }}
-            fontSize={2}
-            mt={2}
-          />
+          <Box mt={2}>
+            <MD_Comment content={c.summary} />
+          </Box>
+
           <Info mt={2}>
             <CountWrapper>
               <CountTot to={`${c.basePath}/followers`}>
@@ -215,10 +214,6 @@ const Right = styled(Flex)`
 
 const Title = styled(Text)`
   color: ${props => props.theme.colors.darker};
-`;
-
-const Description = styled(Text)`
-  color: ${props => props.theme.colors.mediumdark};
 `;
 
 const Username = styled(Text)`
