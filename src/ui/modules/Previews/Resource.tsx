@@ -87,11 +87,11 @@ export const Resource: React.FC<Props> = ({
             </>
           ) : (
             <>
-              <ActionItem>
+              <LinkResource>
                 <a href={link} target="_blank">
                   <TextLink flex={1}>{link}</TextLink>
                 </a>
-              </ActionItem>
+              </LinkResource>
             </>
           )}
           <Summary variant="text" mt={2}>
@@ -113,7 +113,7 @@ export const Resource: React.FC<Props> = ({
               sx={{ textTransform: 'capitalize' }}
               ml={1}
             >
-              {like.totalLikes + ' '} <Trans>Star</Trans>
+              {like.totalLikes + ' '} <Trans>Favourite</Trans>
             </ActionText>
           </ActionItem>
           <ActionItem
@@ -189,6 +189,23 @@ const ActionIcon = styled(Box)`
   margin-left: -8px;
   svg {
     margin: 0 auto;
+  }
+`;
+
+const LinkResource = styled(Box)`
+  align-items: center;
+  color: ${props => props.theme.colors.mediumdark};
+  cursor: pointer;
+  font-size: ${typography.size.s2};
+  text-decoration: none;
+  margin-top: 4px;
+
+  a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 9;
+    text-decoration: none;
   }
 `;
 

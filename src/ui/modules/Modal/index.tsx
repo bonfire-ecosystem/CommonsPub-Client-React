@@ -119,13 +119,11 @@ export const ContainerForm = styled.div`
 `;
 
 export const Header = styled.div`
-  padding: 0 16px;
-  padding-top: 16px;
-  // border-bottom: 1px solid ${props => props.theme.colors.lighter};
+  padding: 16px;
+  border-bottom: 1px solid ${props => props.theme.colors.lighter};
   & h5 {
     text-align: center !important;
     margin: 0 !important;
-    font-size: 18px;
   }
 `;
 

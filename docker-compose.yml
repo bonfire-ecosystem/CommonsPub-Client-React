@@ -38,8 +38,8 @@ services:
     image: postgres:9.6-alpine
     volumes:
        - postgres_data:/var/lib/postgresql/data
-    # ports:
-    #   - "5432:5432"
+    ports:
+      - "5432:5432"
     env_file:
       - .env
       - .env.secrets

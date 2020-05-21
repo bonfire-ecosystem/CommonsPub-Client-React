@@ -15,11 +15,8 @@ import {Resource} from 'ui/modules/Previews/Resource'
 import {Comment} from 'ui/modules/Previews/Comment'
 import {LikedComment} from 'ui/modules/Previews/LikedComment'
 import {MainHeader} from 'ui/modules/MainHeader'
-import {ShareLink} from 'ui/modules/ShareLink'
-import {getShareLinkProps} from 'ui/mock/shareLink'
 const Head = () => <MainHeader {...getMainHeaderProps() } />
 const Side = () => <Sidebar {...getSidebarProps()}/>
-const Share = () => <ShareLink {...getShareLinkProps()} />
 
 <Meta title="Pages|Collection" component={Collection}/>
 
@@ -35,7 +32,6 @@ The `Collection` page displays a single MoodleNet collection. It is made up of t
       HeaderBox={Head}
       SidebarBox={Side}>
       <Collection 
-        ShareLinkBox={Share}
         collectionName="Spaced repetition"
         loadMoreActivities={getLoadMoreProps()}
         loadMoreResources={getLoadMoreProps()}

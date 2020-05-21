@@ -24,7 +24,7 @@ export interface Props {
   // tab: HomePageTab;
   // nextCommunitiesFormik?: FormikHook;
   // nextCollectionsFormik?: FormikHook;
-  nextInboxFormik: FormikHook | null;
+  nextInboxFormik?: FormikHook;
   // FollowedCommunitiesElements: JSX.Element;
   // FollowedCollectionsElements: JSX.Element;
   InboxElements: JSX.Element;

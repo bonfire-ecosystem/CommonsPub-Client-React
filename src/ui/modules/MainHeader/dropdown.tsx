@@ -5,6 +5,7 @@ import { Trans } from '@lingui/macro';
 import { useHistory } from 'react-router';
 import { Text, Flex } from 'rebass/styled-components';
 import { Dropdown } from '../Dropdown';
+import { related_urls } from 'mn-constants';
 
 const List = styled.div<{ lined?: boolean }>`
   padding: 8px;
@@ -81,7 +82,7 @@ export const DropdownSidebar: React.FC<Props> = ({
       </List>
       <List lined>
         <Item variant="link">
-          <a href="/terms" target="_blank">
+          <a href={related_urls.terms_users} target="blank">
             <Trans>Code of Conduct</Trans>
           </a>
         </Item>

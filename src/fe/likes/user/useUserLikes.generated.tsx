@@ -22,7 +22,6 @@ export type UserLikesQuery = (
   { __typename: 'RootQueryType' }
   & { user: Types.Maybe<(
     { __typename: 'User' }
-    & Pick<Types.User, 'id'>
     & { likes: Types.Maybe<(
       { __typename: 'LikesPage' }
       & Pick<Types.LikesPage, 'totalCount'>
@@ -41,7 +40,6 @@ export type UserLikesQuery = (
 export const UserLikesDocument = gql`
     query userLikes($userId: String!, $limit: Int, $before: [Cursor!], $after: [Cursor!]) {
   user(userId: $userId) {
-    id
     likes(limit: $limit, before: $before, after: $after) @connection(key: "userLikes") {
       edges {
         ...LikePreview

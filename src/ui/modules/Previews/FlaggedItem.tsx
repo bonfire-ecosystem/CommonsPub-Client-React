@@ -85,7 +85,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
           {isOpenDelete && (
             <Modal closeModal={() => setOpenDelete(false)}>
               <ConfirmationModal
-                done={() => setOpenDelete(false)}
+                cancel={() => setOpenDelete(false)}
                 formik={deleteContentFormik}
                 modalAction={i18n._(`Delete flagged content`)}
                 modalDescription={i18n._(
@@ -98,7 +98,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
           {isOpenBlock && (
             <Modal closeModal={() => setOpenBlock(false)}>
               <ConfirmationModal
-                done={() => setOpenBlock(false)}
+                cancel={() => setOpenBlock(false)}
                 formik={blockUserFormik}
                 modalAction={i18n._(`Delete user`)}
                 modalDescription={i18n._(
@@ -111,7 +111,7 @@ export const FlaggedItem: React.SFC<FlaggedProps> = ({
           {isOpenIgnore && (
             <Modal closeModal={() => setOpenIgnore(false)}>
               <ConfirmationModal
-                done={() => setOpenIgnore(false)}
+                cancel={() => setOpenIgnore(false)}
                 formik={ignoreFlagFormik}
                 modalAction={i18n._(`Ignore flag`)}
                 modalDescription={i18n._(

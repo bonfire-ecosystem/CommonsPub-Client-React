@@ -1,10 +1,9 @@
 import styled from '../../themes/styled';
 import { Box, Flex, Text } from 'rebass/styled-components';
 import media from 'styled-media-query';
-import { typography } from 'mn-constants';
 
 export const WrapperPanel = styled(Flex)`
-  width: 240px;
+  width: 300px;
   align-items: stretch;
   border: 0 solid black;
   box-sizing: border-box;
@@ -65,12 +64,10 @@ export const Panel = styled(Box)`
 `;
 
 export const PanelTitle = styled(Text)`
-  text-transform: capitalize;
+  text-transform: uppercase;
   border-bottom: ${props => props.theme.colors.border};
   padding: 16px;
-  color: ${props => props.theme.colors.darker};
-  font-size: ${typography.size.s1};
-  font-weight: 600;
+  color: ${props => props.theme.colors.dark};
 `;
 
 export const Nav = styled(Box)`
@@ -78,10 +75,9 @@ export const Nav = styled(Box)`
 `;
 
 export const NavItem = styled(Text)`
-color: ${props => props.theme.colors.dark}
-font-size: ${typography.size.s2};
+color: ${props => props.theme.colors.mediumdark}
 a {
-  color: ${props => props.theme.colors.dark}
+  color: ${props => props.theme.colors.mediumdark}
   text-decoration: none;
 }
   `;

@@ -83,12 +83,12 @@ export const MenuList = styled(Flex)`
   padding: 12px 8px;
   background: ${props => props.theme.colors.appInverse};
   a {
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     margin-right: 8px;
     color: ${props => props.theme.colors.darker};
     letterspacing: 1px;
-    font-size: 14px;
+    font-size: 13px;
     padding: 4px 8px;
     white-space: nowrap;
     &.active {
@@ -100,7 +100,6 @@ export const MenuList = styled(Flex)`
 `;
 
 export const ObjectsList = styled(Box)`
-  background: ${props => props.theme.colors.appInverse};
   &.replies > div {
     margin-bottom: 0;
   }

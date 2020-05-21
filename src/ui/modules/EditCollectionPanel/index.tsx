@@ -4,7 +4,7 @@ import { Input, Textarea } from '@rebass/forms';
 import { FormikHook } from 'ui/@types/types';
 import * as React from 'react';
 import { Flex, Text, Box } from 'rebass/styled-components';
-import DropzoneArea from 'ui/modules/DropzoneModal';
+import DropzoneArea from '../../../components/elements/DropzoneModal';
 import Alert from 'ui/elements/Alert';
 import Button from 'ui/elements/Button';
 import { clearFix } from 'polished';

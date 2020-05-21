@@ -1,0 +1,22 @@
+input CommunityUpdateInput {
+  icon: String
+  name: String!
+  summary: String
+}
+
+mutation updateCommunityMutation($community: CommunityUpdateInput!, $communityId: String!) {
+  updateCommunity(communityId: $communityId, community: $community) {
+    id
+    canonicalUrl
+    preferredUsername
+    name
+    summary
+    icon{
+ id, url }
+
+    # isLocal
+    # isPublic
+    createdAt
+    updatedAt
+  }
+}

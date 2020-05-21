@@ -1,0 +1,14 @@
+mutation fetchResource($url: String!) {
+  fetchWebMetadata(url: $url) {
+    url
+    image
+    title
+    author
+    source
+    mimeType
+    summary
+    embedType
+    embedCode
+    language
+  }
+}

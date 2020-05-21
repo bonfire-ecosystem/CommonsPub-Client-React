@@ -67,8 +67,10 @@ export const useFormikPage = <EdgeType>(page: MngPage<EdgeType>) => {
   });
   return useMemo(
     () => [
-      page.ready && page.pageInfo.hasNextPage ? nextPageFormik : null,
-      page.ready && page.pageInfo.hasPreviousPage ? previousPageFormik : null
+      page.ready && page.pageInfo.hasNextPage ? nextPageFormik : undefined,
+      page.ready && page.pageInfo.hasPreviousPage
+        ? previousPageFormik
+        : undefined
     ],
     [nextPageFormik, previousPageFormik, page]
   );
@@ -76,7 +78,7 @@ export const useFormikPage = <EdgeType>(page: MngPage<EdgeType>) => {
 
 export const usePage = <EdgeType>(
   page: Maybe<Page<EdgeType>>,
-  fetch: Fetch<EdgeType, NextPageCursor> // = () => Promise.resolve()
+  fetch: Fetch<EdgeType, NextPageCursor> = () => Promise.resolve()
 ): MngPage<EdgeType> =>
   useMemo<MngPage<EdgeType>>(() => mngPage(page, fetch), [page, fetch]);
 

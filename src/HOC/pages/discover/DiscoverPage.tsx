@@ -71,7 +71,7 @@ export const DiscoverPage: FC<DiscoverPage> = ({ basePath, tab }) => {
         ? allCollectionsPageNext
         : tab === DiscoverPageTabs.Communities
         ? allCommunitiesPageNext
-        : null;
+        : undefined;
 
     const props: Props = {
       basePath,
